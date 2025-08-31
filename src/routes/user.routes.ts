@@ -9,12 +9,14 @@ import authorization from '../middlewares/authorization.middleware';
 
 const userRouter = Router();
 
+userRouter.use(authentication);
+
 const userController = container.get<UserController>(TYPES.UserController);
 
-userRouter.get('/me', [authentication], asyncHandler(userController.getCurrentUser));
-userRouter.get('/getbyemail', [authentication], asyncHandler(userController.getUserByEmail));
-userRouter.get('/:id', [authentication], asyncHandler(userController.getUserById));
-userRouter.put('/:id', [authentication], asyncHandler(userController.updateUserById));
-userRouter.delete('/:id', [authentication, authorization([Roles.Administrator])], asyncHandler(userController.deleteUserById));
+userRouter.get('/me', asyncHandler(userController.getCurrentUser));
+userRouter.get('/getbyemail', asyncHandler(userController.getUserByEmail));
+userRouter.get('/:id', asyncHandler(userController.getUserById));
+userRouter.put('/:id', asyncHandler(userController.updateUserById));
+userRouter.delete('/:id', asyncHandler(authorization([Roles.Administrator])), asyncHandler(userController.deleteUserById));
 
 export default userRouter;

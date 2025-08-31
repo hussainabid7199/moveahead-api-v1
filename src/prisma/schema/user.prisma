@@ -1,3 +1,4 @@
+
 enum AuthProvider {
   CREDENTIALS
   GOOGLE
@@ -34,6 +35,8 @@ model User {
 
   // Relations
   roles                  UserRole[]
+  appointments          Appointment[]
+  doctorProfiles         DoctorProfile[]
 
   // Indexes for performance
   @@index([email(191)], name: "idx_users_email")
