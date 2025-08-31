@@ -107,7 +107,7 @@ export class AccountController {
     if (!userRole) {
       throw new CustomError('Default USER role not found', 500);
     }
-    const newUser = await this.unitOfService.User.create(data, Roles.User);
+    const newUser = await this.unitOfService.User.create(data, Roles.USER);
     if (!newUser) {
       throw new CustomError('User creation failed', 400);
     }

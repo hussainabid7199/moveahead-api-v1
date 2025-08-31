@@ -3,6 +3,7 @@ import prisma from '../prisma';
 import AppointmentDto, { AppointmentBasicDto } from '../dtos/appointment.dto';
 import { AppointmentModel } from '../validators/appointment.validator';
 import CustomError from '../exceptions/custom-error';
+import { AppointmentStatus } from '../enums/appointment.enum';
 
 @injectable()
 export class AppointmentService {
@@ -122,6 +123,7 @@ export class AppointmentService {
             phoneNumber: data.phoneNumber,
             country: data.country,
             city: data.city,
+            status: AppointmentStatus.PENDING,
             locality: data.locality,
             appointmentSlot: data.appointmentSlot,
             appointmentFor: data.appointmentFor,
@@ -177,6 +179,7 @@ export class AppointmentService {
           email: data.email,
           phoneNumber: data.phoneNumber,
           country: data.country,
+          status: data.status,
           city: data.city,
           locality: data.locality,
           appointmentSlot: data.appointmentSlot,
