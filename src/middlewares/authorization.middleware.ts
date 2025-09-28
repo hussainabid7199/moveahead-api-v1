@@ -8,6 +8,7 @@ import { UserService } from '../services/user.service';
 import { TYPES } from '../config/ioc.types';
 import container from '../config/ioc.config';
 import UnitOfService from '../services/unitof.service';
+import prisma from '../prisma';
 
 const authorization = (roles: Array<Roles>) => {
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -24,8 +25,14 @@ const authorization = (roles: Array<Roles>) => {
       return res.status(404).json(response);
     }
 
+    const userRole = await prisma.role.findFirst({
+      where: { id: user.roles?.[0] as string },
+      select: { id: true, name: true },
+    });
+
     // Ensure the user's role is contained in the authorized roles.
-    const hasMatchingRole = roles.includes(user.roles?.find(role => role === Roles.User) as Roles);
+    const hasMatchingRole = roles.includes((userRole?.name) as Roles);
+    // const hasMatchingRoles = roles.includes(user.roles?.find(role => role === roles[0]) as Roles);
     if (hasMatchingRole) {
       next();
     } else {

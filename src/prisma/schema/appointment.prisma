@@ -1,81 +1,157 @@
 model Appointment {
-    id              String    @id @default(cuid()) @map("id") @db.VarChar(191)
-    userId          String    @map("user_id") @db.VarChar(191)
-    fullName        String?   @map("display_name") @db.VarChar(300)
-    email           String?   @map("email") @db.VarChar(300)
-    phoneNumber     String?   @map("phone_number") @db.VarChar(300)
-    country         String?   @map("country") @db.VarChar(300)
-    city            String?   @map("city") @db.VarChar(300)
-    locality        String?   @map("locality") @db.VarChar(300)
-    status          String?   @map("status") @db.VarChar(100)
-    paymentStatus   String?   @map("payment_status") @db.VarChar(100)
-    appointmentSlot DateTime? @map("appointment_slot") @db.DateTime
-    appointmentFor  String?   @map("appointment_for") @db.VarChar(100)
-    isActive        Boolean   @default(true) @map("is_active")
+    id              String @id @default(cuid()) @map("id") @db.VarChar(191)
+    userId          String @map("user_id") @db.VarChar(191)
+    doctorProfileId String @map("doctor_profile_id") @db.VarChar(191)
+    locationId      String @map("location_id") @db.VarChar(191)
+    serviceId       String @map("service_id") @db.VarChar(191)
 
-    createdAt DateTime  @default(now()) @map("created_at")
-    updatedAt DateTime? @updatedAt @map("updated_at")
+    appointmentDate DateTime @map("appointment_date") @db.Timestamp(6)
+    status          String?  @map("status") @db.VarChar(100)
 
-    createdBy String  @map("created_by") @db.VarChar(191)
-    updatedBy String? @map("updated_by") @db.VarChar(191)
+    isActive Boolean @default(true) @map("is_active")
+
+    createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+    updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
 
     //Relations
-    treatmentTypes TreatmentType[]
-    serviceTypes   ServiceType[]
-    payment        Payment[]
-    doctorAppointment DoctorAppointment[]
+    user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+    doctorProfile DoctorProfile @relation(fields: [doctorProfileId], references: [id], onDelete: Cascade)
+    location      Location      @relation(fields: [locationId], references: [id], onDelete: Cascade)
+    service       Service       @relation(fields: [serviceId], references: [id], onDelete: Cascade)
 
-    users             User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+    doctorRating    DoctorRating[]
+    bookAppointment BookAppointment[]
+    payment         Payment[]
 
-    @@index([email(191)], name: "idx_appointment_email")
-    @@index([phoneNumber(20)], name: "idx_appointment_phone_number")
-    @@index([isActive, createdAt], name: "idx_appointment_active_created")
+    @@index([status(100)], name: "idx_appointment_status")
+    @@index([appointmentDate(20)], name: "idx_appointment_date")
     @@map("appointments")
 }
 
-model TreatmentType {
-    id            String    @id @default(cuid()) @map("id") @db.VarChar(191)
-    appointmentId String    @map("appointment_id") @db.VarChar(191)
-    name          String    @unique @map("name") @db.VarChar(100)
-    description   String?   @map("description") @db.VarChar(300)
-    createdAt     DateTime  @default(now()) @map("created_at")
-    updatedAt     DateTime? @updatedAt @map("updated_at")
-    isActive      Boolean   @default(true) @map("is_active")
+model BookAppointment {
+    id            String @id @default(cuid()) @map("id") @db.VarChar(191)
+    doctorId      String @map("doctor_id") @db.VarChar(191)
+    locationId    String @map("location_id") @db.VarChar(191)
+    appointmentId String @map("appointment_id") @db.VarChar(191)
 
+    date      DateTime @map("date") @db.Timestamp(6)
+    day       String?  @map("day") @db.VarChar(50)
+    startTime String?  @map("start_time") @db.VarChar(50)
+    endTime   String?  @map("end_time") @db.VarChar(50)
+    status    String?  @map("status") @db.VarChar(100)
+
+    isActive Boolean @default(true) @map("is_active")
+
+    createdAt DateTime  @default(now()) @map("created_at")@db.Timestamp(6)
+    updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+
+    //Relations
+    doctor      User        @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+    location    Location    @relation(fields: [locationId], references: [id], onDelete: Cascade)
     appointment Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
 
-    @@index([isActive, createdAt], name: "idx_appointment_active_created")
-    @@map("treatment_types")
+    @@index([status(100)], name: "idx_appointment_status")
+    @@map("book_appointments")
 }
 
-model ServiceType {
-    id            String    @id @default(cuid()) @map("id") @db.VarChar(191)
-    appointmentId String    @map("appointment_id") @db.VarChar(191)
-    name          String    @unique @map("name") @db.VarChar(100)
-    description   String?   @map("description") @db.VarChar(300)
-    createdAt     DateTime  @default(now()) @map("created_at")
-    updatedAt     DateTime? @updatedAt @map("updated_at")
-    isActive      Boolean   @default(true) @map("is_active")
+model AppointmentSlot {
+    id         String @id @default(cuid()) @map("id") @db.VarChar(191)
+    doctorId   String @map("doctor_id") @db.VarChar(191)
+    locationId String @map("location_id") @db.VarChar(191)
 
-    appointment Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+    day       String? @map("day") @db.VarChar(50)
+    startTime String? @map("start_time") @db.VarChar(50)
+    endTime   String? @map("end_time") @db.VarChar(50)
+
+    appointmentSlotDuration Int? @map("appointment_slot_duration") @db.Int
+    totalAppointmentSlots   Int? @map("total_appointment_slots") @db.Int
+
+    isActive Boolean @default(true) @map("is_active")
+
+    createdAt DateTime  @default(now()) @map("created_at")  @db.Timestamp(6)
+    updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+
+    //Relations
+    doctor   User     @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+    location Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+    @@index([appointmentSlotDuration], name: "idx_appointment_slot_duration")
+    @@index([totalAppointmentSlots], name: "idx_total_appointment_slots")
+    @@map("appointment_slots")
+}
+
+model Location {
+    id       String  @id @default(cuid()) @map("id") @db.VarChar(191)
+    doctorId String  @map("doctor_id") @db.VarChar(191)
+    name     String  @map("name") @db.VarChar(100)
+    address  String? @map("address") @db.VarChar(255)
+    city     String? @map("city") @db.VarChar(100)
+    state    String? @map("state") @db.VarChar(100)
+    country  String? @map("country") @db.VarChar(100)
+    zipCode  String? @map("zip_code") @db.VarChar(20)
+    phone    String? @map("phone") @db.VarChar(20)
+
+    isLocationVerified Boolean @default(false) @map("is_location_verified")
+    verifiedBy         String? @map("verified_by") @db.VarChar(191)
+
+    isActive Boolean @default(true) @map("is_active")
+
+    createdAt DateTime  @default(now()) @map("created_at")   @db.Timestamp(6)
+    updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+
+    //Relations
+    doctor User @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+    appointment     Appointment[]
+    bookAppointment BookAppointment[]
+    appointmentSlot AppointmentSlot[]
+    service         Service[]
+
+    @@index([isActive, createdAt], name: "idx_location_active_created")
+    @@map("locations")
+}
+
+model Service {
+    id         String @id @default(cuid()) @map("id") @db.VarChar(191)
+    doctorId   String @map("doctor_id") @db.VarChar(191)
+    locationId String @map("location_id") @db.VarChar(191)
+
+    name        String  @unique @map("name") @db.VarChar(100)
+    description String? @map("description") @db.VarChar(300)
+    price      Decimal @map("price") @db.Decimal(10, 2)
+
+    isActive Boolean @default(true) @map("is_active")
+
+    createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+    updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+
+    //Relations
+    doctor   User     @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+    location Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+    appointment Appointment[]
 
     @@index([isActive, createdAt], name: "idx_appointment_active_created")
-    @@map("service_types")
+    @@map("service")
 }
 
 model Payment {
-    id            String    @id @default(cuid()) @map("id") @db.VarChar(191)
-    appointmentId String    @map("appointment_id") @db.VarChar(191)
-    amount        Decimal   @map("amount") @db.Decimal(10, 2)
-    status        String    @map("status") @db.VarChar(100)
-    paymentMethod String    @map("payment_method") @db.VarChar(100)
-    createdAt     DateTime  @default(now()) @map("created_at")
-    updatedAt     DateTime? @updatedAt @map("updated_at")
-    isActive      Boolean   @default(true) @map("is_active")
+    id            String  @id @default(cuid()) @map("id") @db.VarChar(191)
+    appointmentId String  @map("appointment_id") @db.VarChar(191)
+    transactionId String? @map("transaction_id") @db.VarChar(191)
 
-    // Relations
-    currencies Currency[]
+    amount Decimal @map("amount") @db.Decimal(10, 2)
+    status String  @map("status") @db.VarChar(100)
 
+    paymentMethod String  @map("payment_method") @db.VarChar(100)
+    currencyCode  String? @map("currency_code") @db.VarChar(10)
+
+    isActive Boolean @default(true) @map("is_active")
+
+    createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+    updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+
+    //Relations
     appointment Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
 
     @@index([amount(100)], name: "idx_users_payment_amount")
@@ -83,19 +159,4 @@ model Payment {
     @@index([paymentMethod(100)], name: "idx_users_payment_method")
     @@index([isActive, createdAt], name: "idx_users_active_created")
     @@map("payments")
-}
-
-model Currency {
-    id        String    @id @default(cuid()) @map("id") @db.VarChar(191)
-    paymentId String    @map("payment_id") @db.VarChar(191)
-    code      String    @unique @map("code") @db.VarChar(10)
-    name      String    @map("name") @db.VarChar(100)
-    createdAt DateTime  @default(now()) @map("created_at")
-    updatedAt DateTime? @updatedAt @map("updated_at")
-    isActive  Boolean   @default(true) @map("is_active")
-
-    payment Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
-
-    @@index([isActive, createdAt], name: "idx_users_active_created")
-    @@map("currencies")
 }

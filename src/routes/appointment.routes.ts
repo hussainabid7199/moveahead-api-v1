@@ -16,7 +16,7 @@ const appointmentController = container.get<AppointmentController>(TYPES.Appoint
 
 appointmentRouter.get('/', asyncHandler(appointmentController.getAllAppointments));
 appointmentRouter.get('/:id', asyncHandler(appointmentController.getById));
-appointmentRouter.post('/', asyncHandler(appointmentController.create));
-appointmentRouter.put('/:id', asyncHandler(appointmentController.update));
+// appointmentRouter.post('/', asyncHandler(appointmentController.create));
+// appointmentRouter.put('/:id', asyncHandler(appointmentController.update));
 
 export default appointmentRouter;

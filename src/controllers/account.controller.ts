@@ -54,6 +54,11 @@ export class AccountController {
       return res.status(401).json(response);
     }
 
+    const roles = await prisma.role.findFirst({
+      where: { id: user.roles?.[0] as string },
+      select: { id: true, name: true },
+    });
+
     // Generate and sign a JWT that is valid for one hour.
     const token = jwt.sign(
       {
@@ -64,7 +69,7 @@ export class AccountController {
         profileImageUrl: user.profileImageUrl,
         phoneNumber: user.phoneNumber,
         displayName: user.displayName,
-        roles: user.roles,
+        roles: roles,
       },
       config.jwt.secret,
       {
@@ -107,7 +112,8 @@ export class AccountController {
     if (!userRole) {
       throw new CustomError('Default USER role not found', 500);
     }
-    const newUser = await this.unitOfService.User.create(data, Roles.USER);
+    
+    const newUser = await this.unitOfService.User.create(data, userRole.name as Roles);
     if (!newUser) {
       throw new CustomError('User creation failed', 400);
     }
@@ -119,14 +125,6 @@ export class AccountController {
     };
 
     return res.status(201).json(response);
-
-
-
-
-
-
-
-
   };
 
   /**

@@ -5,8 +5,10 @@ export const TYPES = {
   UserController: Symbol.for('UserController'),
   AccountController: Symbol.for('AccountController'),
   AppointmentController: Symbol.for('AppointmentController'),
+  DoctorController: Symbol.for('DoctorController'),
 
   UnitOfService: Symbol.for('UnitOfService'),
   UserService: Symbol.for('UserService'),
   AppointmentService: Symbol.for('AppointmentService'),
+  DoctorService: Symbol.for('DoctorService'),
 };

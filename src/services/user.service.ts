@@ -47,6 +47,7 @@ export class UserService {
     if (!user) {
       return null;
     }
+
     return this.convertToDto(user, includePassword);
   }
 
