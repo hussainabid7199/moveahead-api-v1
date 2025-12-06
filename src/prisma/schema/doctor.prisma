@@ -1,92 +1,91 @@
+model Specialization {
+    id          String  @id @default(cuid()) @map("id") @db.VarChar(191)
+    name        String  @map("name") @db.VarChar(100)
+    description String? @map("description") @db.VarChar(255)
+
+    isActive Boolean @default(true) @map("is_active")
+
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
+
+    @@index([name], name: "idx_specialization_name")
+    @@map("specializations")
+}
+
 model DoctorProfile {
-    id             String    @id @default(cuid()) @map("id") @db.VarChar(191)
-    userId         String    @map("user_id") @db.VarChar(191)
-    name           String    @map("name") @db.VarChar(200)
-    email          String    @map("email") @db.VarChar(200)
-    specialization String?   @map("specialization") @db.VarChar(200)
-    bio            String?   @map("bio") @db.VarChar(500)
-    website        String?   @map("website") @db.VarChar(200)
-    overallRating  Int?      @map("overall_rating") @db.Int
-    createdAt      DateTime  @default(now()) @map("created_at")
-    updatedAt      DateTime? @updatedAt @map("updated_at")
-    isActive       Boolean   @default(true) @map("is_active")
+    id String @id @default(cuid()) @map("id") @db.VarChar(191)
 
-    doctorService     DoctorService[]
-    doctorRating      DoctorRating[]
-    doctorLocation    DoctorServiceLocation[]
-    doctorAppointment DoctorAppointment[]
+    userId String @map("user_id") @db.VarChar(191)
 
+    fullName        String  @map("full_name") @db.VarChar(200)
+    bio             String? @map("bio") @db.VarChar(500)
+    website         String? @map("website") @db.VarChar(200)
+    overallRating   Decimal?   @map("overall_rating") @db.Decimal(2, 1)
+    profileImageUrl String? @map("profile_image_url") @db.VarChar(255)
+    documentUrl     String? @map("document_url") @db.VarChar(255)
+    resumeUrl       String? @map("resume_url") @db.VarChar(255)
+
+    isVerified Boolean @default(false) @map("is_verified")
+    verifiedBy String? @map("verified_by") @db.VarChar(191)
+
+    isActive Boolean @default(true) @map("is_active")
+
+    createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+    updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+
+    // Relations
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@index([name], name: "idx_doctor_profile_name")
-    @@index([email], name: "idx_doctor_profile_email")
+    appointment          Appointment[]
+    doctorSpecialization DoctorSpecialization[]
+    doctorRating         DoctorRating[]
+
     @@index([overallRating], name: "idx_doctor_profile_overall_rating")
     @@index([isActive, createdAt], name: "idx_doctor_profile_active_created")
     @@map("doctor_profiles")
 }
 
-model DoctorService {
-    id              String    @id @default(cuid()) @map("id") @db.VarChar(191)
-    doctorProfileId String    @map("doctor_profile_id") @db.VarChar(191)
-    name            String    @map("name") @db.VarChar(100)
-    createdAt       DateTime  @default(now()) @map("created_at")
-    updatedAt       DateTime? @updatedAt @map("updated_at")
-    isActive        Boolean   @default(true) @map("is_active")
+model DoctorSpecialization {
+    id              String  @id @default(cuid()) @map("id") @db.VarChar(191)
+    doctorProfileId String  @map("doctor_profile_id") @db.VarChar(191)
+    specialization  String  @map("specialization") @db.VarChar(100)
+    documentUrl     String? @map("document_url") @db.VarChar(255)
 
+    isVerified Boolean @default(false) @map("is_verified")
+    verifiedBy String? @map("verified_by") @db.VarChar(191)
+
+    isActive Boolean @default(true) @map("is_active")
+
+    createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+    updatedAt DateTime? @updatedAt @map("updated_at")@db.Timestamp(6)
+
+    // Relations
     doctorProfile DoctorProfile @relation(fields: [doctorProfileId], references: [id], onDelete: Cascade)
 
-    @@index([name], name: "idx_doctor_service_name")
-    @@index([isActive, createdAt], name: "idx_doctor_service_active_created")
-    @@map("doctor_services")
+    @@index([specialization], name: "idx_doctor_specialization")
+    @@index([isActive, createdAt], name: "idx_doctor_specialization_active_created")
+    @@map("doctor_service_specializations")
 }
 
 model DoctorRating {
-    id              String    @id @default(cuid()) @map("id") @db.VarChar(191)
-    doctorProfileId String    @map("doctor_profile_id") @db.VarChar(191)
-    review          String    @map("review") @db.VarChar(500)
-    rating          Int       @map("rating") @db.Int
-    ratedAt         DateTime  @default(now()) @map("rated_at")
-    ratedBy         String    @map("rated_by") @db.VarChar(191)
-    createdAt       DateTime  @default(now()) @map("created_at")
-    updatedAt       DateTime? @updatedAt @map("updated_at")
-    isActive        Boolean   @default(true) @map("is_active")
+    id              String @id @default(cuid()) @map("id") @db.VarChar(191)
+    doctorId        String @map("doctor_id") @db.VarChar(191)
+    doctorProfileId String @map("doctor_profile_id") @db.VarChar(191)
+    appointmentId   String @map("appointment_id") @db.VarChar(191)
 
+    review    String    @map("review") @db.VarChar(500)
+    rating    Decimal?   @map("rating") @db.Decimal(2, 1)
+    createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+    updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+
+    isActive Boolean @default(true) @map("is_active")
+
+    // Relations
+    user          User          @relation(fields: [doctorId], references: [id], onDelete: Cascade)
     doctorProfile DoctorProfile @relation(fields: [doctorProfileId], references: [id], onDelete: Cascade)
+    appointment   Appointment   @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
 
     @@index([rating], name: "idx_doctor_rating_rating")
     @@index([isActive, createdAt], name: "idx_doctor_rating_active_created")
     @@map("doctor_service_ratings")
-}
-
-model DoctorServiceLocation {
-    id              String    @id @default(cuid()) @map("id") @db.VarChar(191)
-    doctorProfileId String    @map("doctor_profile_id") @db.VarChar(191)
-    location        String    @map("location") @db.VarChar(100)
-    createdAt       DateTime  @default(now()) @map("created_at")
-    updatedAt       DateTime? @updatedAt @map("updated_at")
-    isActive        Boolean   @default(true) @map("is_active")
-
-    doctorProfile DoctorProfile @relation(fields: [doctorProfileId], references: [id], onDelete: Cascade)
-
-    @@index([location], name: "idx_doctor_service_location")
-    @@index([isActive, createdAt], name: "idx_doctor_service_location_active_created")
-    @@map("doctor_service_locations")
-}
-
-model DoctorAppointment {
-    id              String    @id @default(cuid()) @map("id") @db.VarChar(191)
-    appointmentId   String    @map("appointment_id") @db.VarChar(191)
-    doctorId        String    @map("doctor_id") @db.VarChar(191)
-    appointmentSlot DateTime? @map("appointment_slot") @db.DateTime
-    status          String?   @map("status") @db.VarChar(100)
-    createdAt       DateTime  @default(now()) @map("created_at")
-    updatedAt       DateTime? @updatedAt @map("updated_at")
-    isActive        Boolean   @default(true) @map("is_active")
-
-    appointment   Appointment   @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
-    doctorProfile DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
-
-    @@unique([appointmentId, doctorId, appointmentSlot], name: "uq_doctor_appointment")
-    @@index([isActive, createdAt], name: "idx_doctor_appointment_active_created")
-    @@map("doctor_appointments")
 }
