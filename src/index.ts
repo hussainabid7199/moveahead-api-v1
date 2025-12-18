@@ -30,6 +30,11 @@ app.use(cors());
 app.use(asyncHandler(ClientIdMiddleware.verify));
 
 //route setup
+app.get('/', (req, res) => {  
+  res.send('Hello World!');
+});
+
+
 app.use('/api', routes);
 
 // Error-handling middleware

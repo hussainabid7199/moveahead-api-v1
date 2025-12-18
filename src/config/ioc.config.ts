@@ -11,6 +11,7 @@ import { AppointmentService } from '../services/appointment.service';
 import { AppointmentController } from '../controllers/appointment.controller';
 import { DoctorService } from '../services/doctor/doctor.service';
 import { DoctorController } from '../controllers/doctor.controller';
+import { EmailService } from '../services/email.service';
 
 
 const container = new Container();
@@ -25,5 +26,6 @@ container.bind<UnitOfService>(TYPES.UnitOfService).to(UnitOfService);
 container.bind<UserService>(TYPES.UserService).to(UserService);
 container.bind<AppointmentService>(TYPES.AppointmentService).to(AppointmentService);
 container.bind<DoctorService>(TYPES.DoctorService).to(DoctorService);
+container.bind<EmailService>(TYPES.EmailService).to(EmailService);
 
 export default container;
