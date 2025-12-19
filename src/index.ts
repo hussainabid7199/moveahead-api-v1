@@ -8,6 +8,10 @@ import routes from './routes/index.routes';
 import ClientIdMiddleware from './middlewares/clientid.middleware';
 import asyncHandler from './middlewares/asyncHandler.middleware';
 import errorHandler from './middlewares/errorHandler.middleware';
+import compression from "compression";
+import helmet from "helmet";
+import RateLimiter from './security/ratelimiting/rateLimiting';
+import { CorsOptions } from './security/cors';
 
 // Load environment variables
 dotenv.config();
@@ -15,11 +19,18 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
 
+app.set("trust proxy", 1);
+app.use(helmet());
+app.use(cors(CorsOptions.corsOptions()));
+app.use(RateLimiter());
+
 //setup public directory
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json({ limit: "1mb", strict: true }));
+app.use(bodyParser.urlencoded({extended: true, limit: "1mb", parameterLimit: 100}));
 
-// parse application/json
-app.use(bodyParser.json());
+// Payload Compression
+app.use(compression({ level: 6, threshold: 1024, memLevel: 8 }));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
