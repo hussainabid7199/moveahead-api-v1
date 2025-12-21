@@ -52,7 +52,7 @@ style="font-size:13.5px; border-collapse:collapse;">
 <td style="padding:6px 0; font-weight:500;">${fullName}</td>
 
 <td style="padding:6px 0 6px 40px; width:120px; color:#6b7280; font-weight:500;">Service</td>
-<td style="padding:6px 0; font-weight:600; color:#92400e;">${service}</td>
+<td style="padding:6px 0; font-weight:600; color:#92400e;">${service.toUpperCase()}</td>
 </tr>
 
 <tr>

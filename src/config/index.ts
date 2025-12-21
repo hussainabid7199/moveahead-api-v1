@@ -7,6 +7,8 @@ const config = {
   app: {
     name: process.env.APP_NAME || 'Move Ahead',
     mode: process.env.APP_MODE || 'development',
+    clientId: process.env.CLIENT_ID || '',
+    allowedOrigins: process.env.ALLOWED_ORIGINS,
   },
   jwt: {
     secret: process.env.JWT_SECRET || '',
