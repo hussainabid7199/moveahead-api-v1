@@ -23,23 +23,14 @@ app.set("trust proxy", 1);
 app.use(helmet());
 app.use(cors(CorsOptions.corsOptions()));
 app.use(RateLimiter());
-
 //setup public directory
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json({ limit: "1mb", strict: true }));
-app.use(bodyParser.urlencoded({extended: true, limit: "1mb", parameterLimit: 100}));
-
-// Payload Compression
-app.use(compression({ level: 6, threshold: 1024, memLevel: 8 }));
-
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-
-//setup cors
-app.use(cors());
-
+// Payload Compression
+app.use(compression({ level: 6, threshold: 1024, memLevel: 8 }));
 app.use(asyncHandler(ClientIdMiddleware.verify));
-
 //route setup
 app.get('/', (req, res) => {  
   res.send('Hello World!');

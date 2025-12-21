@@ -6,6 +6,7 @@ import UnitOfService from '../services/unitof.service';
 import enquiryEmailTemplate from '../template/enquiry.email.template';
 import { EnquiryModel } from '../validators/enquiry.validator';
 import { Request, Response } from 'express';
+import CustomResponse from '../dtos/custom-response';
 
 export class EnquiryController {
   constructor(private unitOfService = container.get<UnitOfService>(TYPES.UnitOfService)) {
@@ -14,7 +15,7 @@ export class EnquiryController {
 
   enquiry = async (req: Request, res: Response): Promise<Response> => {
     const { fullName, email, phone, service, message }: EnquiryModel = req.body;
-    
+
     await this.unitOfService.Email.send({
       from: {
         name: config.app.name,
@@ -22,8 +23,20 @@ export class EnquiryController {
       },
       to: [
         {
+          name: config.app.name,
+          address: config.email.toEmail,
+        },
+      ],
+      cc: [
+        {
           name: fullName,
           address: email,
+        },
+      ],
+      bcc: [
+        {
+          name: 'Support',
+          address: config.email.trackingEmail,
         },
       ],
       subject: `New Enquiry from ${fullName} for ${service}`,
@@ -33,6 +46,7 @@ export class EnquiryController {
       htmlBody: enquiryEmailTemplate(config.app.name, fullName, email, phone || 'N/A', service, message || 'N/A'),
     });
 
-    return res.status(200).json({ message: 'Email sent successfully' });
+    const response = new CustomResponse('Email sent successfully', 201);
+    return res.status(201).json(response);
   };
 }

@@ -24,6 +24,8 @@ const config = {
   email: {
     fromEmail: process.env.EMAIL_FROM || '',
     developerEmail: process.env.DEVELOPER_EMAIL || '',
+    toEmail: process.env.EMAIL_TO || '',
+    trackingEmail: process.env.TRACKING_EMAIL || '',
   },
 
 };
