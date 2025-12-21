@@ -6,7 +6,7 @@ export default class CustomResponse<T> {
   data?: T;
   status?: number;
 
-  constructor(message?: string, data?: T, status: number = 200, errorCode?: string, errors?: string[]) {
+  constructor(message?: string, status: number = 200, data?: T, errorCode?: string, errors?: string[]) {
     this.success = status < 400;
     this.message = message;
     this.data = data;

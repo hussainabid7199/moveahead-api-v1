@@ -5,7 +5,7 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 
 const config = {
   app: {
-    name: process.env.APP_NAME || 'MyApp',
+    name: process.env.APP_NAME || 'Move Ahead',
     mode: process.env.APP_MODE || 'development',
   },
   jwt: {
@@ -24,6 +24,8 @@ const config = {
   email: {
     fromEmail: process.env.EMAIL_FROM || '',
     developerEmail: process.env.DEVELOPER_EMAIL || '',
+    toEmail: process.env.EMAIL_TO || '',
+    trackingEmail: process.env.TRACKING_EMAIL || '',
   },
 
 };

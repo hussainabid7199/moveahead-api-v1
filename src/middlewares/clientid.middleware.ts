@@ -1,32 +1,31 @@
-import { Request, Response, NextFunction } from "express";
-import CustomResponse from "../dtos/custom-response";
-import PlainDto from "../dtos/plain.dto";
+import { Request, Response, NextFunction } from 'express';
+import CustomResponse from '../dtos/custom-response';
+import PlainDto from '../dtos/plain.dto';
 
 class ClientIdMiddleware {
   verify(req: Request, res: Response, next: NextFunction) {
-    const clientId: string = Array.isArray(req.headers["clientid"])
-      ? req.headers["clientid"][0]
-      : req.headers["clientid"] || "";
+
+    const clientId: string = Array.isArray(req.headers['x-client-id']) ? req.headers['x-client-id'][0] : req.headers['x-client-id'] || '';
     const _clientId = process.env.CLIENT_ID;
 
-    if (!clientId && process.env.SITE_MODE !== "local") {
+    if (!clientId && process.env.SITE_MODE !== 'local') {
       const response: CustomResponse<PlainDto> = {
         success: false,
-        message: "ClientId header is missing",
+        message: 'ClientId header is missing',
       };
       res.status(401).json(response);
       return;
     }
 
-    if (clientId !== _clientId && process.env.SITE_MODE !== "local") {
+    if (clientId !== _clientId && process.env.SITE_MODE !== 'local') {
       const response: CustomResponse<PlainDto> = {
         success: false,
-        message: "Invalid Client Id",
+        message: 'Invalid Client Id',
       };
       return res.status(401).json(response);
     }
 
-    req.headers["clientid"] = clientId;
+    req.headers['x-client-id'] = clientId;
 
     // Call next to pass control to the next middleware or route handler
     next();
