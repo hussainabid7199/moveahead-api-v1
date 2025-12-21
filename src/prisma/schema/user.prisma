@@ -33,7 +33,7 @@ model User {
   updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
 
   // Relations
-  roles            UserRole[]
+  roles UserRole[]
 
   // Indexes for performance
   @@index([email(191)], name: "idx_users_email")
