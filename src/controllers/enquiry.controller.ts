@@ -27,12 +27,12 @@ export class EnquiryController {
           address: config.email.toEmail,
         },
       ],
-      cc: [
-        {
-          name: fullName,
-          address: email,
-        },
-      ],
+      // cc: [
+      //   {
+      //     name: fullName,
+      //     address: email,
+      //   },
+      // ],
       bcc: [
         {
           name: 'Support',
