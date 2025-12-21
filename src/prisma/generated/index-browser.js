@@ -120,140 +120,6 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.AppointmentScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  doctorProfileId: 'doctorProfileId',
-  locationId: 'locationId',
-  serviceId: 'serviceId',
-  appointmentDate: 'appointmentDate',
-  status: 'status',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.BookAppointmentScalarFieldEnum = {
-  id: 'id',
-  doctorId: 'doctorId',
-  locationId: 'locationId',
-  appointmentId: 'appointmentId',
-  date: 'date',
-  day: 'day',
-  startTime: 'startTime',
-  endTime: 'endTime',
-  status: 'status',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.AppointmentSlotScalarFieldEnum = {
-  id: 'id',
-  doctorId: 'doctorId',
-  locationId: 'locationId',
-  day: 'day',
-  startTime: 'startTime',
-  endTime: 'endTime',
-  appointmentSlotDuration: 'appointmentSlotDuration',
-  totalAppointmentSlots: 'totalAppointmentSlots',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.LocationScalarFieldEnum = {
-  id: 'id',
-  doctorId: 'doctorId',
-  name: 'name',
-  address: 'address',
-  city: 'city',
-  state: 'state',
-  country: 'country',
-  zipCode: 'zipCode',
-  phone: 'phone',
-  isLocationVerified: 'isLocationVerified',
-  verifiedBy: 'verifiedBy',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.ServiceScalarFieldEnum = {
-  id: 'id',
-  doctorId: 'doctorId',
-  locationId: 'locationId',
-  name: 'name',
-  description: 'description',
-  price: 'price',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.PaymentScalarFieldEnum = {
-  id: 'id',
-  appointmentId: 'appointmentId',
-  transactionId: 'transactionId',
-  amount: 'amount',
-  status: 'status',
-  paymentMethod: 'paymentMethod',
-  currencyCode: 'currencyCode',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.SpecializationScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  description: 'description',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.DoctorProfileScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  fullName: 'fullName',
-  bio: 'bio',
-  website: 'website',
-  overallRating: 'overallRating',
-  profileImageUrl: 'profileImageUrl',
-  documentUrl: 'documentUrl',
-  resumeUrl: 'resumeUrl',
-  isVerified: 'isVerified',
-  verifiedBy: 'verifiedBy',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.DoctorSpecializationScalarFieldEnum = {
-  id: 'id',
-  doctorProfileId: 'doctorProfileId',
-  specialization: 'specialization',
-  documentUrl: 'documentUrl',
-  isVerified: 'isVerified',
-  verifiedBy: 'verifiedBy',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.DoctorRatingScalarFieldEnum = {
-  id: 'id',
-  doctorId: 'doctorId',
-  doctorProfileId: 'doctorProfileId',
-  appointmentId: 'appointmentId',
-  review: 'review',
-  rating: 'rating',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  isActive: 'isActive'
-};
-
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -297,104 +163,6 @@ exports.Prisma.NullableJsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
-};
-
-exports.Prisma.AppointmentOrderByRelevanceFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  doctorProfileId: 'doctorProfileId',
-  locationId: 'locationId',
-  serviceId: 'serviceId',
-  status: 'status'
-};
-
-exports.Prisma.BookAppointmentOrderByRelevanceFieldEnum = {
-  id: 'id',
-  doctorId: 'doctorId',
-  locationId: 'locationId',
-  appointmentId: 'appointmentId',
-  day: 'day',
-  startTime: 'startTime',
-  endTime: 'endTime',
-  status: 'status'
-};
-
-exports.Prisma.AppointmentSlotOrderByRelevanceFieldEnum = {
-  id: 'id',
-  doctorId: 'doctorId',
-  locationId: 'locationId',
-  day: 'day',
-  startTime: 'startTime',
-  endTime: 'endTime'
-};
-
-exports.Prisma.LocationOrderByRelevanceFieldEnum = {
-  id: 'id',
-  doctorId: 'doctorId',
-  name: 'name',
-  address: 'address',
-  city: 'city',
-  state: 'state',
-  country: 'country',
-  zipCode: 'zipCode',
-  phone: 'phone',
-  verifiedBy: 'verifiedBy'
-};
-
-exports.Prisma.ServiceOrderByRelevanceFieldEnum = {
-  id: 'id',
-  doctorId: 'doctorId',
-  locationId: 'locationId',
-  name: 'name',
-  description: 'description'
-};
-
-exports.Prisma.PaymentOrderByRelevanceFieldEnum = {
-  id: 'id',
-  appointmentId: 'appointmentId',
-  transactionId: 'transactionId',
-  status: 'status',
-  paymentMethod: 'paymentMethod',
-  currencyCode: 'currencyCode'
-};
-
-exports.Prisma.SpecializationOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  description: 'description'
-};
-
-exports.Prisma.DoctorProfileOrderByRelevanceFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  fullName: 'fullName',
-  bio: 'bio',
-  website: 'website',
-  profileImageUrl: 'profileImageUrl',
-  documentUrl: 'documentUrl',
-  resumeUrl: 'resumeUrl',
-  verifiedBy: 'verifiedBy'
-};
-
-exports.Prisma.DoctorSpecializationOrderByRelevanceFieldEnum = {
-  id: 'id',
-  doctorProfileId: 'doctorProfileId',
-  specialization: 'specialization',
-  documentUrl: 'documentUrl',
-  verifiedBy: 'verifiedBy'
-};
-
-exports.Prisma.DoctorRatingOrderByRelevanceFieldEnum = {
-  id: 'id',
-  doctorId: 'doctorId',
-  doctorProfileId: 'doctorProfileId',
-  appointmentId: 'appointmentId',
-  review: 'review'
-};
-
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
@@ -404,6 +172,11 @@ exports.Prisma.JsonNullValueFilter = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 
 exports.Prisma.UserOrderByRelevanceFieldEnum = {
@@ -439,16 +212,6 @@ exports.AuthProvider = exports.$Enums.AuthProvider = {
 };
 
 exports.Prisma.ModelName = {
-  Appointment: 'Appointment',
-  BookAppointment: 'BookAppointment',
-  AppointmentSlot: 'AppointmentSlot',
-  Location: 'Location',
-  Service: 'Service',
-  Payment: 'Payment',
-  Specialization: 'Specialization',
-  DoctorProfile: 'DoctorProfile',
-  DoctorSpecialization: 'DoctorSpecialization',
-  DoctorRating: 'DoctorRating',
   User: 'User',
   Role: 'Role',
   UserRole: 'UserRole'
