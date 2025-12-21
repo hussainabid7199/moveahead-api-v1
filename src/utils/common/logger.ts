@@ -28,7 +28,7 @@ export const logger = winston.createLogger({
   levels: logLevels,
   level: process.env.LOG_LEVEL || 'info',
   format: logFormat,
-  defaultMeta: { service: 'AI AGENT MICROSERVICE' },
+  defaultMeta: { service: 'MOVE AHEAD' },
   transports: [
     // Console transport
     new winston.transports.Console({
@@ -71,7 +71,7 @@ export const securityLogger = winston.createLogger({
   level: 'info',
   format: logFormat,
   defaultMeta: { 
-    service: 'AI AGENT MICROSERVICE',
+    service: 'MOVE AHEAD',
     category: 'security'
   },
   transports: [
@@ -90,7 +90,7 @@ export const performanceLogger = winston.createLogger({
   level: 'info',
   format: logFormat,
   defaultMeta: { 
-    service: 'AI AGENT MICROSERVICE',
+    service: 'MOVE AHEAD',
     category: 'performance'
   },
   transports: [
@@ -108,7 +108,7 @@ export const auditLogger = winston.createLogger({
   level: 'info',
   format: logFormat,
   defaultMeta: { 
-    service: 'AI AGENT MICROSERVICE',
+    service: 'MOVE AHEAD',
     category: 'audit'
   },
   transports: [

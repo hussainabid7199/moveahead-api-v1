@@ -10,7 +10,7 @@ import validateSchema from '../middlewares/validation.middleware';
 
 const enquiryRouter = Router();
 
-enquiryRouter.use(authentication);
+// enquiryRouter.use(authentication);
 
 const enquiryController = container.get<EnquiryController>(TYPES.EnquiryController);
 
