@@ -1,6 +1,10 @@
-import winston from 'winston';
+import winston from "winston";
 
-// Define log levels
+const isProduction = process.env.APP_MODE === "production";
+
+// --------------------
+// Log levels
+// --------------------
 const logLevels = {
   error: 0,
   warn: 1,
@@ -8,172 +12,120 @@ const logLevels = {
   debug: 3,
 };
 
-// Custom log format
+// --------------------
+// Format
+// --------------------
 const logFormat = winston.format.combine(
-  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+  winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
   winston.format.errors({ stack: true }),
-  winston.format.json(),
-  winston.format.printf(({ timestamp, level, message, ...meta }) => {
-    return JSON.stringify({
-      timestamp,
-      level,
-      message,
-      ...meta,
-    });
-  })
+  winston.format.json()
 );
 
-// Create Winston logger
+// --------------------
+// Console transport (always safe)
+// --------------------
+const consoleTransport = new winston.transports.Console({
+  format: winston.format.combine(
+    winston.format.colorize(),
+    winston.format.printf(({ timestamp, level, message, ...meta }) => {
+      const metaStr = Object.keys(meta).length ? JSON.stringify(meta) : "";
+      return `${timestamp} [${level}]: ${message} ${metaStr}`;
+    })
+  ),
+});
+
+// --------------------
+// Build transports dynamically
+// --------------------
+const transports: winston.transport[] = [consoleTransport];
+
+if (!isProduction) {
+  transports.push(
+    new winston.transports.File({
+      filename: "logs/app.log",
+      maxsize: 5 * 1024 * 1024,
+      maxFiles: 5,
+    }),
+    new winston.transports.File({
+      filename: "logs/error.log",
+      level: "error",
+      maxsize: 5 * 1024 * 1024,
+      maxFiles: 5,
+    })
+  );
+}
+
+// --------------------
+// Logger
+// --------------------
 export const logger = winston.createLogger({
   levels: logLevels,
-  level: process.env.LOG_LEVEL || 'info',
+  level: process.env.LOG_LEVEL || "info",
   format: logFormat,
-  defaultMeta: { service: 'MOVE AHEAD' },
-  transports: [
-    // Console transport
-    new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple(),
-        winston.format.printf(({ timestamp, level, message, ...meta }) => {
-          const metaStr = Object.keys(meta).length > 0 ? JSON.stringify(meta, null, 2) : '';
-          return `${timestamp} [${level}]: ${message} ${metaStr}`;
-        })
-      ),
-    }),
-    
-    // File transport for all logs
-    new winston.transports.File({
-      filename: 'logs/app.log',
-      maxsize: 5242880, // 5MB
-      maxFiles: 5,
-    }),
-    
-    // File transport for error logs only
-    new winston.transports.File({
-      filename: 'logs/error.log',
-      level: 'error',
-      maxsize: 5242880, // 5MB
-      maxFiles: 5,
-    }),
-  ],
-  exceptionHandlers: [
-    new winston.transports.File({ filename: 'logs/exceptions.log' })
-  ],
-  rejectionHandlers: [
-    new winston.transports.File({ filename: 'logs/rejections.log' })
-  ]
+  defaultMeta: { service: "MOVE AHEAD" },
+  transports,
+  exceptionHandlers: !isProduction
+    ? [new winston.transports.File({ filename: "logs/exceptions.log" })]
+    : [consoleTransport],
+  rejectionHandlers: !isProduction
+    ? [new winston.transports.File({ filename: "logs/rejections.log" })]
+    : [consoleTransport],
 });
 
-// Security-specific logger
+// --------------------
+// Additional loggers
+// --------------------
 export const securityLogger = winston.createLogger({
   levels: logLevels,
-  level: 'info',
+  level: "info",
   format: logFormat,
-  defaultMeta: { 
-    service: 'MOVE AHEAD',
-    category: 'security'
-  },
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({
-      filename: 'logs/security.log',
-      maxsize: 5242880,
-      maxFiles: 10,
-    }),
-  ],
+  defaultMeta: { service: "MOVE AHEAD", category: "security" },
+  transports,
 });
 
-// Performance logger
 export const performanceLogger = winston.createLogger({
   levels: logLevels,
-  level: 'info',
+  level: "info",
   format: logFormat,
-  defaultMeta: { 
-    service: 'MOVE AHEAD',
-    category: 'performance'
-  },
-  transports: [
-    new winston.transports.File({
-      filename: 'logs/performance.log',
-      maxsize: 5242880,
-      maxFiles: 5,
-    }),
-  ],
+  defaultMeta: { service: "MOVE AHEAD", category: "performance" },
+  transports,
 });
 
-// Audit logger for compliance
 export const auditLogger = winston.createLogger({
   levels: logLevels,
-  level: 'info',
+  level: "info",
   format: logFormat,
-  defaultMeta: { 
-    service: 'MOVE AHEAD',
-    category: 'audit'
-  },
-  transports: [
-    new winston.transports.File({
-      filename: 'logs/audit.log',
-      maxsize: 10485760, // 10MB
-      maxFiles: 20, // Keep more audit logs
-    }),
-  ],
+  defaultMeta: { service: "MOVE AHEAD", category: "audit" },
+  transports,
 });
 
-// Helper functions for structured logging
+// --------------------
+// Utils (unchanged)
+// --------------------
 export const logUtils = {
   logRequest: (requestId: string, method: string, path: string, ip: string, userAgent?: string) => {
-    logger.info('Request received', {
-      requestId,
-      method,
-      path,
-      ip,
-      userAgent,
-      timestamp: new Date().toISOString()
-    });
+    logger.info("Request received", { requestId, method, path, ip, userAgent });
   },
 
   logResponse: (requestId: string, statusCode: number, duration: number) => {
-    performanceLogger.info('Request completed', {
-      requestId,
-      statusCode,
-      duration,
-      timestamp: new Date().toISOString()
-    });
+    performanceLogger.info("Request completed", { requestId, statusCode, duration });
   },
 
   logSecurity: (event: string, details: Record<string, any>) => {
-    securityLogger.warn(`Security event: ${event}`, {
-      event,
-      ...details,
-      timestamp: new Date().toISOString()
-    });
+    securityLogger.warn(`Security event: ${event}`, { event, ...details });
   },
 
   logAudit: (action: string, userId?: string, details?: Record<string, any>) => {
-    auditLogger.info(`Audit: ${action}`, {
-      action,
-      userId,
-      ...details,
-      timestamp: new Date().toISOString()
-    });
+    auditLogger.info(`Audit: ${action}`, { action, userId, ...details });
   },
 
   logError: (error: Error, context?: Record<string, any>) => {
-    logger.error('Application error', {
+    logger.error("Application error", {
       message: error.message,
       stack: error.stack,
       ...context,
-      timestamp: new Date().toISOString()
     });
-  }
+  },
 };
-
-// If we're not in production, add console logging for debugging
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.simple()
-  }));
-}
 
 export default logger;
