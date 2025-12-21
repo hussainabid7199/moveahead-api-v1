@@ -1,10 +1,11 @@
 import { Prisma, PrismaClient } from './generated';
 
+const isProduction = process.env.APP_MODE === 'production';
 // Create a singleton instance of PrismaClient
 const prisma = new PrismaClient({
   datasources: {
     db: {
-      url: process.env.DATABASE_URL || '',
+      url: isProduction ? process.env.PRODUCTION_DATABASE_URL || '' : process.env.DATABASE_URL || '',
     },
   },
   log: process.env.NODE_ENV === 'development' ? ['query', 'info', 'warn', 'error'] : ['error'],
