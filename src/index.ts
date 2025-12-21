@@ -35,6 +35,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to Move Ahead API!');
 });
 
+app.use(asyncHandler(ClientIdMiddleware.verify));
 
 app.use("/api",routes);
 
