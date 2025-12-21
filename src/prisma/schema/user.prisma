@@ -34,13 +34,6 @@ model User {
 
   // Relations
   roles            UserRole[]
-  appointments     Appointment[]
-  bookAppointments BookAppointment[]
-  appointmentSlots AppointmentSlot[]
-  locations        Location[]
-  services         Service[]
-  doctorProfiles   DoctorProfile[]
-  doctorRatings    DoctorRating[]
 
   // Indexes for performance
   @@index([email(191)], name: "idx_users_email")

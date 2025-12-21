@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum AuthProvider {
+  CREDENTIALS
+  GOOGLE
+  FACEBOOK
+  GITHUB
+  APPLE
+}
+
+model User {
+  id              String       @id @default(cuid()) @map("id") @db.VarChar(191) // UUID or cuid for unique user ID
+  email           String       @unique @map("email") @db.VarChar(191) // RFC 5321 compliant
+  passwordHash    String?      @map("password_hash") @db.VarChar(1000) // Sufficient for bcrypt hashes
+  firstName       String?      @map("first_name") @db.VarChar(200)
+  lastName        String?      @map("last_name") @db.VarChar(200)
+  displayName     String?      @map("display_name") @db.VarChar(300)
+  phoneNumber     String?      @map("phone_number") @db.VarChar(20) // E.164 format
+  profileImageUrl String?      @map("profile_image_url") @db.VarChar(2048)
+  provider        AuthProvider @default(CREDENTIALS) @map("provider")
+  providerId      String?      @map("provider_id") @db.VarChar(100)
+  isEmailVerified Boolean      @default(false) @map("is_email_verified")
+  isPhoneVerified Boolean      @default(false) @map("is_phone_verified")
+  isActive        Boolean      @default(true) @map("is_active")
+
+  // Localization
+  timezone String? @map("timezone") @db.VarChar(50) // IANA timezone format, e.g., "America/New_York"
+  locale   String? @map("locale") @db.VarChar(10) // e.g., "en-US"
+
+  // Extensibility
+  metadata Json? @map("metadata") // For storing additional user preferences/data
+
+  // Timestamps
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  // Relations
+  roles UserRole[]
+
+  // Indexes for performance
+  @@index([email(191)], name: "idx_users_email")
+  @@index([phoneNumber(20)], name: "idx_users_phone_number")
+  @@index([provider, providerId(100)], name: "idx_users_provider_provider_id")
+  @@index([isActive, createdAt], name: "idx_users_active_created")
+  @@index([provider, isEmailVerified], name: "idx_users_provider_verified")
+  @@map("users")
+}
+
+model Role {
+  id          String  @id @default(cuid()) @map("id") @db.VarChar(191) // UUID or cuid for unique role ID
+  name        String  @unique @map("name") @db.VarChar(100)
+  description String? @map("description") @db.VarChar(500)
+  isActive    Boolean @default(true) @map("is_active")
+
+  // Relations
+  users UserRole[]
+
+  // Indexes
+  @@index([isActive], name: "idx_roles_active")
+  @@map("roles")
+}
+
+model UserRole {
+  userId String @map("user_id") @db.VarChar(191) // UUID or cuid for unique user ID
+  roleId String @map("role_id") @db.VarChar(191) // UUID or cuid for unique role ID
+
+  // Relations with cascade delete
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@index([userId], name: "idx_user_roles_user_id")
+  @@index([roleId], name: "idx_user_roles_role_id")
+  @@map("user_roles")
+}
