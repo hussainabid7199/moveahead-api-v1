@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
 
 app.use(asyncHandler(ClientIdMiddleware.verify));
 
-app.use('/api', routes);
+app.use(routes);
 
 // Error-handling middleware
 app.use(errorHandler);
