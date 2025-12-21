@@ -30,12 +30,13 @@ app.use(bodyParser.json({ limit: "1mb", strict: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 // Payload Compression
 app.use(compression({ level: 6, threshold: 1024, memLevel: 8 }));
-app.use(asyncHandler(ClientIdMiddleware.verify));
+
 //route setup
 app.get('/', (req, res) => {  
-  res.send('Hello World!');
+  res.send('Welcome to Move Ahead!');
 });
 
+app.use(asyncHandler(ClientIdMiddleware.verify));
 
 app.use('/api', routes);
 
