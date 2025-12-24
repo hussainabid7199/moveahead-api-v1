@@ -7,6 +7,7 @@ import enquiryEmailTemplate from '../template/enquiry.email.template';
 import { EnquiryModel } from '../validators/enquiry.validator';
 import { Request, Response } from 'express';
 import CustomResponse from '../dtos/custom-response';
+import enquiryConfirmationEmailTemplate from '../template/enquiry.email.confirmation.template';
 
 export class EnquiryController {
   constructor(private unitOfService = container.get<UnitOfService>(TYPES.UnitOfService)) {
@@ -16,7 +17,7 @@ export class EnquiryController {
   enquiry = async (req: Request, res: Response): Promise<Response> => {
     const { fullName, email, phone, service, message }: EnquiryModel = req.body;
 
-    await this.unitOfService.Email.send({
+    const enquiry = await this.unitOfService.Email.send({
       from: {
         name: config.app.name,
         address: config.email.fromEmail,
@@ -27,12 +28,6 @@ export class EnquiryController {
           address: config.email.toEmail,
         },
       ],
-      // cc: [
-      //   {
-      //     name: fullName,
-      //     address: email,
-      //   },
-      // ],
       bcc: [
         {
           name: 'Support',
@@ -44,6 +39,26 @@ export class EnquiryController {
         message || 'N/A'
       }`,
       htmlBody: enquiryEmailTemplate(config.app.name, fullName, email, phone || 'N/A', service, message || 'N/A'),
+    });
+
+    if(!enquiry) {
+      throw new Error('Failed to send enquiry email');
+    }
+
+    // Send confirmation email to user
+    await this.unitOfService.Email.send({
+      from: {
+        name: config.app.name,
+        address: config.email.fromEmail,
+      },
+      to: [
+        {
+          name: fullName,
+          address: email,
+        },
+      ],
+      subject: `Confirmation: We Received Your Enquiry for ${service}`,
+      htmlBody: enquiryConfirmationEmailTemplate(config.app.name, fullName, service),
     });
 
     const response = new CustomResponse('Email sent successfully', 201);
