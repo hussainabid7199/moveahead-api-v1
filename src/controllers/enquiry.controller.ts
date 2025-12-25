@@ -59,7 +59,7 @@ export class EnquiryController {
       ],
       bcc: [
         {
-          name: 'Support',
+          name: 'Move Ahead Tracking',
           address: config.email.trackingEmail,
         },
       ],
