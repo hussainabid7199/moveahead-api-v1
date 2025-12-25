@@ -80,7 +80,7 @@ If you have any additional information to share, feel free to reply on <a href="
 <td style="padding:18px 36px; background:#f9fafb; border-top:1px solid #e5e7eb;">
 <p style="margin:0; font-size:12.5px; color:#6b7280;">
 <strong style="color:#1f2937;">${appName}</strong> — Empowering individuals with neuro-developmental,
-speech, behavioural, and hearing challenges.
+speech, behavioural, hearing challenges and special education.
 </p>
 <p style="margin:6px 0 0; font-size:11.5px; color:#9ca3af;">
 This is an automated confirmation email

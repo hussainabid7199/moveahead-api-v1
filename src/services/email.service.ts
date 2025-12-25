@@ -64,7 +64,7 @@ export class EmailService {
         attachments: params.attachments, //Reference: https://nodemailer.com/message/attachments/
       };
 
-      if (this.siteMode === 'local') {
+      if (this.siteMode === 'development') {
         // reset the to, cc, and bcc fields to the developer email
         mailOptions.to = [{ name: this.appName, address: config.email.developerEmail }];
         mailOptions.cc = [];
