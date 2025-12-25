@@ -57,6 +57,12 @@ export class EnquiryController {
           address: email,
         },
       ],
+      bcc: [
+        {
+          name: 'Support',
+          address: config.email.trackingEmail,
+        },
+      ],
       subject: `Confirmation: We Received Your Enquiry for ${service}`,
       htmlBody: enquiryConfirmationEmailTemplate(config.app.name, fullName, service),
     });
