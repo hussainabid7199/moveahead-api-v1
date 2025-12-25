@@ -1,8 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
+import e, { Request, Response, NextFunction } from 'express';
 import CustomError from '../exceptions/custom-error';
 import CustomResponse from '../dtos/custom-response';
 import PlainDto from '../dtos/plain.dto';
 import ResponseErrorDto from '../dtos/response-error.dto';
+import logger from '../utils/common/logger';
 
 export default function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
   if (!(err instanceof CustomError)) {
@@ -10,6 +11,14 @@ export default function errorHandler(err: any, req: Request, res: Response, next
       success: false,
       message: process.env.NODE_ENV === 'development' ? err.message : 'Server error, please try again later',
     };
+
+    logger.error({
+      message: err.message,
+      status: err.status || 500,
+      method: req.method,
+      url: req.originalUrl,
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
+    });
 
     res.status(500).json(response);
     return;
