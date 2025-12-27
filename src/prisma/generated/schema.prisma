@@ -1,7 +1,97 @@
+model Company {
+  id         String  @id @default(cuid()) @map("id") @db.VarChar(191) // UUID or cuid for unique company ID
+  name       String  @map("name") @db.VarChar(200)
+  website    String? @map("website") @db.VarChar(2048)
+  isVerified Boolean @default(false) @map("is_verified")
+
+  isActive  Boolean   @default(true) @map("is_active")
+  // Timestamps
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  // Relations
+  branches      Branch[]
+  userCompanies UserCompany[]
+
+  // Indexes for performance
+  @@index([name(200)], name: "idx_company_name")
+  @@index([isActive, createdAt], name: "idx_company_active_created")
+  @@map("company")
+}
+
+model Branch {
+  id          String  @id @default(cuid()) @map("id") @db.VarChar(191) // UUID or cuid for unique branch ID
+  companyId   String  @map("company_id") @db.VarChar(191) //
+  name        String  @map("name") @db.VarChar(200)
+  address     String? @map("address") @db.VarChar(500)
+  phoneNumber String? @map("phone_number") @db.VarChar(20) // E.164 format
+  latitude    Float?  @map("latitude")
+  longitude   Float?  @map("longitude")
+  isActive    Boolean @default(true) @map("is_active")
+
+  // Timestamps
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  // Relations
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  userBranches   UserBranch[]
+  doctorBranches DoctorBranch[]
+
+  // Indexes for performance
+  @@index([name(200)], name: "idx_branch_name")
+  @@index([isActive, createdAt], name: "idx_branch_active_created")
+  @@map("branch")
+}
+
+model UserCompany {
+  userId    String @map("user_id") @db.VarChar(191) // UUID or cuid for unique user ID
+  companyId String @map("company_id") @db.VarChar(191) // UUID or cuid for unique company ID
+
+  // Relations with cascade delete
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@id([userId, companyId])
+  @@index([userId], name: "idx_user_company_user_id")
+  @@index([companyId], name: "idx_user_company_company_id")
+  @@map("user_company")
+}
+
+model UserBranch {
+  userId   String @map("user_id") @db.VarChar(191) // UUID or cuid for unique user ID
+  branchId String @map("branch_id") @db.VarChar(191) // UUID or cuid for unique branch ID
+
+  // Relations with cascade delete
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  branch Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  @@id([userId, branchId])
+  @@index([userId], name: "idx_user_branch_user_id")
+  @@index([branchId], name: "idx_user_branch_branch_id")
+  @@map("user_branch")
+}
+
+model DoctorBranch {
+  userId   String @map("user_id") @db.VarChar(191) // UUID or cuid for unique user ID
+  branchId String @map("branch_id") @db.VarChar(191) // UUID or cuid for unique branch ID
+
+  // Relations with cascade delete
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  branch Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  @@id([userId, branchId])
+  @@index([userId], name: "idx_doctor_branch_user_id")
+  @@index([branchId], name: "idx_doctor_branch_branch_id")
+  @@map("doctor_branch")
+}
+
+// @ts-eslint-ignore-file
 generator client {
   provider      = "prisma-client-js"
-  output        = "../generated"
   binaryTargets = ["native", "rhel-openssl-3.0.x"]
+  output        = "../generated"
 }
 
 datasource db {
@@ -44,7 +134,10 @@ model User {
   updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
 
   // Relations
-  roles UserRole[]
+  roles         UserRole[]
+  userCompanies UserCompany[]
+  userBranches  UserBranch[]
+  doctorBranch  DoctorBranch[]
 
   // Indexes for performance
   @@index([email(191)], name: "idx_users_email")

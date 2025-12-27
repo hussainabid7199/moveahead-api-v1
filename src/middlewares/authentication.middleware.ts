@@ -21,7 +21,7 @@ export const authentication = (req: Request, res: Response, next: NextFunction) 
       complete: true,
       audience: config.jwt.audience,
       issuer: config.jwt.issuer,
-      algorithms: ['HS256'],
+      algorithms: ['HS512'],
       clockTolerance: 0,
       ignoreExpiration: false,
       ignoreNotBefore: false,
