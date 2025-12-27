@@ -4,12 +4,13 @@ import CustomResponse from '../dtos/custom-response';
 import PlainDto from '../dtos/plain.dto';
 import ResponseErrorDto from '../dtos/response-error.dto';
 import logger from '../utils/common/logger';
+import config from '../config';
 
 export default function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
   if (!(err instanceof CustomError)) {
     const response: CustomResponse<PlainDto> = {
       success: false,
-      message: process.env.NODE_ENV === 'development' ? err.message : 'Server error, please try again later',
+      message: config.app.mode !== 'development' ? err.message : err.message ?? 'Something went wrong, please try again later',
     };
 
     logger.error({
@@ -17,7 +18,7 @@ export default function errorHandler(err: any, req: Request, res: Response, next
       status: err.status || 500,
       method: req.method,
       url: req.originalUrl,
-      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
+      stack: config.app.mode === 'development' ? err.stack : undefined,
     });
 
     res.status(500).json(response);
