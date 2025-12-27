@@ -1,8 +1,7 @@
-import { Role } from './../prisma/generated/index.d';
 import { injectable } from 'inversify';
 import { UpdateUserDto, UserDto } from '../dtos/user.dto';
 
-import { AuthProvider, User, UserRole } from '../prisma/generated';
+import { AuthProvider } from '../prisma/generated';
 import PasswordUtils from '../utils/password.utils';
 import prisma from '../prisma';
 import { CreateUserModel } from '../validators/user.validator';

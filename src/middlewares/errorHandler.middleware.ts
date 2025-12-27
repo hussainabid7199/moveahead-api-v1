@@ -10,7 +10,7 @@ export default function errorHandler(err: any, req: Request, res: Response, next
   if (!(err instanceof CustomError)) {
     const response: CustomResponse<PlainDto> = {
       success: false,
-      message: config.app.mode !== 'development' ? err.message : 'Server error, please try again later',
+      message: config.app.mode !== 'development' ? err.message : err.message ?? 'Something went wrong, please try again later',
     };
 
     logger.error({

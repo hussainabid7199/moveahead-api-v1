@@ -121,6 +121,44 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.CompanyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  website: 'website',
+  isVerified: 'isVerified',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BranchScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  name: 'name',
+  address: 'address',
+  phoneNumber: 'phoneNumber',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserCompanyScalarFieldEnum = {
+  userId: 'userId',
+  companyId: 'companyId'
+};
+
+exports.Prisma.UserBranchScalarFieldEnum = {
+  userId: 'userId',
+  branchId: 'branchId'
+};
+
+exports.Prisma.DoctorBranchScalarFieldEnum = {
+  userId: 'userId',
+  branchId: 'branchId'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -164,6 +202,40 @@ exports.Prisma.NullableJsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
+exports.Prisma.CompanyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  website: 'website'
+};
+
+exports.Prisma.BranchOrderByRelevanceFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  name: 'name',
+  address: 'address',
+  phoneNumber: 'phoneNumber'
+};
+
+exports.Prisma.UserCompanyOrderByRelevanceFieldEnum = {
+  userId: 'userId',
+  companyId: 'companyId'
+};
+
+exports.Prisma.UserBranchOrderByRelevanceFieldEnum = {
+  userId: 'userId',
+  branchId: 'branchId'
+};
+
+exports.Prisma.DoctorBranchOrderByRelevanceFieldEnum = {
+  userId: 'userId',
+  branchId: 'branchId'
+};
+
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
@@ -173,11 +245,6 @@ exports.Prisma.JsonNullValueFilter = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
-};
-
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
 };
 
 exports.Prisma.UserOrderByRelevanceFieldEnum = {
@@ -213,6 +280,11 @@ exports.AuthProvider = exports.$Enums.AuthProvider = {
 };
 
 exports.Prisma.ModelName = {
+  Company: 'Company',
+  Branch: 'Branch',
+  UserCompany: 'UserCompany',
+  UserBranch: 'UserBranch',
+  DoctorBranch: 'DoctorBranch',
   User: 'User',
   Role: 'Role',
   UserRole: 'UserRole'

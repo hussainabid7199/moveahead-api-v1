@@ -14,6 +14,31 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
+ * Model Company
+ * 
+ */
+export type Company = $Result.DefaultSelection<Prisma.$CompanyPayload>
+/**
+ * Model Branch
+ * 
+ */
+export type Branch = $Result.DefaultSelection<Prisma.$BranchPayload>
+/**
+ * Model UserCompany
+ * 
+ */
+export type UserCompany = $Result.DefaultSelection<Prisma.$UserCompanyPayload>
+/**
+ * Model UserBranch
+ * 
+ */
+export type UserBranch = $Result.DefaultSelection<Prisma.$UserBranchPayload>
+/**
+ * Model DoctorBranch
+ * 
+ */
+export type DoctorBranch = $Result.DefaultSelection<Prisma.$DoctorBranchPayload>
+/**
  * Model User
  * 
  */
@@ -56,8 +81,8 @@ export const AuthProvider: typeof $Enums.AuthProvider
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more Companies
+ * const companies = await prisma.company.findMany()
  * ```
  *
  *
@@ -77,8 +102,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Users
-   * const users = await prisma.user.findMany()
+   * // Fetch zero or more Companies
+   * const companies = await prisma.company.findMany()
    * ```
    *
    *
@@ -168,6 +193,56 @@ export class PrismaClient<
   }>>
 
       /**
+   * `prisma.company`: Exposes CRUD operations for the **Company** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Companies
+    * const companies = await prisma.company.findMany()
+    * ```
+    */
+  get company(): Prisma.CompanyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.branch`: Exposes CRUD operations for the **Branch** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Branches
+    * const branches = await prisma.branch.findMany()
+    * ```
+    */
+  get branch(): Prisma.BranchDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userCompany`: Exposes CRUD operations for the **UserCompany** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserCompanies
+    * const userCompanies = await prisma.userCompany.findMany()
+    * ```
+    */
+  get userCompany(): Prisma.UserCompanyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userBranch`: Exposes CRUD operations for the **UserBranch** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserBranches
+    * const userBranches = await prisma.userBranch.findMany()
+    * ```
+    */
+  get userBranch(): Prisma.UserBranchDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.doctorBranch`: Exposes CRUD operations for the **DoctorBranch** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DoctorBranches
+    * const doctorBranches = await prisma.doctorBranch.findMany()
+    * ```
+    */
+  get doctorBranch(): Prisma.DoctorBranchDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
@@ -637,6 +712,11 @@ export namespace Prisma {
 
 
   export const ModelName: {
+    Company: 'Company',
+    Branch: 'Branch',
+    UserCompany: 'UserCompany',
+    UserBranch: 'UserBranch',
+    DoctorBranch: 'DoctorBranch',
     User: 'User',
     Role: 'Role',
     UserRole: 'UserRole'
@@ -658,10 +738,340 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "role" | "userRole"
+      modelProps: "company" | "branch" | "userCompany" | "userBranch" | "doctorBranch" | "user" | "role" | "userRole"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
+      Company: {
+        payload: Prisma.$CompanyPayload<ExtArgs>
+        fields: Prisma.CompanyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CompanyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CompanyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload>
+          }
+          findFirst: {
+            args: Prisma.CompanyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CompanyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload>
+          }
+          findMany: {
+            args: Prisma.CompanyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload>[]
+          }
+          create: {
+            args: Prisma.CompanyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload>
+          }
+          createMany: {
+            args: Prisma.CompanyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.CompanyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload>
+          }
+          update: {
+            args: Prisma.CompanyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload>
+          }
+          deleteMany: {
+            args: Prisma.CompanyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CompanyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CompanyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload>
+          }
+          aggregate: {
+            args: Prisma.CompanyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCompany>
+          }
+          groupBy: {
+            args: Prisma.CompanyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CompanyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CompanyCountArgs<ExtArgs>
+            result: $Utils.Optional<CompanyCountAggregateOutputType> | number
+          }
+        }
+      }
+      Branch: {
+        payload: Prisma.$BranchPayload<ExtArgs>
+        fields: Prisma.BranchFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BranchFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BranchFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchPayload>
+          }
+          findFirst: {
+            args: Prisma.BranchFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BranchFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchPayload>
+          }
+          findMany: {
+            args: Prisma.BranchFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchPayload>[]
+          }
+          create: {
+            args: Prisma.BranchCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchPayload>
+          }
+          createMany: {
+            args: Prisma.BranchCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.BranchDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchPayload>
+          }
+          update: {
+            args: Prisma.BranchUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchPayload>
+          }
+          deleteMany: {
+            args: Prisma.BranchDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BranchUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.BranchUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BranchPayload>
+          }
+          aggregate: {
+            args: Prisma.BranchAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBranch>
+          }
+          groupBy: {
+            args: Prisma.BranchGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BranchGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BranchCountArgs<ExtArgs>
+            result: $Utils.Optional<BranchCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserCompany: {
+        payload: Prisma.$UserCompanyPayload<ExtArgs>
+        fields: Prisma.UserCompanyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserCompanyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserCompanyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyPayload>
+          }
+          findFirst: {
+            args: Prisma.UserCompanyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserCompanyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyPayload>
+          }
+          findMany: {
+            args: Prisma.UserCompanyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyPayload>[]
+          }
+          create: {
+            args: Prisma.UserCompanyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyPayload>
+          }
+          createMany: {
+            args: Prisma.UserCompanyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.UserCompanyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyPayload>
+          }
+          update: {
+            args: Prisma.UserCompanyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserCompanyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserCompanyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.UserCompanyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyPayload>
+          }
+          aggregate: {
+            args: Prisma.UserCompanyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserCompany>
+          }
+          groupBy: {
+            args: Prisma.UserCompanyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserCompanyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserCompanyCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCompanyCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserBranch: {
+        payload: Prisma.$UserBranchPayload<ExtArgs>
+        fields: Prisma.UserBranchFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserBranchFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBranchPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserBranchFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBranchPayload>
+          }
+          findFirst: {
+            args: Prisma.UserBranchFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBranchPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserBranchFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBranchPayload>
+          }
+          findMany: {
+            args: Prisma.UserBranchFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBranchPayload>[]
+          }
+          create: {
+            args: Prisma.UserBranchCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBranchPayload>
+          }
+          createMany: {
+            args: Prisma.UserBranchCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.UserBranchDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBranchPayload>
+          }
+          update: {
+            args: Prisma.UserBranchUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBranchPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserBranchDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserBranchUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.UserBranchUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBranchPayload>
+          }
+          aggregate: {
+            args: Prisma.UserBranchAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserBranch>
+          }
+          groupBy: {
+            args: Prisma.UserBranchGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserBranchGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserBranchCountArgs<ExtArgs>
+            result: $Utils.Optional<UserBranchCountAggregateOutputType> | number
+          }
+        }
+      }
+      DoctorBranch: {
+        payload: Prisma.$DoctorBranchPayload<ExtArgs>
+        fields: Prisma.DoctorBranchFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DoctorBranchFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DoctorBranchPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DoctorBranchFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DoctorBranchPayload>
+          }
+          findFirst: {
+            args: Prisma.DoctorBranchFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DoctorBranchPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DoctorBranchFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DoctorBranchPayload>
+          }
+          findMany: {
+            args: Prisma.DoctorBranchFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DoctorBranchPayload>[]
+          }
+          create: {
+            args: Prisma.DoctorBranchCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DoctorBranchPayload>
+          }
+          createMany: {
+            args: Prisma.DoctorBranchCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.DoctorBranchDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DoctorBranchPayload>
+          }
+          update: {
+            args: Prisma.DoctorBranchUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DoctorBranchPayload>
+          }
+          deleteMany: {
+            args: Prisma.DoctorBranchDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DoctorBranchUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DoctorBranchUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DoctorBranchPayload>
+          }
+          aggregate: {
+            args: Prisma.DoctorBranchAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDoctorBranch>
+          }
+          groupBy: {
+            args: Prisma.DoctorBranchGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DoctorBranchGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DoctorBranchCountArgs<ExtArgs>
+            result: $Utils.Optional<DoctorBranchCountAggregateOutputType> | number
+          }
+        }
+      }
       User: {
         payload: Prisma.$UserPayload<ExtArgs>
         fields: Prisma.UserFieldRefs
@@ -956,6 +1366,11 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
+    company?: CompanyOmit
+    branch?: BranchOmit
+    userCompany?: UserCompanyOmit
+    userBranch?: UserBranchOmit
+    doctorBranch?: DoctorBranchOmit
     user?: UserOmit
     role?: RoleOmit
     userRole?: UserRoleOmit
@@ -1035,15 +1450,101 @@ export namespace Prisma {
 
 
   /**
+   * Count Type CompanyCountOutputType
+   */
+
+  export type CompanyCountOutputType = {
+    branches: number
+    userCompanies: number
+  }
+
+  export type CompanyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    branches?: boolean | CompanyCountOutputTypeCountBranchesArgs
+    userCompanies?: boolean | CompanyCountOutputTypeCountUserCompaniesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CompanyCountOutputType without action
+   */
+  export type CompanyCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyCountOutputType
+     */
+    select?: CompanyCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CompanyCountOutputType without action
+   */
+  export type CompanyCountOutputTypeCountBranchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BranchWhereInput
+  }
+
+  /**
+   * CompanyCountOutputType without action
+   */
+  export type CompanyCountOutputTypeCountUserCompaniesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserCompanyWhereInput
+  }
+
+
+  /**
+   * Count Type BranchCountOutputType
+   */
+
+  export type BranchCountOutputType = {
+    userBranches: number
+    doctorBranches: number
+  }
+
+  export type BranchCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    userBranches?: boolean | BranchCountOutputTypeCountUserBranchesArgs
+    doctorBranches?: boolean | BranchCountOutputTypeCountDoctorBranchesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * BranchCountOutputType without action
+   */
+  export type BranchCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BranchCountOutputType
+     */
+    select?: BranchCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * BranchCountOutputType without action
+   */
+  export type BranchCountOutputTypeCountUserBranchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserBranchWhereInput
+  }
+
+  /**
+   * BranchCountOutputType without action
+   */
+  export type BranchCountOutputTypeCountDoctorBranchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DoctorBranchWhereInput
+  }
+
+
+  /**
    * Count Type UserCountOutputType
    */
 
   export type UserCountOutputType = {
     roles: number
+    userCompanies: number
+    userBranches: number
+    doctorBranch: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     roles?: boolean | UserCountOutputTypeCountRolesArgs
+    userCompanies?: boolean | UserCountOutputTypeCountUserCompaniesArgs
+    userBranches?: boolean | UserCountOutputTypeCountUserBranchesArgs
+    doctorBranch?: boolean | UserCountOutputTypeCountDoctorBranchArgs
   }
 
   // Custom InputTypes
@@ -1062,6 +1563,27 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserRoleWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUserCompaniesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserCompanyWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUserBranchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserBranchWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountDoctorBranchArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DoctorBranchWhereInput
   }
 
 
@@ -1099,6 +1621,4791 @@ export namespace Prisma {
   /**
    * Models
    */
+
+  /**
+   * Model Company
+   */
+
+  export type AggregateCompany = {
+    _count: CompanyCountAggregateOutputType | null
+    _min: CompanyMinAggregateOutputType | null
+    _max: CompanyMaxAggregateOutputType | null
+  }
+
+  export type CompanyMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    website: string | null
+    isVerified: boolean | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CompanyMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    website: string | null
+    isVerified: boolean | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CompanyCountAggregateOutputType = {
+    id: number
+    name: number
+    website: number
+    isVerified: number
+    isActive: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CompanyMinAggregateInputType = {
+    id?: true
+    name?: true
+    website?: true
+    isVerified?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CompanyMaxAggregateInputType = {
+    id?: true
+    name?: true
+    website?: true
+    isVerified?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CompanyCountAggregateInputType = {
+    id?: true
+    name?: true
+    website?: true
+    isVerified?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CompanyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Company to aggregate.
+     */
+    where?: CompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Companies to fetch.
+     */
+    orderBy?: CompanyOrderByWithRelationInput | CompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Companies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Companies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Companies
+    **/
+    _count?: true | CompanyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CompanyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CompanyMaxAggregateInputType
+  }
+
+  export type GetCompanyAggregateType<T extends CompanyAggregateArgs> = {
+        [P in keyof T & keyof AggregateCompany]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCompany[P]>
+      : GetScalarType<T[P], AggregateCompany[P]>
+  }
+
+
+
+
+  export type CompanyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CompanyWhereInput
+    orderBy?: CompanyOrderByWithAggregationInput | CompanyOrderByWithAggregationInput[]
+    by: CompanyScalarFieldEnum[] | CompanyScalarFieldEnum
+    having?: CompanyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CompanyCountAggregateInputType | true
+    _min?: CompanyMinAggregateInputType
+    _max?: CompanyMaxAggregateInputType
+  }
+
+  export type CompanyGroupByOutputType = {
+    id: string
+    name: string
+    website: string | null
+    isVerified: boolean
+    isActive: boolean
+    createdAt: Date
+    updatedAt: Date | null
+    _count: CompanyCountAggregateOutputType | null
+    _min: CompanyMinAggregateOutputType | null
+    _max: CompanyMaxAggregateOutputType | null
+  }
+
+  type GetCompanyGroupByPayload<T extends CompanyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CompanyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CompanyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CompanyGroupByOutputType[P]>
+            : GetScalarType<T[P], CompanyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CompanySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    website?: boolean
+    isVerified?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    branches?: boolean | Company$branchesArgs<ExtArgs>
+    userCompanies?: boolean | Company$userCompaniesArgs<ExtArgs>
+    _count?: boolean | CompanyCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["company"]>
+
+
+
+  export type CompanySelectScalar = {
+    id?: boolean
+    name?: boolean
+    website?: boolean
+    isVerified?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "website" | "isVerified" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
+  export type CompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    branches?: boolean | Company$branchesArgs<ExtArgs>
+    userCompanies?: boolean | Company$userCompaniesArgs<ExtArgs>
+    _count?: boolean | CompanyCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $CompanyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Company"
+    objects: {
+      branches: Prisma.$BranchPayload<ExtArgs>[]
+      userCompanies: Prisma.$UserCompanyPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      website: string | null
+      isVerified: boolean
+      isActive: boolean
+      createdAt: Date
+      updatedAt: Date | null
+    }, ExtArgs["result"]["company"]>
+    composites: {}
+  }
+
+  type CompanyGetPayload<S extends boolean | null | undefined | CompanyDefaultArgs> = $Result.GetResult<Prisma.$CompanyPayload, S>
+
+  type CompanyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CompanyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CompanyCountAggregateInputType | true
+    }
+
+  export interface CompanyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Company'], meta: { name: 'Company' } }
+    /**
+     * Find zero or one Company that matches the filter.
+     * @param {CompanyFindUniqueArgs} args - Arguments to find a Company
+     * @example
+     * // Get one Company
+     * const company = await prisma.company.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CompanyFindUniqueArgs>(args: SelectSubset<T, CompanyFindUniqueArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Company that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CompanyFindUniqueOrThrowArgs} args - Arguments to find a Company
+     * @example
+     * // Get one Company
+     * const company = await prisma.company.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CompanyFindUniqueOrThrowArgs>(args: SelectSubset<T, CompanyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Company that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyFindFirstArgs} args - Arguments to find a Company
+     * @example
+     * // Get one Company
+     * const company = await prisma.company.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CompanyFindFirstArgs>(args?: SelectSubset<T, CompanyFindFirstArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Company that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyFindFirstOrThrowArgs} args - Arguments to find a Company
+     * @example
+     * // Get one Company
+     * const company = await prisma.company.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CompanyFindFirstOrThrowArgs>(args?: SelectSubset<T, CompanyFindFirstOrThrowArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Companies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Companies
+     * const companies = await prisma.company.findMany()
+     * 
+     * // Get first 10 Companies
+     * const companies = await prisma.company.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const companyWithIdOnly = await prisma.company.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CompanyFindManyArgs>(args?: SelectSubset<T, CompanyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Company.
+     * @param {CompanyCreateArgs} args - Arguments to create a Company.
+     * @example
+     * // Create one Company
+     * const Company = await prisma.company.create({
+     *   data: {
+     *     // ... data to create a Company
+     *   }
+     * })
+     * 
+     */
+    create<T extends CompanyCreateArgs>(args: SelectSubset<T, CompanyCreateArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Companies.
+     * @param {CompanyCreateManyArgs} args - Arguments to create many Companies.
+     * @example
+     * // Create many Companies
+     * const company = await prisma.company.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CompanyCreateManyArgs>(args?: SelectSubset<T, CompanyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Company.
+     * @param {CompanyDeleteArgs} args - Arguments to delete one Company.
+     * @example
+     * // Delete one Company
+     * const Company = await prisma.company.delete({
+     *   where: {
+     *     // ... filter to delete one Company
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CompanyDeleteArgs>(args: SelectSubset<T, CompanyDeleteArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Company.
+     * @param {CompanyUpdateArgs} args - Arguments to update one Company.
+     * @example
+     * // Update one Company
+     * const company = await prisma.company.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CompanyUpdateArgs>(args: SelectSubset<T, CompanyUpdateArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Companies.
+     * @param {CompanyDeleteManyArgs} args - Arguments to filter Companies to delete.
+     * @example
+     * // Delete a few Companies
+     * const { count } = await prisma.company.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CompanyDeleteManyArgs>(args?: SelectSubset<T, CompanyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Companies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Companies
+     * const company = await prisma.company.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CompanyUpdateManyArgs>(args: SelectSubset<T, CompanyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Company.
+     * @param {CompanyUpsertArgs} args - Arguments to update or create a Company.
+     * @example
+     * // Update or create a Company
+     * const company = await prisma.company.upsert({
+     *   create: {
+     *     // ... data to create a Company
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Company we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CompanyUpsertArgs>(args: SelectSubset<T, CompanyUpsertArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Companies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyCountArgs} args - Arguments to filter Companies to count.
+     * @example
+     * // Count the number of Companies
+     * const count = await prisma.company.count({
+     *   where: {
+     *     // ... the filter for the Companies we want to count
+     *   }
+     * })
+    **/
+    count<T extends CompanyCountArgs>(
+      args?: Subset<T, CompanyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CompanyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Company.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CompanyAggregateArgs>(args: Subset<T, CompanyAggregateArgs>): Prisma.PrismaPromise<GetCompanyAggregateType<T>>
+
+    /**
+     * Group by Company.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CompanyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CompanyGroupByArgs['orderBy'] }
+        : { orderBy?: CompanyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CompanyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCompanyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Company model
+   */
+  readonly fields: CompanyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Company.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    branches<T extends Company$branchesArgs<ExtArgs> = {}>(args?: Subset<T, Company$branchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    userCompanies<T extends Company$userCompaniesArgs<ExtArgs> = {}>(args?: Subset<T, Company$userCompaniesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserCompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Company model
+   */
+  interface CompanyFieldRefs {
+    readonly id: FieldRef<"Company", 'String'>
+    readonly name: FieldRef<"Company", 'String'>
+    readonly website: FieldRef<"Company", 'String'>
+    readonly isVerified: FieldRef<"Company", 'Boolean'>
+    readonly isActive: FieldRef<"Company", 'Boolean'>
+    readonly createdAt: FieldRef<"Company", 'DateTime'>
+    readonly updatedAt: FieldRef<"Company", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Company findUnique
+   */
+  export type CompanyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Company
+     */
+    omit?: CompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which Company to fetch.
+     */
+    where: CompanyWhereUniqueInput
+  }
+
+  /**
+   * Company findUniqueOrThrow
+   */
+  export type CompanyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Company
+     */
+    omit?: CompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which Company to fetch.
+     */
+    where: CompanyWhereUniqueInput
+  }
+
+  /**
+   * Company findFirst
+   */
+  export type CompanyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Company
+     */
+    omit?: CompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which Company to fetch.
+     */
+    where?: CompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Companies to fetch.
+     */
+    orderBy?: CompanyOrderByWithRelationInput | CompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Companies.
+     */
+    cursor?: CompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Companies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Companies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Companies.
+     */
+    distinct?: CompanyScalarFieldEnum | CompanyScalarFieldEnum[]
+  }
+
+  /**
+   * Company findFirstOrThrow
+   */
+  export type CompanyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Company
+     */
+    omit?: CompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which Company to fetch.
+     */
+    where?: CompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Companies to fetch.
+     */
+    orderBy?: CompanyOrderByWithRelationInput | CompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Companies.
+     */
+    cursor?: CompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Companies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Companies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Companies.
+     */
+    distinct?: CompanyScalarFieldEnum | CompanyScalarFieldEnum[]
+  }
+
+  /**
+   * Company findMany
+   */
+  export type CompanyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Company
+     */
+    omit?: CompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which Companies to fetch.
+     */
+    where?: CompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Companies to fetch.
+     */
+    orderBy?: CompanyOrderByWithRelationInput | CompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Companies.
+     */
+    cursor?: CompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Companies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Companies.
+     */
+    skip?: number
+    distinct?: CompanyScalarFieldEnum | CompanyScalarFieldEnum[]
+  }
+
+  /**
+   * Company create
+   */
+  export type CompanyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Company
+     */
+    omit?: CompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Company.
+     */
+    data: XOR<CompanyCreateInput, CompanyUncheckedCreateInput>
+  }
+
+  /**
+   * Company createMany
+   */
+  export type CompanyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Companies.
+     */
+    data: CompanyCreateManyInput | CompanyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Company update
+   */
+  export type CompanyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Company
+     */
+    omit?: CompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Company.
+     */
+    data: XOR<CompanyUpdateInput, CompanyUncheckedUpdateInput>
+    /**
+     * Choose, which Company to update.
+     */
+    where: CompanyWhereUniqueInput
+  }
+
+  /**
+   * Company updateMany
+   */
+  export type CompanyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Companies.
+     */
+    data: XOR<CompanyUpdateManyMutationInput, CompanyUncheckedUpdateManyInput>
+    /**
+     * Filter which Companies to update
+     */
+    where?: CompanyWhereInput
+    /**
+     * Limit how many Companies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Company upsert
+   */
+  export type CompanyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Company
+     */
+    omit?: CompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Company to update in case it exists.
+     */
+    where: CompanyWhereUniqueInput
+    /**
+     * In case the Company found by the `where` argument doesn't exist, create a new Company with this data.
+     */
+    create: XOR<CompanyCreateInput, CompanyUncheckedCreateInput>
+    /**
+     * In case the Company was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CompanyUpdateInput, CompanyUncheckedUpdateInput>
+  }
+
+  /**
+   * Company delete
+   */
+  export type CompanyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Company
+     */
+    omit?: CompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * Filter which Company to delete.
+     */
+    where: CompanyWhereUniqueInput
+  }
+
+  /**
+   * Company deleteMany
+   */
+  export type CompanyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Companies to delete
+     */
+    where?: CompanyWhereInput
+    /**
+     * Limit how many Companies to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Company.branches
+   */
+  export type Company$branchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Branch
+     */
+    omit?: BranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchInclude<ExtArgs> | null
+    where?: BranchWhereInput
+    orderBy?: BranchOrderByWithRelationInput | BranchOrderByWithRelationInput[]
+    cursor?: BranchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BranchScalarFieldEnum | BranchScalarFieldEnum[]
+  }
+
+  /**
+   * Company.userCompanies
+   */
+  export type Company$userCompaniesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompany
+     */
+    select?: UserCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompany
+     */
+    omit?: UserCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyInclude<ExtArgs> | null
+    where?: UserCompanyWhereInput
+    orderBy?: UserCompanyOrderByWithRelationInput | UserCompanyOrderByWithRelationInput[]
+    cursor?: UserCompanyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserCompanyScalarFieldEnum | UserCompanyScalarFieldEnum[]
+  }
+
+  /**
+   * Company without action
+   */
+  export type CompanyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Company
+     */
+    omit?: CompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Branch
+   */
+
+  export type AggregateBranch = {
+    _count: BranchCountAggregateOutputType | null
+    _avg: BranchAvgAggregateOutputType | null
+    _sum: BranchSumAggregateOutputType | null
+    _min: BranchMinAggregateOutputType | null
+    _max: BranchMaxAggregateOutputType | null
+  }
+
+  export type BranchAvgAggregateOutputType = {
+    latitude: number | null
+    longitude: number | null
+  }
+
+  export type BranchSumAggregateOutputType = {
+    latitude: number | null
+    longitude: number | null
+  }
+
+  export type BranchMinAggregateOutputType = {
+    id: string | null
+    companyId: string | null
+    name: string | null
+    address: string | null
+    phoneNumber: string | null
+    latitude: number | null
+    longitude: number | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BranchMaxAggregateOutputType = {
+    id: string | null
+    companyId: string | null
+    name: string | null
+    address: string | null
+    phoneNumber: string | null
+    latitude: number | null
+    longitude: number | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BranchCountAggregateOutputType = {
+    id: number
+    companyId: number
+    name: number
+    address: number
+    phoneNumber: number
+    latitude: number
+    longitude: number
+    isActive: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BranchAvgAggregateInputType = {
+    latitude?: true
+    longitude?: true
+  }
+
+  export type BranchSumAggregateInputType = {
+    latitude?: true
+    longitude?: true
+  }
+
+  export type BranchMinAggregateInputType = {
+    id?: true
+    companyId?: true
+    name?: true
+    address?: true
+    phoneNumber?: true
+    latitude?: true
+    longitude?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BranchMaxAggregateInputType = {
+    id?: true
+    companyId?: true
+    name?: true
+    address?: true
+    phoneNumber?: true
+    latitude?: true
+    longitude?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BranchCountAggregateInputType = {
+    id?: true
+    companyId?: true
+    name?: true
+    address?: true
+    phoneNumber?: true
+    latitude?: true
+    longitude?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BranchAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Branch to aggregate.
+     */
+    where?: BranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Branches to fetch.
+     */
+    orderBy?: BranchOrderByWithRelationInput | BranchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Branches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Branches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Branches
+    **/
+    _count?: true | BranchCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BranchAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BranchSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BranchMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BranchMaxAggregateInputType
+  }
+
+  export type GetBranchAggregateType<T extends BranchAggregateArgs> = {
+        [P in keyof T & keyof AggregateBranch]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBranch[P]>
+      : GetScalarType<T[P], AggregateBranch[P]>
+  }
+
+
+
+
+  export type BranchGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BranchWhereInput
+    orderBy?: BranchOrderByWithAggregationInput | BranchOrderByWithAggregationInput[]
+    by: BranchScalarFieldEnum[] | BranchScalarFieldEnum
+    having?: BranchScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BranchCountAggregateInputType | true
+    _avg?: BranchAvgAggregateInputType
+    _sum?: BranchSumAggregateInputType
+    _min?: BranchMinAggregateInputType
+    _max?: BranchMaxAggregateInputType
+  }
+
+  export type BranchGroupByOutputType = {
+    id: string
+    companyId: string
+    name: string
+    address: string | null
+    phoneNumber: string | null
+    latitude: number | null
+    longitude: number | null
+    isActive: boolean
+    createdAt: Date
+    updatedAt: Date | null
+    _count: BranchCountAggregateOutputType | null
+    _avg: BranchAvgAggregateOutputType | null
+    _sum: BranchSumAggregateOutputType | null
+    _min: BranchMinAggregateOutputType | null
+    _max: BranchMaxAggregateOutputType | null
+  }
+
+  type GetBranchGroupByPayload<T extends BranchGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BranchGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BranchGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BranchGroupByOutputType[P]>
+            : GetScalarType<T[P], BranchGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BranchSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    companyId?: boolean
+    name?: boolean
+    address?: boolean
+    phoneNumber?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+    userBranches?: boolean | Branch$userBranchesArgs<ExtArgs>
+    doctorBranches?: boolean | Branch$doctorBranchesArgs<ExtArgs>
+    _count?: boolean | BranchCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["branch"]>
+
+
+
+  export type BranchSelectScalar = {
+    id?: boolean
+    companyId?: boolean
+    name?: boolean
+    address?: boolean
+    phoneNumber?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type BranchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "name" | "address" | "phoneNumber" | "latitude" | "longitude" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["branch"]>
+  export type BranchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+    userBranches?: boolean | Branch$userBranchesArgs<ExtArgs>
+    doctorBranches?: boolean | Branch$doctorBranchesArgs<ExtArgs>
+    _count?: boolean | BranchCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $BranchPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Branch"
+    objects: {
+      company: Prisma.$CompanyPayload<ExtArgs>
+      userBranches: Prisma.$UserBranchPayload<ExtArgs>[]
+      doctorBranches: Prisma.$DoctorBranchPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      companyId: string
+      name: string
+      address: string | null
+      phoneNumber: string | null
+      latitude: number | null
+      longitude: number | null
+      isActive: boolean
+      createdAt: Date
+      updatedAt: Date | null
+    }, ExtArgs["result"]["branch"]>
+    composites: {}
+  }
+
+  type BranchGetPayload<S extends boolean | null | undefined | BranchDefaultArgs> = $Result.GetResult<Prisma.$BranchPayload, S>
+
+  type BranchCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BranchFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BranchCountAggregateInputType | true
+    }
+
+  export interface BranchDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Branch'], meta: { name: 'Branch' } }
+    /**
+     * Find zero or one Branch that matches the filter.
+     * @param {BranchFindUniqueArgs} args - Arguments to find a Branch
+     * @example
+     * // Get one Branch
+     * const branch = await prisma.branch.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BranchFindUniqueArgs>(args: SelectSubset<T, BranchFindUniqueArgs<ExtArgs>>): Prisma__BranchClient<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Branch that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BranchFindUniqueOrThrowArgs} args - Arguments to find a Branch
+     * @example
+     * // Get one Branch
+     * const branch = await prisma.branch.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BranchFindUniqueOrThrowArgs>(args: SelectSubset<T, BranchFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BranchClient<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Branch that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchFindFirstArgs} args - Arguments to find a Branch
+     * @example
+     * // Get one Branch
+     * const branch = await prisma.branch.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BranchFindFirstArgs>(args?: SelectSubset<T, BranchFindFirstArgs<ExtArgs>>): Prisma__BranchClient<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Branch that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchFindFirstOrThrowArgs} args - Arguments to find a Branch
+     * @example
+     * // Get one Branch
+     * const branch = await prisma.branch.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BranchFindFirstOrThrowArgs>(args?: SelectSubset<T, BranchFindFirstOrThrowArgs<ExtArgs>>): Prisma__BranchClient<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Branches that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Branches
+     * const branches = await prisma.branch.findMany()
+     * 
+     * // Get first 10 Branches
+     * const branches = await prisma.branch.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const branchWithIdOnly = await prisma.branch.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BranchFindManyArgs>(args?: SelectSubset<T, BranchFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Branch.
+     * @param {BranchCreateArgs} args - Arguments to create a Branch.
+     * @example
+     * // Create one Branch
+     * const Branch = await prisma.branch.create({
+     *   data: {
+     *     // ... data to create a Branch
+     *   }
+     * })
+     * 
+     */
+    create<T extends BranchCreateArgs>(args: SelectSubset<T, BranchCreateArgs<ExtArgs>>): Prisma__BranchClient<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Branches.
+     * @param {BranchCreateManyArgs} args - Arguments to create many Branches.
+     * @example
+     * // Create many Branches
+     * const branch = await prisma.branch.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BranchCreateManyArgs>(args?: SelectSubset<T, BranchCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Branch.
+     * @param {BranchDeleteArgs} args - Arguments to delete one Branch.
+     * @example
+     * // Delete one Branch
+     * const Branch = await prisma.branch.delete({
+     *   where: {
+     *     // ... filter to delete one Branch
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BranchDeleteArgs>(args: SelectSubset<T, BranchDeleteArgs<ExtArgs>>): Prisma__BranchClient<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Branch.
+     * @param {BranchUpdateArgs} args - Arguments to update one Branch.
+     * @example
+     * // Update one Branch
+     * const branch = await prisma.branch.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BranchUpdateArgs>(args: SelectSubset<T, BranchUpdateArgs<ExtArgs>>): Prisma__BranchClient<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Branches.
+     * @param {BranchDeleteManyArgs} args - Arguments to filter Branches to delete.
+     * @example
+     * // Delete a few Branches
+     * const { count } = await prisma.branch.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BranchDeleteManyArgs>(args?: SelectSubset<T, BranchDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Branches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Branches
+     * const branch = await prisma.branch.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BranchUpdateManyArgs>(args: SelectSubset<T, BranchUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Branch.
+     * @param {BranchUpsertArgs} args - Arguments to update or create a Branch.
+     * @example
+     * // Update or create a Branch
+     * const branch = await prisma.branch.upsert({
+     *   create: {
+     *     // ... data to create a Branch
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Branch we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BranchUpsertArgs>(args: SelectSubset<T, BranchUpsertArgs<ExtArgs>>): Prisma__BranchClient<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Branches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchCountArgs} args - Arguments to filter Branches to count.
+     * @example
+     * // Count the number of Branches
+     * const count = await prisma.branch.count({
+     *   where: {
+     *     // ... the filter for the Branches we want to count
+     *   }
+     * })
+    **/
+    count<T extends BranchCountArgs>(
+      args?: Subset<T, BranchCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BranchCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Branch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BranchAggregateArgs>(args: Subset<T, BranchAggregateArgs>): Prisma.PrismaPromise<GetBranchAggregateType<T>>
+
+    /**
+     * Group by Branch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BranchGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BranchGroupByArgs['orderBy'] }
+        : { orderBy?: BranchGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BranchGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBranchGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Branch model
+   */
+  readonly fields: BranchFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Branch.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BranchClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    company<T extends CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CompanyDefaultArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    userBranches<T extends Branch$userBranchesArgs<ExtArgs> = {}>(args?: Subset<T, Branch$userBranchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBranchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    doctorBranches<T extends Branch$doctorBranchesArgs<ExtArgs> = {}>(args?: Subset<T, Branch$doctorBranchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorBranchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Branch model
+   */
+  interface BranchFieldRefs {
+    readonly id: FieldRef<"Branch", 'String'>
+    readonly companyId: FieldRef<"Branch", 'String'>
+    readonly name: FieldRef<"Branch", 'String'>
+    readonly address: FieldRef<"Branch", 'String'>
+    readonly phoneNumber: FieldRef<"Branch", 'String'>
+    readonly latitude: FieldRef<"Branch", 'Float'>
+    readonly longitude: FieldRef<"Branch", 'Float'>
+    readonly isActive: FieldRef<"Branch", 'Boolean'>
+    readonly createdAt: FieldRef<"Branch", 'DateTime'>
+    readonly updatedAt: FieldRef<"Branch", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Branch findUnique
+   */
+  export type BranchFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Branch
+     */
+    omit?: BranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchInclude<ExtArgs> | null
+    /**
+     * Filter, which Branch to fetch.
+     */
+    where: BranchWhereUniqueInput
+  }
+
+  /**
+   * Branch findUniqueOrThrow
+   */
+  export type BranchFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Branch
+     */
+    omit?: BranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchInclude<ExtArgs> | null
+    /**
+     * Filter, which Branch to fetch.
+     */
+    where: BranchWhereUniqueInput
+  }
+
+  /**
+   * Branch findFirst
+   */
+  export type BranchFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Branch
+     */
+    omit?: BranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchInclude<ExtArgs> | null
+    /**
+     * Filter, which Branch to fetch.
+     */
+    where?: BranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Branches to fetch.
+     */
+    orderBy?: BranchOrderByWithRelationInput | BranchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Branches.
+     */
+    cursor?: BranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Branches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Branches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Branches.
+     */
+    distinct?: BranchScalarFieldEnum | BranchScalarFieldEnum[]
+  }
+
+  /**
+   * Branch findFirstOrThrow
+   */
+  export type BranchFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Branch
+     */
+    omit?: BranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchInclude<ExtArgs> | null
+    /**
+     * Filter, which Branch to fetch.
+     */
+    where?: BranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Branches to fetch.
+     */
+    orderBy?: BranchOrderByWithRelationInput | BranchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Branches.
+     */
+    cursor?: BranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Branches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Branches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Branches.
+     */
+    distinct?: BranchScalarFieldEnum | BranchScalarFieldEnum[]
+  }
+
+  /**
+   * Branch findMany
+   */
+  export type BranchFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Branch
+     */
+    omit?: BranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchInclude<ExtArgs> | null
+    /**
+     * Filter, which Branches to fetch.
+     */
+    where?: BranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Branches to fetch.
+     */
+    orderBy?: BranchOrderByWithRelationInput | BranchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Branches.
+     */
+    cursor?: BranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Branches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Branches.
+     */
+    skip?: number
+    distinct?: BranchScalarFieldEnum | BranchScalarFieldEnum[]
+  }
+
+  /**
+   * Branch create
+   */
+  export type BranchCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Branch
+     */
+    omit?: BranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Branch.
+     */
+    data: XOR<BranchCreateInput, BranchUncheckedCreateInput>
+  }
+
+  /**
+   * Branch createMany
+   */
+  export type BranchCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Branches.
+     */
+    data: BranchCreateManyInput | BranchCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Branch update
+   */
+  export type BranchUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Branch
+     */
+    omit?: BranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Branch.
+     */
+    data: XOR<BranchUpdateInput, BranchUncheckedUpdateInput>
+    /**
+     * Choose, which Branch to update.
+     */
+    where: BranchWhereUniqueInput
+  }
+
+  /**
+   * Branch updateMany
+   */
+  export type BranchUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Branches.
+     */
+    data: XOR<BranchUpdateManyMutationInput, BranchUncheckedUpdateManyInput>
+    /**
+     * Filter which Branches to update
+     */
+    where?: BranchWhereInput
+    /**
+     * Limit how many Branches to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Branch upsert
+   */
+  export type BranchUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Branch
+     */
+    omit?: BranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Branch to update in case it exists.
+     */
+    where: BranchWhereUniqueInput
+    /**
+     * In case the Branch found by the `where` argument doesn't exist, create a new Branch with this data.
+     */
+    create: XOR<BranchCreateInput, BranchUncheckedCreateInput>
+    /**
+     * In case the Branch was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BranchUpdateInput, BranchUncheckedUpdateInput>
+  }
+
+  /**
+   * Branch delete
+   */
+  export type BranchDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Branch
+     */
+    omit?: BranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchInclude<ExtArgs> | null
+    /**
+     * Filter which Branch to delete.
+     */
+    where: BranchWhereUniqueInput
+  }
+
+  /**
+   * Branch deleteMany
+   */
+  export type BranchDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Branches to delete
+     */
+    where?: BranchWhereInput
+    /**
+     * Limit how many Branches to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Branch.userBranches
+   */
+  export type Branch$userBranchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBranch
+     */
+    select?: UserBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBranch
+     */
+    omit?: UserBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBranchInclude<ExtArgs> | null
+    where?: UserBranchWhereInput
+    orderBy?: UserBranchOrderByWithRelationInput | UserBranchOrderByWithRelationInput[]
+    cursor?: UserBranchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserBranchScalarFieldEnum | UserBranchScalarFieldEnum[]
+  }
+
+  /**
+   * Branch.doctorBranches
+   */
+  export type Branch$doctorBranchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DoctorBranch
+     */
+    select?: DoctorBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DoctorBranch
+     */
+    omit?: DoctorBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DoctorBranchInclude<ExtArgs> | null
+    where?: DoctorBranchWhereInput
+    orderBy?: DoctorBranchOrderByWithRelationInput | DoctorBranchOrderByWithRelationInput[]
+    cursor?: DoctorBranchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DoctorBranchScalarFieldEnum | DoctorBranchScalarFieldEnum[]
+  }
+
+  /**
+   * Branch without action
+   */
+  export type BranchDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Branch
+     */
+    omit?: BranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BranchInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserCompany
+   */
+
+  export type AggregateUserCompany = {
+    _count: UserCompanyCountAggregateOutputType | null
+    _min: UserCompanyMinAggregateOutputType | null
+    _max: UserCompanyMaxAggregateOutputType | null
+  }
+
+  export type UserCompanyMinAggregateOutputType = {
+    userId: string | null
+    companyId: string | null
+  }
+
+  export type UserCompanyMaxAggregateOutputType = {
+    userId: string | null
+    companyId: string | null
+  }
+
+  export type UserCompanyCountAggregateOutputType = {
+    userId: number
+    companyId: number
+    _all: number
+  }
+
+
+  export type UserCompanyMinAggregateInputType = {
+    userId?: true
+    companyId?: true
+  }
+
+  export type UserCompanyMaxAggregateInputType = {
+    userId?: true
+    companyId?: true
+  }
+
+  export type UserCompanyCountAggregateInputType = {
+    userId?: true
+    companyId?: true
+    _all?: true
+  }
+
+  export type UserCompanyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserCompany to aggregate.
+     */
+    where?: UserCompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserCompanies to fetch.
+     */
+    orderBy?: UserCompanyOrderByWithRelationInput | UserCompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserCompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserCompanies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserCompanies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserCompanies
+    **/
+    _count?: true | UserCompanyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserCompanyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserCompanyMaxAggregateInputType
+  }
+
+  export type GetUserCompanyAggregateType<T extends UserCompanyAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserCompany]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserCompany[P]>
+      : GetScalarType<T[P], AggregateUserCompany[P]>
+  }
+
+
+
+
+  export type UserCompanyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserCompanyWhereInput
+    orderBy?: UserCompanyOrderByWithAggregationInput | UserCompanyOrderByWithAggregationInput[]
+    by: UserCompanyScalarFieldEnum[] | UserCompanyScalarFieldEnum
+    having?: UserCompanyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserCompanyCountAggregateInputType | true
+    _min?: UserCompanyMinAggregateInputType
+    _max?: UserCompanyMaxAggregateInputType
+  }
+
+  export type UserCompanyGroupByOutputType = {
+    userId: string
+    companyId: string
+    _count: UserCompanyCountAggregateOutputType | null
+    _min: UserCompanyMinAggregateOutputType | null
+    _max: UserCompanyMaxAggregateOutputType | null
+  }
+
+  type GetUserCompanyGroupByPayload<T extends UserCompanyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserCompanyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserCompanyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserCompanyGroupByOutputType[P]>
+            : GetScalarType<T[P], UserCompanyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserCompanySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    companyId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userCompany"]>
+
+
+
+  export type UserCompanySelectScalar = {
+    userId?: boolean
+    companyId?: boolean
+  }
+
+  export type UserCompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "companyId", ExtArgs["result"]["userCompany"]>
+  export type UserCompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+  }
+
+  export type $UserCompanyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserCompany"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      company: Prisma.$CompanyPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      userId: string
+      companyId: string
+    }, ExtArgs["result"]["userCompany"]>
+    composites: {}
+  }
+
+  type UserCompanyGetPayload<S extends boolean | null | undefined | UserCompanyDefaultArgs> = $Result.GetResult<Prisma.$UserCompanyPayload, S>
+
+  type UserCompanyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserCompanyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCompanyCountAggregateInputType | true
+    }
+
+  export interface UserCompanyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserCompany'], meta: { name: 'UserCompany' } }
+    /**
+     * Find zero or one UserCompany that matches the filter.
+     * @param {UserCompanyFindUniqueArgs} args - Arguments to find a UserCompany
+     * @example
+     * // Get one UserCompany
+     * const userCompany = await prisma.userCompany.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserCompanyFindUniqueArgs>(args: SelectSubset<T, UserCompanyFindUniqueArgs<ExtArgs>>): Prisma__UserCompanyClient<$Result.GetResult<Prisma.$UserCompanyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserCompany that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserCompanyFindUniqueOrThrowArgs} args - Arguments to find a UserCompany
+     * @example
+     * // Get one UserCompany
+     * const userCompany = await prisma.userCompany.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserCompanyFindUniqueOrThrowArgs>(args: SelectSubset<T, UserCompanyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserCompanyClient<$Result.GetResult<Prisma.$UserCompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserCompany that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCompanyFindFirstArgs} args - Arguments to find a UserCompany
+     * @example
+     * // Get one UserCompany
+     * const userCompany = await prisma.userCompany.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserCompanyFindFirstArgs>(args?: SelectSubset<T, UserCompanyFindFirstArgs<ExtArgs>>): Prisma__UserCompanyClient<$Result.GetResult<Prisma.$UserCompanyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserCompany that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCompanyFindFirstOrThrowArgs} args - Arguments to find a UserCompany
+     * @example
+     * // Get one UserCompany
+     * const userCompany = await prisma.userCompany.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserCompanyFindFirstOrThrowArgs>(args?: SelectSubset<T, UserCompanyFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserCompanyClient<$Result.GetResult<Prisma.$UserCompanyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserCompanies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCompanyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserCompanies
+     * const userCompanies = await prisma.userCompany.findMany()
+     * 
+     * // Get first 10 UserCompanies
+     * const userCompanies = await prisma.userCompany.findMany({ take: 10 })
+     * 
+     * // Only select the `userId`
+     * const userCompanyWithUserIdOnly = await prisma.userCompany.findMany({ select: { userId: true } })
+     * 
+     */
+    findMany<T extends UserCompanyFindManyArgs>(args?: SelectSubset<T, UserCompanyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserCompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserCompany.
+     * @param {UserCompanyCreateArgs} args - Arguments to create a UserCompany.
+     * @example
+     * // Create one UserCompany
+     * const UserCompany = await prisma.userCompany.create({
+     *   data: {
+     *     // ... data to create a UserCompany
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserCompanyCreateArgs>(args: SelectSubset<T, UserCompanyCreateArgs<ExtArgs>>): Prisma__UserCompanyClient<$Result.GetResult<Prisma.$UserCompanyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserCompanies.
+     * @param {UserCompanyCreateManyArgs} args - Arguments to create many UserCompanies.
+     * @example
+     * // Create many UserCompanies
+     * const userCompany = await prisma.userCompany.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserCompanyCreateManyArgs>(args?: SelectSubset<T, UserCompanyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a UserCompany.
+     * @param {UserCompanyDeleteArgs} args - Arguments to delete one UserCompany.
+     * @example
+     * // Delete one UserCompany
+     * const UserCompany = await prisma.userCompany.delete({
+     *   where: {
+     *     // ... filter to delete one UserCompany
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserCompanyDeleteArgs>(args: SelectSubset<T, UserCompanyDeleteArgs<ExtArgs>>): Prisma__UserCompanyClient<$Result.GetResult<Prisma.$UserCompanyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserCompany.
+     * @param {UserCompanyUpdateArgs} args - Arguments to update one UserCompany.
+     * @example
+     * // Update one UserCompany
+     * const userCompany = await prisma.userCompany.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserCompanyUpdateArgs>(args: SelectSubset<T, UserCompanyUpdateArgs<ExtArgs>>): Prisma__UserCompanyClient<$Result.GetResult<Prisma.$UserCompanyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserCompanies.
+     * @param {UserCompanyDeleteManyArgs} args - Arguments to filter UserCompanies to delete.
+     * @example
+     * // Delete a few UserCompanies
+     * const { count } = await prisma.userCompany.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserCompanyDeleteManyArgs>(args?: SelectSubset<T, UserCompanyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserCompanies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCompanyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserCompanies
+     * const userCompany = await prisma.userCompany.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserCompanyUpdateManyArgs>(args: SelectSubset<T, UserCompanyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UserCompany.
+     * @param {UserCompanyUpsertArgs} args - Arguments to update or create a UserCompany.
+     * @example
+     * // Update or create a UserCompany
+     * const userCompany = await prisma.userCompany.upsert({
+     *   create: {
+     *     // ... data to create a UserCompany
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserCompany we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserCompanyUpsertArgs>(args: SelectSubset<T, UserCompanyUpsertArgs<ExtArgs>>): Prisma__UserCompanyClient<$Result.GetResult<Prisma.$UserCompanyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserCompanies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCompanyCountArgs} args - Arguments to filter UserCompanies to count.
+     * @example
+     * // Count the number of UserCompanies
+     * const count = await prisma.userCompany.count({
+     *   where: {
+     *     // ... the filter for the UserCompanies we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCompanyCountArgs>(
+      args?: Subset<T, UserCompanyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserCompanyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserCompany.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCompanyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserCompanyAggregateArgs>(args: Subset<T, UserCompanyAggregateArgs>): Prisma.PrismaPromise<GetUserCompanyAggregateType<T>>
+
+    /**
+     * Group by UserCompany.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCompanyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserCompanyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserCompanyGroupByArgs['orderBy'] }
+        : { orderBy?: UserCompanyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserCompanyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserCompanyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserCompany model
+   */
+  readonly fields: UserCompanyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserCompany.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserCompanyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    company<T extends CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CompanyDefaultArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserCompany model
+   */
+  interface UserCompanyFieldRefs {
+    readonly userId: FieldRef<"UserCompany", 'String'>
+    readonly companyId: FieldRef<"UserCompany", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserCompany findUnique
+   */
+  export type UserCompanyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompany
+     */
+    select?: UserCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompany
+     */
+    omit?: UserCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCompany to fetch.
+     */
+    where: UserCompanyWhereUniqueInput
+  }
+
+  /**
+   * UserCompany findUniqueOrThrow
+   */
+  export type UserCompanyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompany
+     */
+    select?: UserCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompany
+     */
+    omit?: UserCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCompany to fetch.
+     */
+    where: UserCompanyWhereUniqueInput
+  }
+
+  /**
+   * UserCompany findFirst
+   */
+  export type UserCompanyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompany
+     */
+    select?: UserCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompany
+     */
+    omit?: UserCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCompany to fetch.
+     */
+    where?: UserCompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserCompanies to fetch.
+     */
+    orderBy?: UserCompanyOrderByWithRelationInput | UserCompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserCompanies.
+     */
+    cursor?: UserCompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserCompanies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserCompanies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserCompanies.
+     */
+    distinct?: UserCompanyScalarFieldEnum | UserCompanyScalarFieldEnum[]
+  }
+
+  /**
+   * UserCompany findFirstOrThrow
+   */
+  export type UserCompanyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompany
+     */
+    select?: UserCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompany
+     */
+    omit?: UserCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCompany to fetch.
+     */
+    where?: UserCompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserCompanies to fetch.
+     */
+    orderBy?: UserCompanyOrderByWithRelationInput | UserCompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserCompanies.
+     */
+    cursor?: UserCompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserCompanies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserCompanies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserCompanies.
+     */
+    distinct?: UserCompanyScalarFieldEnum | UserCompanyScalarFieldEnum[]
+  }
+
+  /**
+   * UserCompany findMany
+   */
+  export type UserCompanyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompany
+     */
+    select?: UserCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompany
+     */
+    omit?: UserCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCompanies to fetch.
+     */
+    where?: UserCompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserCompanies to fetch.
+     */
+    orderBy?: UserCompanyOrderByWithRelationInput | UserCompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserCompanies.
+     */
+    cursor?: UserCompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserCompanies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserCompanies.
+     */
+    skip?: number
+    distinct?: UserCompanyScalarFieldEnum | UserCompanyScalarFieldEnum[]
+  }
+
+  /**
+   * UserCompany create
+   */
+  export type UserCompanyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompany
+     */
+    select?: UserCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompany
+     */
+    omit?: UserCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserCompany.
+     */
+    data: XOR<UserCompanyCreateInput, UserCompanyUncheckedCreateInput>
+  }
+
+  /**
+   * UserCompany createMany
+   */
+  export type UserCompanyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserCompanies.
+     */
+    data: UserCompanyCreateManyInput | UserCompanyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserCompany update
+   */
+  export type UserCompanyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompany
+     */
+    select?: UserCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompany
+     */
+    omit?: UserCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserCompany.
+     */
+    data: XOR<UserCompanyUpdateInput, UserCompanyUncheckedUpdateInput>
+    /**
+     * Choose, which UserCompany to update.
+     */
+    where: UserCompanyWhereUniqueInput
+  }
+
+  /**
+   * UserCompany updateMany
+   */
+  export type UserCompanyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserCompanies.
+     */
+    data: XOR<UserCompanyUpdateManyMutationInput, UserCompanyUncheckedUpdateManyInput>
+    /**
+     * Filter which UserCompanies to update
+     */
+    where?: UserCompanyWhereInput
+    /**
+     * Limit how many UserCompanies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserCompany upsert
+   */
+  export type UserCompanyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompany
+     */
+    select?: UserCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompany
+     */
+    omit?: UserCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserCompany to update in case it exists.
+     */
+    where: UserCompanyWhereUniqueInput
+    /**
+     * In case the UserCompany found by the `where` argument doesn't exist, create a new UserCompany with this data.
+     */
+    create: XOR<UserCompanyCreateInput, UserCompanyUncheckedCreateInput>
+    /**
+     * In case the UserCompany was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserCompanyUpdateInput, UserCompanyUncheckedUpdateInput>
+  }
+
+  /**
+   * UserCompany delete
+   */
+  export type UserCompanyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompany
+     */
+    select?: UserCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompany
+     */
+    omit?: UserCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyInclude<ExtArgs> | null
+    /**
+     * Filter which UserCompany to delete.
+     */
+    where: UserCompanyWhereUniqueInput
+  }
+
+  /**
+   * UserCompany deleteMany
+   */
+  export type UserCompanyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserCompanies to delete
+     */
+    where?: UserCompanyWhereInput
+    /**
+     * Limit how many UserCompanies to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserCompany without action
+   */
+  export type UserCompanyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompany
+     */
+    select?: UserCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompany
+     */
+    omit?: UserCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserBranch
+   */
+
+  export type AggregateUserBranch = {
+    _count: UserBranchCountAggregateOutputType | null
+    _min: UserBranchMinAggregateOutputType | null
+    _max: UserBranchMaxAggregateOutputType | null
+  }
+
+  export type UserBranchMinAggregateOutputType = {
+    userId: string | null
+    branchId: string | null
+  }
+
+  export type UserBranchMaxAggregateOutputType = {
+    userId: string | null
+    branchId: string | null
+  }
+
+  export type UserBranchCountAggregateOutputType = {
+    userId: number
+    branchId: number
+    _all: number
+  }
+
+
+  export type UserBranchMinAggregateInputType = {
+    userId?: true
+    branchId?: true
+  }
+
+  export type UserBranchMaxAggregateInputType = {
+    userId?: true
+    branchId?: true
+  }
+
+  export type UserBranchCountAggregateInputType = {
+    userId?: true
+    branchId?: true
+    _all?: true
+  }
+
+  export type UserBranchAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserBranch to aggregate.
+     */
+    where?: UserBranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBranches to fetch.
+     */
+    orderBy?: UserBranchOrderByWithRelationInput | UserBranchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserBranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBranches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBranches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserBranches
+    **/
+    _count?: true | UserBranchCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserBranchMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserBranchMaxAggregateInputType
+  }
+
+  export type GetUserBranchAggregateType<T extends UserBranchAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserBranch]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserBranch[P]>
+      : GetScalarType<T[P], AggregateUserBranch[P]>
+  }
+
+
+
+
+  export type UserBranchGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserBranchWhereInput
+    orderBy?: UserBranchOrderByWithAggregationInput | UserBranchOrderByWithAggregationInput[]
+    by: UserBranchScalarFieldEnum[] | UserBranchScalarFieldEnum
+    having?: UserBranchScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserBranchCountAggregateInputType | true
+    _min?: UserBranchMinAggregateInputType
+    _max?: UserBranchMaxAggregateInputType
+  }
+
+  export type UserBranchGroupByOutputType = {
+    userId: string
+    branchId: string
+    _count: UserBranchCountAggregateOutputType | null
+    _min: UserBranchMinAggregateOutputType | null
+    _max: UserBranchMaxAggregateOutputType | null
+  }
+
+  type GetUserBranchGroupByPayload<T extends UserBranchGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserBranchGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserBranchGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserBranchGroupByOutputType[P]>
+            : GetScalarType<T[P], UserBranchGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserBranchSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    branchId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    branch?: boolean | BranchDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userBranch"]>
+
+
+
+  export type UserBranchSelectScalar = {
+    userId?: boolean
+    branchId?: boolean
+  }
+
+  export type UserBranchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "branchId", ExtArgs["result"]["userBranch"]>
+  export type UserBranchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    branch?: boolean | BranchDefaultArgs<ExtArgs>
+  }
+
+  export type $UserBranchPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserBranch"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      branch: Prisma.$BranchPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      userId: string
+      branchId: string
+    }, ExtArgs["result"]["userBranch"]>
+    composites: {}
+  }
+
+  type UserBranchGetPayload<S extends boolean | null | undefined | UserBranchDefaultArgs> = $Result.GetResult<Prisma.$UserBranchPayload, S>
+
+  type UserBranchCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserBranchFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserBranchCountAggregateInputType | true
+    }
+
+  export interface UserBranchDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserBranch'], meta: { name: 'UserBranch' } }
+    /**
+     * Find zero or one UserBranch that matches the filter.
+     * @param {UserBranchFindUniqueArgs} args - Arguments to find a UserBranch
+     * @example
+     * // Get one UserBranch
+     * const userBranch = await prisma.userBranch.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserBranchFindUniqueArgs>(args: SelectSubset<T, UserBranchFindUniqueArgs<ExtArgs>>): Prisma__UserBranchClient<$Result.GetResult<Prisma.$UserBranchPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserBranch that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserBranchFindUniqueOrThrowArgs} args - Arguments to find a UserBranch
+     * @example
+     * // Get one UserBranch
+     * const userBranch = await prisma.userBranch.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserBranchFindUniqueOrThrowArgs>(args: SelectSubset<T, UserBranchFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserBranchClient<$Result.GetResult<Prisma.$UserBranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserBranch that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBranchFindFirstArgs} args - Arguments to find a UserBranch
+     * @example
+     * // Get one UserBranch
+     * const userBranch = await prisma.userBranch.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserBranchFindFirstArgs>(args?: SelectSubset<T, UserBranchFindFirstArgs<ExtArgs>>): Prisma__UserBranchClient<$Result.GetResult<Prisma.$UserBranchPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserBranch that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBranchFindFirstOrThrowArgs} args - Arguments to find a UserBranch
+     * @example
+     * // Get one UserBranch
+     * const userBranch = await prisma.userBranch.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserBranchFindFirstOrThrowArgs>(args?: SelectSubset<T, UserBranchFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserBranchClient<$Result.GetResult<Prisma.$UserBranchPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserBranches that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBranchFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserBranches
+     * const userBranches = await prisma.userBranch.findMany()
+     * 
+     * // Get first 10 UserBranches
+     * const userBranches = await prisma.userBranch.findMany({ take: 10 })
+     * 
+     * // Only select the `userId`
+     * const userBranchWithUserIdOnly = await prisma.userBranch.findMany({ select: { userId: true } })
+     * 
+     */
+    findMany<T extends UserBranchFindManyArgs>(args?: SelectSubset<T, UserBranchFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBranchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserBranch.
+     * @param {UserBranchCreateArgs} args - Arguments to create a UserBranch.
+     * @example
+     * // Create one UserBranch
+     * const UserBranch = await prisma.userBranch.create({
+     *   data: {
+     *     // ... data to create a UserBranch
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserBranchCreateArgs>(args: SelectSubset<T, UserBranchCreateArgs<ExtArgs>>): Prisma__UserBranchClient<$Result.GetResult<Prisma.$UserBranchPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserBranches.
+     * @param {UserBranchCreateManyArgs} args - Arguments to create many UserBranches.
+     * @example
+     * // Create many UserBranches
+     * const userBranch = await prisma.userBranch.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserBranchCreateManyArgs>(args?: SelectSubset<T, UserBranchCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a UserBranch.
+     * @param {UserBranchDeleteArgs} args - Arguments to delete one UserBranch.
+     * @example
+     * // Delete one UserBranch
+     * const UserBranch = await prisma.userBranch.delete({
+     *   where: {
+     *     // ... filter to delete one UserBranch
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserBranchDeleteArgs>(args: SelectSubset<T, UserBranchDeleteArgs<ExtArgs>>): Prisma__UserBranchClient<$Result.GetResult<Prisma.$UserBranchPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserBranch.
+     * @param {UserBranchUpdateArgs} args - Arguments to update one UserBranch.
+     * @example
+     * // Update one UserBranch
+     * const userBranch = await prisma.userBranch.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserBranchUpdateArgs>(args: SelectSubset<T, UserBranchUpdateArgs<ExtArgs>>): Prisma__UserBranchClient<$Result.GetResult<Prisma.$UserBranchPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserBranches.
+     * @param {UserBranchDeleteManyArgs} args - Arguments to filter UserBranches to delete.
+     * @example
+     * // Delete a few UserBranches
+     * const { count } = await prisma.userBranch.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserBranchDeleteManyArgs>(args?: SelectSubset<T, UserBranchDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserBranches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBranchUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserBranches
+     * const userBranch = await prisma.userBranch.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserBranchUpdateManyArgs>(args: SelectSubset<T, UserBranchUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UserBranch.
+     * @param {UserBranchUpsertArgs} args - Arguments to update or create a UserBranch.
+     * @example
+     * // Update or create a UserBranch
+     * const userBranch = await prisma.userBranch.upsert({
+     *   create: {
+     *     // ... data to create a UserBranch
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserBranch we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserBranchUpsertArgs>(args: SelectSubset<T, UserBranchUpsertArgs<ExtArgs>>): Prisma__UserBranchClient<$Result.GetResult<Prisma.$UserBranchPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserBranches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBranchCountArgs} args - Arguments to filter UserBranches to count.
+     * @example
+     * // Count the number of UserBranches
+     * const count = await prisma.userBranch.count({
+     *   where: {
+     *     // ... the filter for the UserBranches we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserBranchCountArgs>(
+      args?: Subset<T, UserBranchCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserBranchCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserBranch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBranchAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserBranchAggregateArgs>(args: Subset<T, UserBranchAggregateArgs>): Prisma.PrismaPromise<GetUserBranchAggregateType<T>>
+
+    /**
+     * Group by UserBranch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBranchGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserBranchGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserBranchGroupByArgs['orderBy'] }
+        : { orderBy?: UserBranchGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserBranchGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserBranchGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserBranch model
+   */
+  readonly fields: UserBranchFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserBranch.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserBranchClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    branch<T extends BranchDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BranchDefaultArgs<ExtArgs>>): Prisma__BranchClient<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserBranch model
+   */
+  interface UserBranchFieldRefs {
+    readonly userId: FieldRef<"UserBranch", 'String'>
+    readonly branchId: FieldRef<"UserBranch", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserBranch findUnique
+   */
+  export type UserBranchFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBranch
+     */
+    select?: UserBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBranch
+     */
+    omit?: UserBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBranchInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBranch to fetch.
+     */
+    where: UserBranchWhereUniqueInput
+  }
+
+  /**
+   * UserBranch findUniqueOrThrow
+   */
+  export type UserBranchFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBranch
+     */
+    select?: UserBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBranch
+     */
+    omit?: UserBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBranchInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBranch to fetch.
+     */
+    where: UserBranchWhereUniqueInput
+  }
+
+  /**
+   * UserBranch findFirst
+   */
+  export type UserBranchFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBranch
+     */
+    select?: UserBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBranch
+     */
+    omit?: UserBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBranchInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBranch to fetch.
+     */
+    where?: UserBranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBranches to fetch.
+     */
+    orderBy?: UserBranchOrderByWithRelationInput | UserBranchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserBranches.
+     */
+    cursor?: UserBranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBranches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBranches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserBranches.
+     */
+    distinct?: UserBranchScalarFieldEnum | UserBranchScalarFieldEnum[]
+  }
+
+  /**
+   * UserBranch findFirstOrThrow
+   */
+  export type UserBranchFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBranch
+     */
+    select?: UserBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBranch
+     */
+    omit?: UserBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBranchInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBranch to fetch.
+     */
+    where?: UserBranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBranches to fetch.
+     */
+    orderBy?: UserBranchOrderByWithRelationInput | UserBranchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserBranches.
+     */
+    cursor?: UserBranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBranches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBranches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserBranches.
+     */
+    distinct?: UserBranchScalarFieldEnum | UserBranchScalarFieldEnum[]
+  }
+
+  /**
+   * UserBranch findMany
+   */
+  export type UserBranchFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBranch
+     */
+    select?: UserBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBranch
+     */
+    omit?: UserBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBranchInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBranches to fetch.
+     */
+    where?: UserBranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBranches to fetch.
+     */
+    orderBy?: UserBranchOrderByWithRelationInput | UserBranchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserBranches.
+     */
+    cursor?: UserBranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBranches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBranches.
+     */
+    skip?: number
+    distinct?: UserBranchScalarFieldEnum | UserBranchScalarFieldEnum[]
+  }
+
+  /**
+   * UserBranch create
+   */
+  export type UserBranchCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBranch
+     */
+    select?: UserBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBranch
+     */
+    omit?: UserBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBranchInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserBranch.
+     */
+    data: XOR<UserBranchCreateInput, UserBranchUncheckedCreateInput>
+  }
+
+  /**
+   * UserBranch createMany
+   */
+  export type UserBranchCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserBranches.
+     */
+    data: UserBranchCreateManyInput | UserBranchCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserBranch update
+   */
+  export type UserBranchUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBranch
+     */
+    select?: UserBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBranch
+     */
+    omit?: UserBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBranchInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserBranch.
+     */
+    data: XOR<UserBranchUpdateInput, UserBranchUncheckedUpdateInput>
+    /**
+     * Choose, which UserBranch to update.
+     */
+    where: UserBranchWhereUniqueInput
+  }
+
+  /**
+   * UserBranch updateMany
+   */
+  export type UserBranchUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserBranches.
+     */
+    data: XOR<UserBranchUpdateManyMutationInput, UserBranchUncheckedUpdateManyInput>
+    /**
+     * Filter which UserBranches to update
+     */
+    where?: UserBranchWhereInput
+    /**
+     * Limit how many UserBranches to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserBranch upsert
+   */
+  export type UserBranchUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBranch
+     */
+    select?: UserBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBranch
+     */
+    omit?: UserBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBranchInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserBranch to update in case it exists.
+     */
+    where: UserBranchWhereUniqueInput
+    /**
+     * In case the UserBranch found by the `where` argument doesn't exist, create a new UserBranch with this data.
+     */
+    create: XOR<UserBranchCreateInput, UserBranchUncheckedCreateInput>
+    /**
+     * In case the UserBranch was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserBranchUpdateInput, UserBranchUncheckedUpdateInput>
+  }
+
+  /**
+   * UserBranch delete
+   */
+  export type UserBranchDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBranch
+     */
+    select?: UserBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBranch
+     */
+    omit?: UserBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBranchInclude<ExtArgs> | null
+    /**
+     * Filter which UserBranch to delete.
+     */
+    where: UserBranchWhereUniqueInput
+  }
+
+  /**
+   * UserBranch deleteMany
+   */
+  export type UserBranchDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserBranches to delete
+     */
+    where?: UserBranchWhereInput
+    /**
+     * Limit how many UserBranches to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserBranch without action
+   */
+  export type UserBranchDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBranch
+     */
+    select?: UserBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBranch
+     */
+    omit?: UserBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBranchInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DoctorBranch
+   */
+
+  export type AggregateDoctorBranch = {
+    _count: DoctorBranchCountAggregateOutputType | null
+    _min: DoctorBranchMinAggregateOutputType | null
+    _max: DoctorBranchMaxAggregateOutputType | null
+  }
+
+  export type DoctorBranchMinAggregateOutputType = {
+    userId: string | null
+    branchId: string | null
+  }
+
+  export type DoctorBranchMaxAggregateOutputType = {
+    userId: string | null
+    branchId: string | null
+  }
+
+  export type DoctorBranchCountAggregateOutputType = {
+    userId: number
+    branchId: number
+    _all: number
+  }
+
+
+  export type DoctorBranchMinAggregateInputType = {
+    userId?: true
+    branchId?: true
+  }
+
+  export type DoctorBranchMaxAggregateInputType = {
+    userId?: true
+    branchId?: true
+  }
+
+  export type DoctorBranchCountAggregateInputType = {
+    userId?: true
+    branchId?: true
+    _all?: true
+  }
+
+  export type DoctorBranchAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DoctorBranch to aggregate.
+     */
+    where?: DoctorBranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DoctorBranches to fetch.
+     */
+    orderBy?: DoctorBranchOrderByWithRelationInput | DoctorBranchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DoctorBranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DoctorBranches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DoctorBranches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DoctorBranches
+    **/
+    _count?: true | DoctorBranchCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DoctorBranchMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DoctorBranchMaxAggregateInputType
+  }
+
+  export type GetDoctorBranchAggregateType<T extends DoctorBranchAggregateArgs> = {
+        [P in keyof T & keyof AggregateDoctorBranch]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDoctorBranch[P]>
+      : GetScalarType<T[P], AggregateDoctorBranch[P]>
+  }
+
+
+
+
+  export type DoctorBranchGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DoctorBranchWhereInput
+    orderBy?: DoctorBranchOrderByWithAggregationInput | DoctorBranchOrderByWithAggregationInput[]
+    by: DoctorBranchScalarFieldEnum[] | DoctorBranchScalarFieldEnum
+    having?: DoctorBranchScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DoctorBranchCountAggregateInputType | true
+    _min?: DoctorBranchMinAggregateInputType
+    _max?: DoctorBranchMaxAggregateInputType
+  }
+
+  export type DoctorBranchGroupByOutputType = {
+    userId: string
+    branchId: string
+    _count: DoctorBranchCountAggregateOutputType | null
+    _min: DoctorBranchMinAggregateOutputType | null
+    _max: DoctorBranchMaxAggregateOutputType | null
+  }
+
+  type GetDoctorBranchGroupByPayload<T extends DoctorBranchGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DoctorBranchGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DoctorBranchGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DoctorBranchGroupByOutputType[P]>
+            : GetScalarType<T[P], DoctorBranchGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DoctorBranchSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    branchId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    branch?: boolean | BranchDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["doctorBranch"]>
+
+
+
+  export type DoctorBranchSelectScalar = {
+    userId?: boolean
+    branchId?: boolean
+  }
+
+  export type DoctorBranchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "branchId", ExtArgs["result"]["doctorBranch"]>
+  export type DoctorBranchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    branch?: boolean | BranchDefaultArgs<ExtArgs>
+  }
+
+  export type $DoctorBranchPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DoctorBranch"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      branch: Prisma.$BranchPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      userId: string
+      branchId: string
+    }, ExtArgs["result"]["doctorBranch"]>
+    composites: {}
+  }
+
+  type DoctorBranchGetPayload<S extends boolean | null | undefined | DoctorBranchDefaultArgs> = $Result.GetResult<Prisma.$DoctorBranchPayload, S>
+
+  type DoctorBranchCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DoctorBranchFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DoctorBranchCountAggregateInputType | true
+    }
+
+  export interface DoctorBranchDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DoctorBranch'], meta: { name: 'DoctorBranch' } }
+    /**
+     * Find zero or one DoctorBranch that matches the filter.
+     * @param {DoctorBranchFindUniqueArgs} args - Arguments to find a DoctorBranch
+     * @example
+     * // Get one DoctorBranch
+     * const doctorBranch = await prisma.doctorBranch.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DoctorBranchFindUniqueArgs>(args: SelectSubset<T, DoctorBranchFindUniqueArgs<ExtArgs>>): Prisma__DoctorBranchClient<$Result.GetResult<Prisma.$DoctorBranchPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DoctorBranch that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DoctorBranchFindUniqueOrThrowArgs} args - Arguments to find a DoctorBranch
+     * @example
+     * // Get one DoctorBranch
+     * const doctorBranch = await prisma.doctorBranch.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DoctorBranchFindUniqueOrThrowArgs>(args: SelectSubset<T, DoctorBranchFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DoctorBranchClient<$Result.GetResult<Prisma.$DoctorBranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DoctorBranch that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DoctorBranchFindFirstArgs} args - Arguments to find a DoctorBranch
+     * @example
+     * // Get one DoctorBranch
+     * const doctorBranch = await prisma.doctorBranch.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DoctorBranchFindFirstArgs>(args?: SelectSubset<T, DoctorBranchFindFirstArgs<ExtArgs>>): Prisma__DoctorBranchClient<$Result.GetResult<Prisma.$DoctorBranchPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DoctorBranch that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DoctorBranchFindFirstOrThrowArgs} args - Arguments to find a DoctorBranch
+     * @example
+     * // Get one DoctorBranch
+     * const doctorBranch = await prisma.doctorBranch.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DoctorBranchFindFirstOrThrowArgs>(args?: SelectSubset<T, DoctorBranchFindFirstOrThrowArgs<ExtArgs>>): Prisma__DoctorBranchClient<$Result.GetResult<Prisma.$DoctorBranchPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DoctorBranches that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DoctorBranchFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DoctorBranches
+     * const doctorBranches = await prisma.doctorBranch.findMany()
+     * 
+     * // Get first 10 DoctorBranches
+     * const doctorBranches = await prisma.doctorBranch.findMany({ take: 10 })
+     * 
+     * // Only select the `userId`
+     * const doctorBranchWithUserIdOnly = await prisma.doctorBranch.findMany({ select: { userId: true } })
+     * 
+     */
+    findMany<T extends DoctorBranchFindManyArgs>(args?: SelectSubset<T, DoctorBranchFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorBranchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DoctorBranch.
+     * @param {DoctorBranchCreateArgs} args - Arguments to create a DoctorBranch.
+     * @example
+     * // Create one DoctorBranch
+     * const DoctorBranch = await prisma.doctorBranch.create({
+     *   data: {
+     *     // ... data to create a DoctorBranch
+     *   }
+     * })
+     * 
+     */
+    create<T extends DoctorBranchCreateArgs>(args: SelectSubset<T, DoctorBranchCreateArgs<ExtArgs>>): Prisma__DoctorBranchClient<$Result.GetResult<Prisma.$DoctorBranchPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DoctorBranches.
+     * @param {DoctorBranchCreateManyArgs} args - Arguments to create many DoctorBranches.
+     * @example
+     * // Create many DoctorBranches
+     * const doctorBranch = await prisma.doctorBranch.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DoctorBranchCreateManyArgs>(args?: SelectSubset<T, DoctorBranchCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a DoctorBranch.
+     * @param {DoctorBranchDeleteArgs} args - Arguments to delete one DoctorBranch.
+     * @example
+     * // Delete one DoctorBranch
+     * const DoctorBranch = await prisma.doctorBranch.delete({
+     *   where: {
+     *     // ... filter to delete one DoctorBranch
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DoctorBranchDeleteArgs>(args: SelectSubset<T, DoctorBranchDeleteArgs<ExtArgs>>): Prisma__DoctorBranchClient<$Result.GetResult<Prisma.$DoctorBranchPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DoctorBranch.
+     * @param {DoctorBranchUpdateArgs} args - Arguments to update one DoctorBranch.
+     * @example
+     * // Update one DoctorBranch
+     * const doctorBranch = await prisma.doctorBranch.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DoctorBranchUpdateArgs>(args: SelectSubset<T, DoctorBranchUpdateArgs<ExtArgs>>): Prisma__DoctorBranchClient<$Result.GetResult<Prisma.$DoctorBranchPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DoctorBranches.
+     * @param {DoctorBranchDeleteManyArgs} args - Arguments to filter DoctorBranches to delete.
+     * @example
+     * // Delete a few DoctorBranches
+     * const { count } = await prisma.doctorBranch.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DoctorBranchDeleteManyArgs>(args?: SelectSubset<T, DoctorBranchDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DoctorBranches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DoctorBranchUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DoctorBranches
+     * const doctorBranch = await prisma.doctorBranch.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DoctorBranchUpdateManyArgs>(args: SelectSubset<T, DoctorBranchUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DoctorBranch.
+     * @param {DoctorBranchUpsertArgs} args - Arguments to update or create a DoctorBranch.
+     * @example
+     * // Update or create a DoctorBranch
+     * const doctorBranch = await prisma.doctorBranch.upsert({
+     *   create: {
+     *     // ... data to create a DoctorBranch
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DoctorBranch we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DoctorBranchUpsertArgs>(args: SelectSubset<T, DoctorBranchUpsertArgs<ExtArgs>>): Prisma__DoctorBranchClient<$Result.GetResult<Prisma.$DoctorBranchPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DoctorBranches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DoctorBranchCountArgs} args - Arguments to filter DoctorBranches to count.
+     * @example
+     * // Count the number of DoctorBranches
+     * const count = await prisma.doctorBranch.count({
+     *   where: {
+     *     // ... the filter for the DoctorBranches we want to count
+     *   }
+     * })
+    **/
+    count<T extends DoctorBranchCountArgs>(
+      args?: Subset<T, DoctorBranchCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DoctorBranchCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DoctorBranch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DoctorBranchAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DoctorBranchAggregateArgs>(args: Subset<T, DoctorBranchAggregateArgs>): Prisma.PrismaPromise<GetDoctorBranchAggregateType<T>>
+
+    /**
+     * Group by DoctorBranch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DoctorBranchGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DoctorBranchGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DoctorBranchGroupByArgs['orderBy'] }
+        : { orderBy?: DoctorBranchGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DoctorBranchGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDoctorBranchGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DoctorBranch model
+   */
+  readonly fields: DoctorBranchFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DoctorBranch.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DoctorBranchClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    branch<T extends BranchDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BranchDefaultArgs<ExtArgs>>): Prisma__BranchClient<$Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DoctorBranch model
+   */
+  interface DoctorBranchFieldRefs {
+    readonly userId: FieldRef<"DoctorBranch", 'String'>
+    readonly branchId: FieldRef<"DoctorBranch", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DoctorBranch findUnique
+   */
+  export type DoctorBranchFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DoctorBranch
+     */
+    select?: DoctorBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DoctorBranch
+     */
+    omit?: DoctorBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DoctorBranchInclude<ExtArgs> | null
+    /**
+     * Filter, which DoctorBranch to fetch.
+     */
+    where: DoctorBranchWhereUniqueInput
+  }
+
+  /**
+   * DoctorBranch findUniqueOrThrow
+   */
+  export type DoctorBranchFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DoctorBranch
+     */
+    select?: DoctorBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DoctorBranch
+     */
+    omit?: DoctorBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DoctorBranchInclude<ExtArgs> | null
+    /**
+     * Filter, which DoctorBranch to fetch.
+     */
+    where: DoctorBranchWhereUniqueInput
+  }
+
+  /**
+   * DoctorBranch findFirst
+   */
+  export type DoctorBranchFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DoctorBranch
+     */
+    select?: DoctorBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DoctorBranch
+     */
+    omit?: DoctorBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DoctorBranchInclude<ExtArgs> | null
+    /**
+     * Filter, which DoctorBranch to fetch.
+     */
+    where?: DoctorBranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DoctorBranches to fetch.
+     */
+    orderBy?: DoctorBranchOrderByWithRelationInput | DoctorBranchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DoctorBranches.
+     */
+    cursor?: DoctorBranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DoctorBranches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DoctorBranches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DoctorBranches.
+     */
+    distinct?: DoctorBranchScalarFieldEnum | DoctorBranchScalarFieldEnum[]
+  }
+
+  /**
+   * DoctorBranch findFirstOrThrow
+   */
+  export type DoctorBranchFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DoctorBranch
+     */
+    select?: DoctorBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DoctorBranch
+     */
+    omit?: DoctorBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DoctorBranchInclude<ExtArgs> | null
+    /**
+     * Filter, which DoctorBranch to fetch.
+     */
+    where?: DoctorBranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DoctorBranches to fetch.
+     */
+    orderBy?: DoctorBranchOrderByWithRelationInput | DoctorBranchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DoctorBranches.
+     */
+    cursor?: DoctorBranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DoctorBranches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DoctorBranches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DoctorBranches.
+     */
+    distinct?: DoctorBranchScalarFieldEnum | DoctorBranchScalarFieldEnum[]
+  }
+
+  /**
+   * DoctorBranch findMany
+   */
+  export type DoctorBranchFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DoctorBranch
+     */
+    select?: DoctorBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DoctorBranch
+     */
+    omit?: DoctorBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DoctorBranchInclude<ExtArgs> | null
+    /**
+     * Filter, which DoctorBranches to fetch.
+     */
+    where?: DoctorBranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DoctorBranches to fetch.
+     */
+    orderBy?: DoctorBranchOrderByWithRelationInput | DoctorBranchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DoctorBranches.
+     */
+    cursor?: DoctorBranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DoctorBranches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DoctorBranches.
+     */
+    skip?: number
+    distinct?: DoctorBranchScalarFieldEnum | DoctorBranchScalarFieldEnum[]
+  }
+
+  /**
+   * DoctorBranch create
+   */
+  export type DoctorBranchCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DoctorBranch
+     */
+    select?: DoctorBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DoctorBranch
+     */
+    omit?: DoctorBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DoctorBranchInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DoctorBranch.
+     */
+    data: XOR<DoctorBranchCreateInput, DoctorBranchUncheckedCreateInput>
+  }
+
+  /**
+   * DoctorBranch createMany
+   */
+  export type DoctorBranchCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DoctorBranches.
+     */
+    data: DoctorBranchCreateManyInput | DoctorBranchCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DoctorBranch update
+   */
+  export type DoctorBranchUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DoctorBranch
+     */
+    select?: DoctorBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DoctorBranch
+     */
+    omit?: DoctorBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DoctorBranchInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DoctorBranch.
+     */
+    data: XOR<DoctorBranchUpdateInput, DoctorBranchUncheckedUpdateInput>
+    /**
+     * Choose, which DoctorBranch to update.
+     */
+    where: DoctorBranchWhereUniqueInput
+  }
+
+  /**
+   * DoctorBranch updateMany
+   */
+  export type DoctorBranchUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DoctorBranches.
+     */
+    data: XOR<DoctorBranchUpdateManyMutationInput, DoctorBranchUncheckedUpdateManyInput>
+    /**
+     * Filter which DoctorBranches to update
+     */
+    where?: DoctorBranchWhereInput
+    /**
+     * Limit how many DoctorBranches to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DoctorBranch upsert
+   */
+  export type DoctorBranchUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DoctorBranch
+     */
+    select?: DoctorBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DoctorBranch
+     */
+    omit?: DoctorBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DoctorBranchInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DoctorBranch to update in case it exists.
+     */
+    where: DoctorBranchWhereUniqueInput
+    /**
+     * In case the DoctorBranch found by the `where` argument doesn't exist, create a new DoctorBranch with this data.
+     */
+    create: XOR<DoctorBranchCreateInput, DoctorBranchUncheckedCreateInput>
+    /**
+     * In case the DoctorBranch was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DoctorBranchUpdateInput, DoctorBranchUncheckedUpdateInput>
+  }
+
+  /**
+   * DoctorBranch delete
+   */
+  export type DoctorBranchDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DoctorBranch
+     */
+    select?: DoctorBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DoctorBranch
+     */
+    omit?: DoctorBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DoctorBranchInclude<ExtArgs> | null
+    /**
+     * Filter which DoctorBranch to delete.
+     */
+    where: DoctorBranchWhereUniqueInput
+  }
+
+  /**
+   * DoctorBranch deleteMany
+   */
+  export type DoctorBranchDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DoctorBranches to delete
+     */
+    where?: DoctorBranchWhereInput
+    /**
+     * Limit how many DoctorBranches to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DoctorBranch without action
+   */
+  export type DoctorBranchDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DoctorBranch
+     */
+    select?: DoctorBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DoctorBranch
+     */
+    omit?: DoctorBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DoctorBranchInclude<ExtArgs> | null
+  }
+
 
   /**
    * Model User
@@ -1365,6 +6672,9 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     roles?: boolean | User$rolesArgs<ExtArgs>
+    userCompanies?: boolean | User$userCompaniesArgs<ExtArgs>
+    userBranches?: boolean | User$userBranchesArgs<ExtArgs>
+    doctorBranch?: boolean | User$doctorBranchArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1394,6 +6704,9 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "passwordHash" | "firstName" | "lastName" | "displayName" | "phoneNumber" | "profileImageUrl" | "provider" | "providerId" | "isEmailVerified" | "isPhoneVerified" | "isActive" | "timezone" | "locale" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     roles?: boolean | User$rolesArgs<ExtArgs>
+    userCompanies?: boolean | User$userCompaniesArgs<ExtArgs>
+    userBranches?: boolean | User$userBranchesArgs<ExtArgs>
+    doctorBranch?: boolean | User$doctorBranchArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1401,6 +6714,9 @@ export namespace Prisma {
     name: "User"
     objects: {
       roles: Prisma.$UserRolePayload<ExtArgs>[]
+      userCompanies: Prisma.$UserCompanyPayload<ExtArgs>[]
+      userBranches: Prisma.$UserBranchPayload<ExtArgs>[]
+      doctorBranch: Prisma.$DoctorBranchPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1762,6 +7078,9 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     roles<T extends User$rolesArgs<ExtArgs> = {}>(args?: Subset<T, User$rolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    userCompanies<T extends User$userCompaniesArgs<ExtArgs> = {}>(args?: Subset<T, User$userCompaniesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserCompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    userBranches<T extends User$userBranchesArgs<ExtArgs> = {}>(args?: Subset<T, User$userBranchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBranchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    doctorBranch<T extends User$doctorBranchArgs<ExtArgs> = {}>(args?: Subset<T, User$doctorBranchArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorBranchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2173,6 +7492,78 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserRoleScalarFieldEnum | UserRoleScalarFieldEnum[]
+  }
+
+  /**
+   * User.userCompanies
+   */
+  export type User$userCompaniesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompany
+     */
+    select?: UserCompanySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompany
+     */
+    omit?: UserCompanyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyInclude<ExtArgs> | null
+    where?: UserCompanyWhereInput
+    orderBy?: UserCompanyOrderByWithRelationInput | UserCompanyOrderByWithRelationInput[]
+    cursor?: UserCompanyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserCompanyScalarFieldEnum | UserCompanyScalarFieldEnum[]
+  }
+
+  /**
+   * User.userBranches
+   */
+  export type User$userBranchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBranch
+     */
+    select?: UserBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBranch
+     */
+    omit?: UserBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBranchInclude<ExtArgs> | null
+    where?: UserBranchWhereInput
+    orderBy?: UserBranchOrderByWithRelationInput | UserBranchOrderByWithRelationInput[]
+    cursor?: UserBranchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserBranchScalarFieldEnum | UserBranchScalarFieldEnum[]
+  }
+
+  /**
+   * User.doctorBranch
+   */
+  export type User$doctorBranchArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DoctorBranch
+     */
+    select?: DoctorBranchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DoctorBranch
+     */
+    omit?: DoctorBranchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DoctorBranchInclude<ExtArgs> | null
+    where?: DoctorBranchWhereInput
+    orderBy?: DoctorBranchOrderByWithRelationInput | DoctorBranchOrderByWithRelationInput[]
+    cursor?: DoctorBranchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DoctorBranchScalarFieldEnum | DoctorBranchScalarFieldEnum[]
   }
 
   /**
@@ -4052,6 +9443,59 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+  export const CompanyScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    website: 'website',
+    isVerified: 'isVerified',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
+
+
+  export const BranchScalarFieldEnum: {
+    id: 'id',
+    companyId: 'companyId',
+    name: 'name',
+    address: 'address',
+    phoneNumber: 'phoneNumber',
+    latitude: 'latitude',
+    longitude: 'longitude',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BranchScalarFieldEnum = (typeof BranchScalarFieldEnum)[keyof typeof BranchScalarFieldEnum]
+
+
+  export const UserCompanyScalarFieldEnum: {
+    userId: 'userId',
+    companyId: 'companyId'
+  };
+
+  export type UserCompanyScalarFieldEnum = (typeof UserCompanyScalarFieldEnum)[keyof typeof UserCompanyScalarFieldEnum]
+
+
+  export const UserBranchScalarFieldEnum: {
+    userId: 'userId',
+    branchId: 'branchId'
+  };
+
+  export type UserBranchScalarFieldEnum = (typeof UserBranchScalarFieldEnum)[keyof typeof UserBranchScalarFieldEnum]
+
+
+  export const DoctorBranchScalarFieldEnum: {
+    userId: 'userId',
+    branchId: 'branchId'
+  };
+
+  export type DoctorBranchScalarFieldEnum = (typeof DoctorBranchScalarFieldEnum)[keyof typeof DoctorBranchScalarFieldEnum]
+
+
   export const UserScalarFieldEnum: {
     id: 'id',
     email: 'email',
@@ -4110,6 +9554,58 @@ export namespace Prisma {
   export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const CompanyOrderByRelevanceFieldEnum: {
+    id: 'id',
+    name: 'name',
+    website: 'website'
+  };
+
+  export type CompanyOrderByRelevanceFieldEnum = (typeof CompanyOrderByRelevanceFieldEnum)[keyof typeof CompanyOrderByRelevanceFieldEnum]
+
+
+  export const BranchOrderByRelevanceFieldEnum: {
+    id: 'id',
+    companyId: 'companyId',
+    name: 'name',
+    address: 'address',
+    phoneNumber: 'phoneNumber'
+  };
+
+  export type BranchOrderByRelevanceFieldEnum = (typeof BranchOrderByRelevanceFieldEnum)[keyof typeof BranchOrderByRelevanceFieldEnum]
+
+
+  export const UserCompanyOrderByRelevanceFieldEnum: {
+    userId: 'userId',
+    companyId: 'companyId'
+  };
+
+  export type UserCompanyOrderByRelevanceFieldEnum = (typeof UserCompanyOrderByRelevanceFieldEnum)[keyof typeof UserCompanyOrderByRelevanceFieldEnum]
+
+
+  export const UserBranchOrderByRelevanceFieldEnum: {
+    userId: 'userId',
+    branchId: 'branchId'
+  };
+
+  export type UserBranchOrderByRelevanceFieldEnum = (typeof UserBranchOrderByRelevanceFieldEnum)[keyof typeof UserBranchOrderByRelevanceFieldEnum]
+
+
+  export const DoctorBranchOrderByRelevanceFieldEnum: {
+    userId: 'userId',
+    branchId: 'branchId'
+  };
+
+  export type DoctorBranchOrderByRelevanceFieldEnum = (typeof DoctorBranchOrderByRelevanceFieldEnum)[keyof typeof DoctorBranchOrderByRelevanceFieldEnum]
+
+
   export const JsonNullValueFilter: {
     DbNull: typeof DbNull,
     JsonNull: typeof JsonNull,
@@ -4125,14 +9621,6 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
-
-  export const NullsOrder: {
-    first: 'first',
-    last: 'last'
-  };
-
-  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   export const UserOrderByRelevanceFieldEnum: {
@@ -4182,16 +9670,30 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'AuthProvider'
+   * Reference to a field of type 'Boolean'
    */
-  export type EnumAuthProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthProvider'>
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
   /**
-   * Reference to a field of type 'Boolean'
+   * Reference to a field of type 'DateTime'
    */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'AuthProvider'
+   */
+  export type EnumAuthProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthProvider'>
     
 
 
@@ -4210,13 +9712,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -4225,6 +9720,299 @@ export namespace Prisma {
    * Deep Input Types
    */
 
+
+  export type CompanyWhereInput = {
+    AND?: CompanyWhereInput | CompanyWhereInput[]
+    OR?: CompanyWhereInput[]
+    NOT?: CompanyWhereInput | CompanyWhereInput[]
+    id?: StringFilter<"Company"> | string
+    name?: StringFilter<"Company"> | string
+    website?: StringNullableFilter<"Company"> | string | null
+    isVerified?: BoolFilter<"Company"> | boolean
+    isActive?: BoolFilter<"Company"> | boolean
+    createdAt?: DateTimeFilter<"Company"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"Company"> | Date | string | null
+    branches?: BranchListRelationFilter
+    userCompanies?: UserCompanyListRelationFilter
+  }
+
+  export type CompanyOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    website?: SortOrderInput | SortOrder
+    isVerified?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
+    branches?: BranchOrderByRelationAggregateInput
+    userCompanies?: UserCompanyOrderByRelationAggregateInput
+    _relevance?: CompanyOrderByRelevanceInput
+  }
+
+  export type CompanyWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CompanyWhereInput | CompanyWhereInput[]
+    OR?: CompanyWhereInput[]
+    NOT?: CompanyWhereInput | CompanyWhereInput[]
+    name?: StringFilter<"Company"> | string
+    website?: StringNullableFilter<"Company"> | string | null
+    isVerified?: BoolFilter<"Company"> | boolean
+    isActive?: BoolFilter<"Company"> | boolean
+    createdAt?: DateTimeFilter<"Company"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"Company"> | Date | string | null
+    branches?: BranchListRelationFilter
+    userCompanies?: UserCompanyListRelationFilter
+  }, "id">
+
+  export type CompanyOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    website?: SortOrderInput | SortOrder
+    isVerified?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
+    _count?: CompanyCountOrderByAggregateInput
+    _max?: CompanyMaxOrderByAggregateInput
+    _min?: CompanyMinOrderByAggregateInput
+  }
+
+  export type CompanyScalarWhereWithAggregatesInput = {
+    AND?: CompanyScalarWhereWithAggregatesInput | CompanyScalarWhereWithAggregatesInput[]
+    OR?: CompanyScalarWhereWithAggregatesInput[]
+    NOT?: CompanyScalarWhereWithAggregatesInput | CompanyScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Company"> | string
+    name?: StringWithAggregatesFilter<"Company"> | string
+    website?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    isVerified?: BoolWithAggregatesFilter<"Company"> | boolean
+    isActive?: BoolWithAggregatesFilter<"Company"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Company"> | Date | string
+    updatedAt?: DateTimeNullableWithAggregatesFilter<"Company"> | Date | string | null
+  }
+
+  export type BranchWhereInput = {
+    AND?: BranchWhereInput | BranchWhereInput[]
+    OR?: BranchWhereInput[]
+    NOT?: BranchWhereInput | BranchWhereInput[]
+    id?: StringFilter<"Branch"> | string
+    companyId?: StringFilter<"Branch"> | string
+    name?: StringFilter<"Branch"> | string
+    address?: StringNullableFilter<"Branch"> | string | null
+    phoneNumber?: StringNullableFilter<"Branch"> | string | null
+    latitude?: FloatNullableFilter<"Branch"> | number | null
+    longitude?: FloatNullableFilter<"Branch"> | number | null
+    isActive?: BoolFilter<"Branch"> | boolean
+    createdAt?: DateTimeFilter<"Branch"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"Branch"> | Date | string | null
+    company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
+    userBranches?: UserBranchListRelationFilter
+    doctorBranches?: DoctorBranchListRelationFilter
+  }
+
+  export type BranchOrderByWithRelationInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    name?: SortOrder
+    address?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    latitude?: SortOrderInput | SortOrder
+    longitude?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
+    company?: CompanyOrderByWithRelationInput
+    userBranches?: UserBranchOrderByRelationAggregateInput
+    doctorBranches?: DoctorBranchOrderByRelationAggregateInput
+    _relevance?: BranchOrderByRelevanceInput
+  }
+
+  export type BranchWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: BranchWhereInput | BranchWhereInput[]
+    OR?: BranchWhereInput[]
+    NOT?: BranchWhereInput | BranchWhereInput[]
+    companyId?: StringFilter<"Branch"> | string
+    name?: StringFilter<"Branch"> | string
+    address?: StringNullableFilter<"Branch"> | string | null
+    phoneNumber?: StringNullableFilter<"Branch"> | string | null
+    latitude?: FloatNullableFilter<"Branch"> | number | null
+    longitude?: FloatNullableFilter<"Branch"> | number | null
+    isActive?: BoolFilter<"Branch"> | boolean
+    createdAt?: DateTimeFilter<"Branch"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"Branch"> | Date | string | null
+    company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
+    userBranches?: UserBranchListRelationFilter
+    doctorBranches?: DoctorBranchListRelationFilter
+  }, "id">
+
+  export type BranchOrderByWithAggregationInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    name?: SortOrder
+    address?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    latitude?: SortOrderInput | SortOrder
+    longitude?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
+    _count?: BranchCountOrderByAggregateInput
+    _avg?: BranchAvgOrderByAggregateInput
+    _max?: BranchMaxOrderByAggregateInput
+    _min?: BranchMinOrderByAggregateInput
+    _sum?: BranchSumOrderByAggregateInput
+  }
+
+  export type BranchScalarWhereWithAggregatesInput = {
+    AND?: BranchScalarWhereWithAggregatesInput | BranchScalarWhereWithAggregatesInput[]
+    OR?: BranchScalarWhereWithAggregatesInput[]
+    NOT?: BranchScalarWhereWithAggregatesInput | BranchScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Branch"> | string
+    companyId?: StringWithAggregatesFilter<"Branch"> | string
+    name?: StringWithAggregatesFilter<"Branch"> | string
+    address?: StringNullableWithAggregatesFilter<"Branch"> | string | null
+    phoneNumber?: StringNullableWithAggregatesFilter<"Branch"> | string | null
+    latitude?: FloatNullableWithAggregatesFilter<"Branch"> | number | null
+    longitude?: FloatNullableWithAggregatesFilter<"Branch"> | number | null
+    isActive?: BoolWithAggregatesFilter<"Branch"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Branch"> | Date | string
+    updatedAt?: DateTimeNullableWithAggregatesFilter<"Branch"> | Date | string | null
+  }
+
+  export type UserCompanyWhereInput = {
+    AND?: UserCompanyWhereInput | UserCompanyWhereInput[]
+    OR?: UserCompanyWhereInput[]
+    NOT?: UserCompanyWhereInput | UserCompanyWhereInput[]
+    userId?: StringFilter<"UserCompany"> | string
+    companyId?: StringFilter<"UserCompany"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
+  }
+
+  export type UserCompanyOrderByWithRelationInput = {
+    userId?: SortOrder
+    companyId?: SortOrder
+    user?: UserOrderByWithRelationInput
+    company?: CompanyOrderByWithRelationInput
+    _relevance?: UserCompanyOrderByRelevanceInput
+  }
+
+  export type UserCompanyWhereUniqueInput = Prisma.AtLeast<{
+    userId_companyId?: UserCompanyUserIdCompanyIdCompoundUniqueInput
+    AND?: UserCompanyWhereInput | UserCompanyWhereInput[]
+    OR?: UserCompanyWhereInput[]
+    NOT?: UserCompanyWhereInput | UserCompanyWhereInput[]
+    userId?: StringFilter<"UserCompany"> | string
+    companyId?: StringFilter<"UserCompany"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
+  }, "userId_companyId">
+
+  export type UserCompanyOrderByWithAggregationInput = {
+    userId?: SortOrder
+    companyId?: SortOrder
+    _count?: UserCompanyCountOrderByAggregateInput
+    _max?: UserCompanyMaxOrderByAggregateInput
+    _min?: UserCompanyMinOrderByAggregateInput
+  }
+
+  export type UserCompanyScalarWhereWithAggregatesInput = {
+    AND?: UserCompanyScalarWhereWithAggregatesInput | UserCompanyScalarWhereWithAggregatesInput[]
+    OR?: UserCompanyScalarWhereWithAggregatesInput[]
+    NOT?: UserCompanyScalarWhereWithAggregatesInput | UserCompanyScalarWhereWithAggregatesInput[]
+    userId?: StringWithAggregatesFilter<"UserCompany"> | string
+    companyId?: StringWithAggregatesFilter<"UserCompany"> | string
+  }
+
+  export type UserBranchWhereInput = {
+    AND?: UserBranchWhereInput | UserBranchWhereInput[]
+    OR?: UserBranchWhereInput[]
+    NOT?: UserBranchWhereInput | UserBranchWhereInput[]
+    userId?: StringFilter<"UserBranch"> | string
+    branchId?: StringFilter<"UserBranch"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    branch?: XOR<BranchScalarRelationFilter, BranchWhereInput>
+  }
+
+  export type UserBranchOrderByWithRelationInput = {
+    userId?: SortOrder
+    branchId?: SortOrder
+    user?: UserOrderByWithRelationInput
+    branch?: BranchOrderByWithRelationInput
+    _relevance?: UserBranchOrderByRelevanceInput
+  }
+
+  export type UserBranchWhereUniqueInput = Prisma.AtLeast<{
+    userId_branchId?: UserBranchUserIdBranchIdCompoundUniqueInput
+    AND?: UserBranchWhereInput | UserBranchWhereInput[]
+    OR?: UserBranchWhereInput[]
+    NOT?: UserBranchWhereInput | UserBranchWhereInput[]
+    userId?: StringFilter<"UserBranch"> | string
+    branchId?: StringFilter<"UserBranch"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    branch?: XOR<BranchScalarRelationFilter, BranchWhereInput>
+  }, "userId_branchId">
+
+  export type UserBranchOrderByWithAggregationInput = {
+    userId?: SortOrder
+    branchId?: SortOrder
+    _count?: UserBranchCountOrderByAggregateInput
+    _max?: UserBranchMaxOrderByAggregateInput
+    _min?: UserBranchMinOrderByAggregateInput
+  }
+
+  export type UserBranchScalarWhereWithAggregatesInput = {
+    AND?: UserBranchScalarWhereWithAggregatesInput | UserBranchScalarWhereWithAggregatesInput[]
+    OR?: UserBranchScalarWhereWithAggregatesInput[]
+    NOT?: UserBranchScalarWhereWithAggregatesInput | UserBranchScalarWhereWithAggregatesInput[]
+    userId?: StringWithAggregatesFilter<"UserBranch"> | string
+    branchId?: StringWithAggregatesFilter<"UserBranch"> | string
+  }
+
+  export type DoctorBranchWhereInput = {
+    AND?: DoctorBranchWhereInput | DoctorBranchWhereInput[]
+    OR?: DoctorBranchWhereInput[]
+    NOT?: DoctorBranchWhereInput | DoctorBranchWhereInput[]
+    userId?: StringFilter<"DoctorBranch"> | string
+    branchId?: StringFilter<"DoctorBranch"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    branch?: XOR<BranchScalarRelationFilter, BranchWhereInput>
+  }
+
+  export type DoctorBranchOrderByWithRelationInput = {
+    userId?: SortOrder
+    branchId?: SortOrder
+    user?: UserOrderByWithRelationInput
+    branch?: BranchOrderByWithRelationInput
+    _relevance?: DoctorBranchOrderByRelevanceInput
+  }
+
+  export type DoctorBranchWhereUniqueInput = Prisma.AtLeast<{
+    userId_branchId?: DoctorBranchUserIdBranchIdCompoundUniqueInput
+    AND?: DoctorBranchWhereInput | DoctorBranchWhereInput[]
+    OR?: DoctorBranchWhereInput[]
+    NOT?: DoctorBranchWhereInput | DoctorBranchWhereInput[]
+    userId?: StringFilter<"DoctorBranch"> | string
+    branchId?: StringFilter<"DoctorBranch"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    branch?: XOR<BranchScalarRelationFilter, BranchWhereInput>
+  }, "userId_branchId">
+
+  export type DoctorBranchOrderByWithAggregationInput = {
+    userId?: SortOrder
+    branchId?: SortOrder
+    _count?: DoctorBranchCountOrderByAggregateInput
+    _max?: DoctorBranchMaxOrderByAggregateInput
+    _min?: DoctorBranchMinOrderByAggregateInput
+  }
+
+  export type DoctorBranchScalarWhereWithAggregatesInput = {
+    AND?: DoctorBranchScalarWhereWithAggregatesInput | DoctorBranchScalarWhereWithAggregatesInput[]
+    OR?: DoctorBranchScalarWhereWithAggregatesInput[]
+    NOT?: DoctorBranchScalarWhereWithAggregatesInput | DoctorBranchScalarWhereWithAggregatesInput[]
+    userId?: StringWithAggregatesFilter<"DoctorBranch"> | string
+    branchId?: StringWithAggregatesFilter<"DoctorBranch"> | string
+  }
 
   export type UserWhereInput = {
     AND?: UserWhereInput | UserWhereInput[]
@@ -4249,6 +10037,9 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     roles?: UserRoleListRelationFilter
+    userCompanies?: UserCompanyListRelationFilter
+    userBranches?: UserBranchListRelationFilter
+    doctorBranch?: DoctorBranchListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4271,6 +10062,9 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     roles?: UserRoleOrderByRelationAggregateInput
+    userCompanies?: UserCompanyOrderByRelationAggregateInput
+    userBranches?: UserBranchOrderByRelationAggregateInput
+    doctorBranch?: DoctorBranchOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -4297,6 +10091,9 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     roles?: UserRoleListRelationFilter
+    userCompanies?: UserCompanyListRelationFilter
+    userBranches?: UserBranchListRelationFilter
+    doctorBranch?: DoctorBranchListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -4443,6 +10240,284 @@ export namespace Prisma {
     roleId?: StringWithAggregatesFilter<"UserRole"> | string
   }
 
+  export type CompanyCreateInput = {
+    id?: string
+    name: string
+    website?: string | null
+    isVerified?: boolean
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    branches?: BranchCreateNestedManyWithoutCompanyInput
+    userCompanies?: UserCompanyCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyUncheckedCreateInput = {
+    id?: string
+    name: string
+    website?: string | null
+    isVerified?: boolean
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    branches?: BranchUncheckedCreateNestedManyWithoutCompanyInput
+    userCompanies?: UserCompanyUncheckedCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    branches?: BranchUpdateManyWithoutCompanyNestedInput
+    userCompanies?: UserCompanyUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type CompanyUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    branches?: BranchUncheckedUpdateManyWithoutCompanyNestedInput
+    userCompanies?: UserCompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type CompanyCreateManyInput = {
+    id?: string
+    name: string
+    website?: string | null
+    isVerified?: boolean
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+  }
+
+  export type CompanyUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type CompanyUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type BranchCreateInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phoneNumber?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    company: CompanyCreateNestedOneWithoutBranchesInput
+    userBranches?: UserBranchCreateNestedManyWithoutBranchInput
+    doctorBranches?: DoctorBranchCreateNestedManyWithoutBranchInput
+  }
+
+  export type BranchUncheckedCreateInput = {
+    id?: string
+    companyId: string
+    name: string
+    address?: string | null
+    phoneNumber?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    userBranches?: UserBranchUncheckedCreateNestedManyWithoutBranchInput
+    doctorBranches?: DoctorBranchUncheckedCreateNestedManyWithoutBranchInput
+  }
+
+  export type BranchUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    company?: CompanyUpdateOneRequiredWithoutBranchesNestedInput
+    userBranches?: UserBranchUpdateManyWithoutBranchNestedInput
+    doctorBranches?: DoctorBranchUpdateManyWithoutBranchNestedInput
+  }
+
+  export type BranchUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userBranches?: UserBranchUncheckedUpdateManyWithoutBranchNestedInput
+    doctorBranches?: DoctorBranchUncheckedUpdateManyWithoutBranchNestedInput
+  }
+
+  export type BranchCreateManyInput = {
+    id?: string
+    companyId: string
+    name: string
+    address?: string | null
+    phoneNumber?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+  }
+
+  export type BranchUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type BranchUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type UserCompanyCreateInput = {
+    user: UserCreateNestedOneWithoutUserCompaniesInput
+    company: CompanyCreateNestedOneWithoutUserCompaniesInput
+  }
+
+  export type UserCompanyUncheckedCreateInput = {
+    userId: string
+    companyId: string
+  }
+
+  export type UserCompanyUpdateInput = {
+    user?: UserUpdateOneRequiredWithoutUserCompaniesNestedInput
+    company?: CompanyUpdateOneRequiredWithoutUserCompaniesNestedInput
+  }
+
+  export type UserCompanyUncheckedUpdateInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserCompanyCreateManyInput = {
+    userId: string
+    companyId: string
+  }
+
+  export type UserCompanyUpdateManyMutationInput = {
+
+  }
+
+  export type UserCompanyUncheckedUpdateManyInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserBranchCreateInput = {
+    user: UserCreateNestedOneWithoutUserBranchesInput
+    branch: BranchCreateNestedOneWithoutUserBranchesInput
+  }
+
+  export type UserBranchUncheckedCreateInput = {
+    userId: string
+    branchId: string
+  }
+
+  export type UserBranchUpdateInput = {
+    user?: UserUpdateOneRequiredWithoutUserBranchesNestedInput
+    branch?: BranchUpdateOneRequiredWithoutUserBranchesNestedInput
+  }
+
+  export type UserBranchUncheckedUpdateInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    branchId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserBranchCreateManyInput = {
+    userId: string
+    branchId: string
+  }
+
+  export type UserBranchUpdateManyMutationInput = {
+
+  }
+
+  export type UserBranchUncheckedUpdateManyInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    branchId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DoctorBranchCreateInput = {
+    user: UserCreateNestedOneWithoutDoctorBranchInput
+    branch: BranchCreateNestedOneWithoutDoctorBranchesInput
+  }
+
+  export type DoctorBranchUncheckedCreateInput = {
+    userId: string
+    branchId: string
+  }
+
+  export type DoctorBranchUpdateInput = {
+    user?: UserUpdateOneRequiredWithoutDoctorBranchNestedInput
+    branch?: BranchUpdateOneRequiredWithoutDoctorBranchesNestedInput
+  }
+
+  export type DoctorBranchUncheckedUpdateInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    branchId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DoctorBranchCreateManyInput = {
+    userId: string
+    branchId: string
+  }
+
+  export type DoctorBranchUpdateManyMutationInput = {
+
+  }
+
+  export type DoctorBranchUncheckedUpdateManyInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    branchId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -4463,6 +10538,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     roles?: UserRoleCreateNestedManyWithoutUserInput
+    userCompanies?: UserCompanyCreateNestedManyWithoutUserInput
+    userBranches?: UserBranchCreateNestedManyWithoutUserInput
+    doctorBranch?: DoctorBranchCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -4485,6 +10563,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    userCompanies?: UserCompanyUncheckedCreateNestedManyWithoutUserInput
+    userBranches?: UserBranchUncheckedCreateNestedManyWithoutUserInput
+    doctorBranch?: DoctorBranchUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -4507,6 +10588,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     roles?: UserRoleUpdateManyWithoutUserNestedInput
+    userCompanies?: UserCompanyUpdateManyWithoutUserNestedInput
+    userBranches?: UserBranchUpdateManyWithoutUserNestedInput
+    doctorBranch?: DoctorBranchUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -4529,6 +10613,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    userCompanies?: UserCompanyUncheckedUpdateManyWithoutUserNestedInput
+    userBranches?: UserBranchUncheckedUpdateManyWithoutUserNestedInput
+    doctorBranch?: DoctorBranchUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -4711,16 +10798,366 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type BranchListRelationFilter = {
+    every?: BranchWhereInput
+    some?: BranchWhereInput
+    none?: BranchWhereInput
+  }
+
+  export type UserCompanyListRelationFilter = {
+    every?: UserCompanyWhereInput
+    some?: UserCompanyWhereInput
+    none?: UserCompanyWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type BranchOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserCompanyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CompanyOrderByRelevanceInput = {
+    fields: CompanyOrderByRelevanceFieldEnum | CompanyOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type CompanyCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    website?: SortOrder
+    isVerified?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CompanyMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    website?: SortOrder
+    isVerified?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CompanyMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    website?: SortOrder
+    isVerified?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type CompanyScalarRelationFilter = {
+    is?: CompanyWhereInput
+    isNot?: CompanyWhereInput
+  }
+
+  export type UserBranchListRelationFilter = {
+    every?: UserBranchWhereInput
+    some?: UserBranchWhereInput
+    none?: UserBranchWhereInput
+  }
+
+  export type DoctorBranchListRelationFilter = {
+    every?: DoctorBranchWhereInput
+    some?: DoctorBranchWhereInput
+    none?: DoctorBranchWhereInput
+  }
+
+  export type UserBranchOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DoctorBranchOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BranchOrderByRelevanceInput = {
+    fields: BranchOrderByRelevanceFieldEnum | BranchOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type BranchCountOrderByAggregateInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    name?: SortOrder
+    address?: SortOrder
+    phoneNumber?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BranchAvgOrderByAggregateInput = {
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type BranchMaxOrderByAggregateInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    name?: SortOrder
+    address?: SortOrder
+    phoneNumber?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BranchMinOrderByAggregateInput = {
+    id?: SortOrder
+    companyId?: SortOrder
+    name?: SortOrder
+    address?: SortOrder
+    phoneNumber?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BranchSumOrderByAggregateInput = {
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type UserCompanyOrderByRelevanceInput = {
+    fields: UserCompanyOrderByRelevanceFieldEnum | UserCompanyOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type UserCompanyUserIdCompanyIdCompoundUniqueInput = {
+    userId: string
+    companyId: string
+  }
+
+  export type UserCompanyCountOrderByAggregateInput = {
+    userId?: SortOrder
+    companyId?: SortOrder
+  }
+
+  export type UserCompanyMaxOrderByAggregateInput = {
+    userId?: SortOrder
+    companyId?: SortOrder
+  }
+
+  export type UserCompanyMinOrderByAggregateInput = {
+    userId?: SortOrder
+    companyId?: SortOrder
+  }
+
+  export type BranchScalarRelationFilter = {
+    is?: BranchWhereInput
+    isNot?: BranchWhereInput
+  }
+
+  export type UserBranchOrderByRelevanceInput = {
+    fields: UserBranchOrderByRelevanceFieldEnum | UserBranchOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type UserBranchUserIdBranchIdCompoundUniqueInput = {
+    userId: string
+    branchId: string
+  }
+
+  export type UserBranchCountOrderByAggregateInput = {
+    userId?: SortOrder
+    branchId?: SortOrder
+  }
+
+  export type UserBranchMaxOrderByAggregateInput = {
+    userId?: SortOrder
+    branchId?: SortOrder
+  }
+
+  export type UserBranchMinOrderByAggregateInput = {
+    userId?: SortOrder
+    branchId?: SortOrder
+  }
+
+  export type DoctorBranchOrderByRelevanceInput = {
+    fields: DoctorBranchOrderByRelevanceFieldEnum | DoctorBranchOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type DoctorBranchUserIdBranchIdCompoundUniqueInput = {
+    userId: string
+    branchId: string
+  }
+
+  export type DoctorBranchCountOrderByAggregateInput = {
+    userId?: SortOrder
+    branchId?: SortOrder
+  }
+
+  export type DoctorBranchMaxOrderByAggregateInput = {
+    userId?: SortOrder
+    branchId?: SortOrder
+  }
+
+  export type DoctorBranchMinOrderByAggregateInput = {
+    userId?: SortOrder
+    branchId?: SortOrder
+  }
+
   export type EnumAuthProviderFilter<$PrismaModel = never> = {
     equals?: $Enums.AuthProvider | EnumAuthProviderFieldRefInput<$PrismaModel>
     in?: $Enums.AuthProvider[]
     notIn?: $Enums.AuthProvider[]
     not?: NestedEnumAuthProviderFilter<$PrismaModel> | $Enums.AuthProvider
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
   export type JsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -4746,37 +11183,10 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type UserRoleListRelationFilter = {
     every?: UserRoleWhereInput
     some?: UserRoleWhereInput
     none?: UserRoleWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type UserRoleOrderByRelationAggregateInput = {
@@ -4850,42 +11260,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type StringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[]
-    notIn?: string[]
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
   export type EnumAuthProviderWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.AuthProvider | EnumAuthProviderFieldRefInput<$PrismaModel>
     in?: $Enums.AuthProvider[]
@@ -4894,14 +11268,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumAuthProviderFilter<$PrismaModel>
     _max?: NestedEnumAuthProviderFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -4930,34 +11296,6 @@ export namespace Prisma {
     _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
   export type RoleOrderByRelevanceInput = {
     fields: RoleOrderByRelevanceFieldEnum | RoleOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -4983,11 +11321,6 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     isActive?: SortOrder
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type RoleScalarRelationFilter = {
@@ -5021,18 +11354,32 @@ export namespace Prisma {
     roleId?: SortOrder
   }
 
-  export type UserRoleCreateNestedManyWithoutUserInput = {
-    create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
-    createMany?: UserRoleCreateManyUserInputEnvelope
-    connect?: UserRoleWhereUniqueInput | UserRoleWhereUniqueInput[]
+  export type BranchCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<BranchCreateWithoutCompanyInput, BranchUncheckedCreateWithoutCompanyInput> | BranchCreateWithoutCompanyInput[] | BranchUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: BranchCreateOrConnectWithoutCompanyInput | BranchCreateOrConnectWithoutCompanyInput[]
+    createMany?: BranchCreateManyCompanyInputEnvelope
+    connect?: BranchWhereUniqueInput | BranchWhereUniqueInput[]
   }
 
-  export type UserRoleUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
-    createMany?: UserRoleCreateManyUserInputEnvelope
-    connect?: UserRoleWhereUniqueInput | UserRoleWhereUniqueInput[]
+  export type UserCompanyCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<UserCompanyCreateWithoutCompanyInput, UserCompanyUncheckedCreateWithoutCompanyInput> | UserCompanyCreateWithoutCompanyInput[] | UserCompanyUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: UserCompanyCreateOrConnectWithoutCompanyInput | UserCompanyCreateOrConnectWithoutCompanyInput[]
+    createMany?: UserCompanyCreateManyCompanyInputEnvelope
+    connect?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+  }
+
+  export type BranchUncheckedCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<BranchCreateWithoutCompanyInput, BranchUncheckedCreateWithoutCompanyInput> | BranchCreateWithoutCompanyInput[] | BranchUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: BranchCreateOrConnectWithoutCompanyInput | BranchCreateOrConnectWithoutCompanyInput[]
+    createMany?: BranchCreateManyCompanyInputEnvelope
+    connect?: BranchWhereUniqueInput | BranchWhereUniqueInput[]
+  }
+
+  export type UserCompanyUncheckedCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<UserCompanyCreateWithoutCompanyInput, UserCompanyUncheckedCreateWithoutCompanyInput> | UserCompanyCreateWithoutCompanyInput[] | UserCompanyUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: UserCompanyCreateOrConnectWithoutCompanyInput | UserCompanyCreateOrConnectWithoutCompanyInput[]
+    createMany?: UserCompanyCreateManyCompanyInputEnvelope
+    connect?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5041,10 +11388,6 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
-  }
-
-  export type EnumAuthProviderFieldUpdateOperationsInput = {
-    set?: $Enums.AuthProvider
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -5057,6 +11400,312 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type BranchUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<BranchCreateWithoutCompanyInput, BranchUncheckedCreateWithoutCompanyInput> | BranchCreateWithoutCompanyInput[] | BranchUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: BranchCreateOrConnectWithoutCompanyInput | BranchCreateOrConnectWithoutCompanyInput[]
+    upsert?: BranchUpsertWithWhereUniqueWithoutCompanyInput | BranchUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: BranchCreateManyCompanyInputEnvelope
+    set?: BranchWhereUniqueInput | BranchWhereUniqueInput[]
+    disconnect?: BranchWhereUniqueInput | BranchWhereUniqueInput[]
+    delete?: BranchWhereUniqueInput | BranchWhereUniqueInput[]
+    connect?: BranchWhereUniqueInput | BranchWhereUniqueInput[]
+    update?: BranchUpdateWithWhereUniqueWithoutCompanyInput | BranchUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: BranchUpdateManyWithWhereWithoutCompanyInput | BranchUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: BranchScalarWhereInput | BranchScalarWhereInput[]
+  }
+
+  export type UserCompanyUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<UserCompanyCreateWithoutCompanyInput, UserCompanyUncheckedCreateWithoutCompanyInput> | UserCompanyCreateWithoutCompanyInput[] | UserCompanyUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: UserCompanyCreateOrConnectWithoutCompanyInput | UserCompanyCreateOrConnectWithoutCompanyInput[]
+    upsert?: UserCompanyUpsertWithWhereUniqueWithoutCompanyInput | UserCompanyUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: UserCompanyCreateManyCompanyInputEnvelope
+    set?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    disconnect?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    delete?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    connect?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    update?: UserCompanyUpdateWithWhereUniqueWithoutCompanyInput | UserCompanyUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: UserCompanyUpdateManyWithWhereWithoutCompanyInput | UserCompanyUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: UserCompanyScalarWhereInput | UserCompanyScalarWhereInput[]
+  }
+
+  export type BranchUncheckedUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<BranchCreateWithoutCompanyInput, BranchUncheckedCreateWithoutCompanyInput> | BranchCreateWithoutCompanyInput[] | BranchUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: BranchCreateOrConnectWithoutCompanyInput | BranchCreateOrConnectWithoutCompanyInput[]
+    upsert?: BranchUpsertWithWhereUniqueWithoutCompanyInput | BranchUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: BranchCreateManyCompanyInputEnvelope
+    set?: BranchWhereUniqueInput | BranchWhereUniqueInput[]
+    disconnect?: BranchWhereUniqueInput | BranchWhereUniqueInput[]
+    delete?: BranchWhereUniqueInput | BranchWhereUniqueInput[]
+    connect?: BranchWhereUniqueInput | BranchWhereUniqueInput[]
+    update?: BranchUpdateWithWhereUniqueWithoutCompanyInput | BranchUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: BranchUpdateManyWithWhereWithoutCompanyInput | BranchUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: BranchScalarWhereInput | BranchScalarWhereInput[]
+  }
+
+  export type UserCompanyUncheckedUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<UserCompanyCreateWithoutCompanyInput, UserCompanyUncheckedCreateWithoutCompanyInput> | UserCompanyCreateWithoutCompanyInput[] | UserCompanyUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: UserCompanyCreateOrConnectWithoutCompanyInput | UserCompanyCreateOrConnectWithoutCompanyInput[]
+    upsert?: UserCompanyUpsertWithWhereUniqueWithoutCompanyInput | UserCompanyUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: UserCompanyCreateManyCompanyInputEnvelope
+    set?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    disconnect?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    delete?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    connect?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    update?: UserCompanyUpdateWithWhereUniqueWithoutCompanyInput | UserCompanyUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: UserCompanyUpdateManyWithWhereWithoutCompanyInput | UserCompanyUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: UserCompanyScalarWhereInput | UserCompanyScalarWhereInput[]
+  }
+
+  export type CompanyCreateNestedOneWithoutBranchesInput = {
+    create?: XOR<CompanyCreateWithoutBranchesInput, CompanyUncheckedCreateWithoutBranchesInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutBranchesInput
+    connect?: CompanyWhereUniqueInput
+  }
+
+  export type UserBranchCreateNestedManyWithoutBranchInput = {
+    create?: XOR<UserBranchCreateWithoutBranchInput, UserBranchUncheckedCreateWithoutBranchInput> | UserBranchCreateWithoutBranchInput[] | UserBranchUncheckedCreateWithoutBranchInput[]
+    connectOrCreate?: UserBranchCreateOrConnectWithoutBranchInput | UserBranchCreateOrConnectWithoutBranchInput[]
+    createMany?: UserBranchCreateManyBranchInputEnvelope
+    connect?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+  }
+
+  export type DoctorBranchCreateNestedManyWithoutBranchInput = {
+    create?: XOR<DoctorBranchCreateWithoutBranchInput, DoctorBranchUncheckedCreateWithoutBranchInput> | DoctorBranchCreateWithoutBranchInput[] | DoctorBranchUncheckedCreateWithoutBranchInput[]
+    connectOrCreate?: DoctorBranchCreateOrConnectWithoutBranchInput | DoctorBranchCreateOrConnectWithoutBranchInput[]
+    createMany?: DoctorBranchCreateManyBranchInputEnvelope
+    connect?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+  }
+
+  export type UserBranchUncheckedCreateNestedManyWithoutBranchInput = {
+    create?: XOR<UserBranchCreateWithoutBranchInput, UserBranchUncheckedCreateWithoutBranchInput> | UserBranchCreateWithoutBranchInput[] | UserBranchUncheckedCreateWithoutBranchInput[]
+    connectOrCreate?: UserBranchCreateOrConnectWithoutBranchInput | UserBranchCreateOrConnectWithoutBranchInput[]
+    createMany?: UserBranchCreateManyBranchInputEnvelope
+    connect?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+  }
+
+  export type DoctorBranchUncheckedCreateNestedManyWithoutBranchInput = {
+    create?: XOR<DoctorBranchCreateWithoutBranchInput, DoctorBranchUncheckedCreateWithoutBranchInput> | DoctorBranchCreateWithoutBranchInput[] | DoctorBranchUncheckedCreateWithoutBranchInput[]
+    connectOrCreate?: DoctorBranchCreateOrConnectWithoutBranchInput | DoctorBranchCreateOrConnectWithoutBranchInput[]
+    createMany?: DoctorBranchCreateManyBranchInputEnvelope
+    connect?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type CompanyUpdateOneRequiredWithoutBranchesNestedInput = {
+    create?: XOR<CompanyCreateWithoutBranchesInput, CompanyUncheckedCreateWithoutBranchesInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutBranchesInput
+    upsert?: CompanyUpsertWithoutBranchesInput
+    connect?: CompanyWhereUniqueInput
+    update?: XOR<XOR<CompanyUpdateToOneWithWhereWithoutBranchesInput, CompanyUpdateWithoutBranchesInput>, CompanyUncheckedUpdateWithoutBranchesInput>
+  }
+
+  export type UserBranchUpdateManyWithoutBranchNestedInput = {
+    create?: XOR<UserBranchCreateWithoutBranchInput, UserBranchUncheckedCreateWithoutBranchInput> | UserBranchCreateWithoutBranchInput[] | UserBranchUncheckedCreateWithoutBranchInput[]
+    connectOrCreate?: UserBranchCreateOrConnectWithoutBranchInput | UserBranchCreateOrConnectWithoutBranchInput[]
+    upsert?: UserBranchUpsertWithWhereUniqueWithoutBranchInput | UserBranchUpsertWithWhereUniqueWithoutBranchInput[]
+    createMany?: UserBranchCreateManyBranchInputEnvelope
+    set?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    disconnect?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    delete?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    connect?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    update?: UserBranchUpdateWithWhereUniqueWithoutBranchInput | UserBranchUpdateWithWhereUniqueWithoutBranchInput[]
+    updateMany?: UserBranchUpdateManyWithWhereWithoutBranchInput | UserBranchUpdateManyWithWhereWithoutBranchInput[]
+    deleteMany?: UserBranchScalarWhereInput | UserBranchScalarWhereInput[]
+  }
+
+  export type DoctorBranchUpdateManyWithoutBranchNestedInput = {
+    create?: XOR<DoctorBranchCreateWithoutBranchInput, DoctorBranchUncheckedCreateWithoutBranchInput> | DoctorBranchCreateWithoutBranchInput[] | DoctorBranchUncheckedCreateWithoutBranchInput[]
+    connectOrCreate?: DoctorBranchCreateOrConnectWithoutBranchInput | DoctorBranchCreateOrConnectWithoutBranchInput[]
+    upsert?: DoctorBranchUpsertWithWhereUniqueWithoutBranchInput | DoctorBranchUpsertWithWhereUniqueWithoutBranchInput[]
+    createMany?: DoctorBranchCreateManyBranchInputEnvelope
+    set?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    disconnect?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    delete?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    connect?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    update?: DoctorBranchUpdateWithWhereUniqueWithoutBranchInput | DoctorBranchUpdateWithWhereUniqueWithoutBranchInput[]
+    updateMany?: DoctorBranchUpdateManyWithWhereWithoutBranchInput | DoctorBranchUpdateManyWithWhereWithoutBranchInput[]
+    deleteMany?: DoctorBranchScalarWhereInput | DoctorBranchScalarWhereInput[]
+  }
+
+  export type UserBranchUncheckedUpdateManyWithoutBranchNestedInput = {
+    create?: XOR<UserBranchCreateWithoutBranchInput, UserBranchUncheckedCreateWithoutBranchInput> | UserBranchCreateWithoutBranchInput[] | UserBranchUncheckedCreateWithoutBranchInput[]
+    connectOrCreate?: UserBranchCreateOrConnectWithoutBranchInput | UserBranchCreateOrConnectWithoutBranchInput[]
+    upsert?: UserBranchUpsertWithWhereUniqueWithoutBranchInput | UserBranchUpsertWithWhereUniqueWithoutBranchInput[]
+    createMany?: UserBranchCreateManyBranchInputEnvelope
+    set?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    disconnect?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    delete?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    connect?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    update?: UserBranchUpdateWithWhereUniqueWithoutBranchInput | UserBranchUpdateWithWhereUniqueWithoutBranchInput[]
+    updateMany?: UserBranchUpdateManyWithWhereWithoutBranchInput | UserBranchUpdateManyWithWhereWithoutBranchInput[]
+    deleteMany?: UserBranchScalarWhereInput | UserBranchScalarWhereInput[]
+  }
+
+  export type DoctorBranchUncheckedUpdateManyWithoutBranchNestedInput = {
+    create?: XOR<DoctorBranchCreateWithoutBranchInput, DoctorBranchUncheckedCreateWithoutBranchInput> | DoctorBranchCreateWithoutBranchInput[] | DoctorBranchUncheckedCreateWithoutBranchInput[]
+    connectOrCreate?: DoctorBranchCreateOrConnectWithoutBranchInput | DoctorBranchCreateOrConnectWithoutBranchInput[]
+    upsert?: DoctorBranchUpsertWithWhereUniqueWithoutBranchInput | DoctorBranchUpsertWithWhereUniqueWithoutBranchInput[]
+    createMany?: DoctorBranchCreateManyBranchInputEnvelope
+    set?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    disconnect?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    delete?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    connect?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    update?: DoctorBranchUpdateWithWhereUniqueWithoutBranchInput | DoctorBranchUpdateWithWhereUniqueWithoutBranchInput[]
+    updateMany?: DoctorBranchUpdateManyWithWhereWithoutBranchInput | DoctorBranchUpdateManyWithWhereWithoutBranchInput[]
+    deleteMany?: DoctorBranchScalarWhereInput | DoctorBranchScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutUserCompaniesInput = {
+    create?: XOR<UserCreateWithoutUserCompaniesInput, UserUncheckedCreateWithoutUserCompaniesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserCompaniesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type CompanyCreateNestedOneWithoutUserCompaniesInput = {
+    create?: XOR<CompanyCreateWithoutUserCompaniesInput, CompanyUncheckedCreateWithoutUserCompaniesInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutUserCompaniesInput
+    connect?: CompanyWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutUserCompaniesNestedInput = {
+    create?: XOR<UserCreateWithoutUserCompaniesInput, UserUncheckedCreateWithoutUserCompaniesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserCompaniesInput
+    upsert?: UserUpsertWithoutUserCompaniesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserCompaniesInput, UserUpdateWithoutUserCompaniesInput>, UserUncheckedUpdateWithoutUserCompaniesInput>
+  }
+
+  export type CompanyUpdateOneRequiredWithoutUserCompaniesNestedInput = {
+    create?: XOR<CompanyCreateWithoutUserCompaniesInput, CompanyUncheckedCreateWithoutUserCompaniesInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutUserCompaniesInput
+    upsert?: CompanyUpsertWithoutUserCompaniesInput
+    connect?: CompanyWhereUniqueInput
+    update?: XOR<XOR<CompanyUpdateToOneWithWhereWithoutUserCompaniesInput, CompanyUpdateWithoutUserCompaniesInput>, CompanyUncheckedUpdateWithoutUserCompaniesInput>
+  }
+
+  export type UserCreateNestedOneWithoutUserBranchesInput = {
+    create?: XOR<UserCreateWithoutUserBranchesInput, UserUncheckedCreateWithoutUserBranchesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserBranchesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BranchCreateNestedOneWithoutUserBranchesInput = {
+    create?: XOR<BranchCreateWithoutUserBranchesInput, BranchUncheckedCreateWithoutUserBranchesInput>
+    connectOrCreate?: BranchCreateOrConnectWithoutUserBranchesInput
+    connect?: BranchWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutUserBranchesNestedInput = {
+    create?: XOR<UserCreateWithoutUserBranchesInput, UserUncheckedCreateWithoutUserBranchesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserBranchesInput
+    upsert?: UserUpsertWithoutUserBranchesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserBranchesInput, UserUpdateWithoutUserBranchesInput>, UserUncheckedUpdateWithoutUserBranchesInput>
+  }
+
+  export type BranchUpdateOneRequiredWithoutUserBranchesNestedInput = {
+    create?: XOR<BranchCreateWithoutUserBranchesInput, BranchUncheckedCreateWithoutUserBranchesInput>
+    connectOrCreate?: BranchCreateOrConnectWithoutUserBranchesInput
+    upsert?: BranchUpsertWithoutUserBranchesInput
+    connect?: BranchWhereUniqueInput
+    update?: XOR<XOR<BranchUpdateToOneWithWhereWithoutUserBranchesInput, BranchUpdateWithoutUserBranchesInput>, BranchUncheckedUpdateWithoutUserBranchesInput>
+  }
+
+  export type UserCreateNestedOneWithoutDoctorBranchInput = {
+    create?: XOR<UserCreateWithoutDoctorBranchInput, UserUncheckedCreateWithoutDoctorBranchInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDoctorBranchInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BranchCreateNestedOneWithoutDoctorBranchesInput = {
+    create?: XOR<BranchCreateWithoutDoctorBranchesInput, BranchUncheckedCreateWithoutDoctorBranchesInput>
+    connectOrCreate?: BranchCreateOrConnectWithoutDoctorBranchesInput
+    connect?: BranchWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutDoctorBranchNestedInput = {
+    create?: XOR<UserCreateWithoutDoctorBranchInput, UserUncheckedCreateWithoutDoctorBranchInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDoctorBranchInput
+    upsert?: UserUpsertWithoutDoctorBranchInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDoctorBranchInput, UserUpdateWithoutDoctorBranchInput>, UserUncheckedUpdateWithoutDoctorBranchInput>
+  }
+
+  export type BranchUpdateOneRequiredWithoutDoctorBranchesNestedInput = {
+    create?: XOR<BranchCreateWithoutDoctorBranchesInput, BranchUncheckedCreateWithoutDoctorBranchesInput>
+    connectOrCreate?: BranchCreateOrConnectWithoutDoctorBranchesInput
+    upsert?: BranchUpsertWithoutDoctorBranchesInput
+    connect?: BranchWhereUniqueInput
+    update?: XOR<XOR<BranchUpdateToOneWithWhereWithoutDoctorBranchesInput, BranchUpdateWithoutDoctorBranchesInput>, BranchUncheckedUpdateWithoutDoctorBranchesInput>
+  }
+
+  export type UserRoleCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
+    createMany?: UserRoleCreateManyUserInputEnvelope
+    connect?: UserRoleWhereUniqueInput | UserRoleWhereUniqueInput[]
+  }
+
+  export type UserCompanyCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserCompanyCreateWithoutUserInput, UserCompanyUncheckedCreateWithoutUserInput> | UserCompanyCreateWithoutUserInput[] | UserCompanyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserCompanyCreateOrConnectWithoutUserInput | UserCompanyCreateOrConnectWithoutUserInput[]
+    createMany?: UserCompanyCreateManyUserInputEnvelope
+    connect?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+  }
+
+  export type UserBranchCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserBranchCreateWithoutUserInput, UserBranchUncheckedCreateWithoutUserInput> | UserBranchCreateWithoutUserInput[] | UserBranchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBranchCreateOrConnectWithoutUserInput | UserBranchCreateOrConnectWithoutUserInput[]
+    createMany?: UserBranchCreateManyUserInputEnvelope
+    connect?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+  }
+
+  export type DoctorBranchCreateNestedManyWithoutUserInput = {
+    create?: XOR<DoctorBranchCreateWithoutUserInput, DoctorBranchUncheckedCreateWithoutUserInput> | DoctorBranchCreateWithoutUserInput[] | DoctorBranchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DoctorBranchCreateOrConnectWithoutUserInput | DoctorBranchCreateOrConnectWithoutUserInput[]
+    createMany?: DoctorBranchCreateManyUserInputEnvelope
+    connect?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+  }
+
+  export type UserRoleUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
+    createMany?: UserRoleCreateManyUserInputEnvelope
+    connect?: UserRoleWhereUniqueInput | UserRoleWhereUniqueInput[]
+  }
+
+  export type UserCompanyUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserCompanyCreateWithoutUserInput, UserCompanyUncheckedCreateWithoutUserInput> | UserCompanyCreateWithoutUserInput[] | UserCompanyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserCompanyCreateOrConnectWithoutUserInput | UserCompanyCreateOrConnectWithoutUserInput[]
+    createMany?: UserCompanyCreateManyUserInputEnvelope
+    connect?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+  }
+
+  export type UserBranchUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserBranchCreateWithoutUserInput, UserBranchUncheckedCreateWithoutUserInput> | UserBranchCreateWithoutUserInput[] | UserBranchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBranchCreateOrConnectWithoutUserInput | UserBranchCreateOrConnectWithoutUserInput[]
+    createMany?: UserBranchCreateManyUserInputEnvelope
+    connect?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+  }
+
+  export type DoctorBranchUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<DoctorBranchCreateWithoutUserInput, DoctorBranchUncheckedCreateWithoutUserInput> | DoctorBranchCreateWithoutUserInput[] | DoctorBranchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DoctorBranchCreateOrConnectWithoutUserInput | DoctorBranchCreateOrConnectWithoutUserInput[]
+    createMany?: DoctorBranchCreateManyUserInputEnvelope
+    connect?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+  }
+
+  export type EnumAuthProviderFieldUpdateOperationsInput = {
+    set?: $Enums.AuthProvider
   }
 
   export type UserRoleUpdateManyWithoutUserNestedInput = {
@@ -5073,6 +11722,48 @@ export namespace Prisma {
     deleteMany?: UserRoleScalarWhereInput | UserRoleScalarWhereInput[]
   }
 
+  export type UserCompanyUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserCompanyCreateWithoutUserInput, UserCompanyUncheckedCreateWithoutUserInput> | UserCompanyCreateWithoutUserInput[] | UserCompanyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserCompanyCreateOrConnectWithoutUserInput | UserCompanyCreateOrConnectWithoutUserInput[]
+    upsert?: UserCompanyUpsertWithWhereUniqueWithoutUserInput | UserCompanyUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserCompanyCreateManyUserInputEnvelope
+    set?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    disconnect?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    delete?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    connect?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    update?: UserCompanyUpdateWithWhereUniqueWithoutUserInput | UserCompanyUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserCompanyUpdateManyWithWhereWithoutUserInput | UserCompanyUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserCompanyScalarWhereInput | UserCompanyScalarWhereInput[]
+  }
+
+  export type UserBranchUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserBranchCreateWithoutUserInput, UserBranchUncheckedCreateWithoutUserInput> | UserBranchCreateWithoutUserInput[] | UserBranchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBranchCreateOrConnectWithoutUserInput | UserBranchCreateOrConnectWithoutUserInput[]
+    upsert?: UserBranchUpsertWithWhereUniqueWithoutUserInput | UserBranchUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserBranchCreateManyUserInputEnvelope
+    set?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    disconnect?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    delete?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    connect?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    update?: UserBranchUpdateWithWhereUniqueWithoutUserInput | UserBranchUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserBranchUpdateManyWithWhereWithoutUserInput | UserBranchUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserBranchScalarWhereInput | UserBranchScalarWhereInput[]
+  }
+
+  export type DoctorBranchUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DoctorBranchCreateWithoutUserInput, DoctorBranchUncheckedCreateWithoutUserInput> | DoctorBranchCreateWithoutUserInput[] | DoctorBranchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DoctorBranchCreateOrConnectWithoutUserInput | DoctorBranchCreateOrConnectWithoutUserInput[]
+    upsert?: DoctorBranchUpsertWithWhereUniqueWithoutUserInput | DoctorBranchUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DoctorBranchCreateManyUserInputEnvelope
+    set?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    disconnect?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    delete?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    connect?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    update?: DoctorBranchUpdateWithWhereUniqueWithoutUserInput | DoctorBranchUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DoctorBranchUpdateManyWithWhereWithoutUserInput | DoctorBranchUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DoctorBranchScalarWhereInput | DoctorBranchScalarWhereInput[]
+  }
+
   export type UserRoleUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -5085,6 +11776,48 @@ export namespace Prisma {
     update?: UserRoleUpdateWithWhereUniqueWithoutUserInput | UserRoleUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserRoleUpdateManyWithWhereWithoutUserInput | UserRoleUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserRoleScalarWhereInput | UserRoleScalarWhereInput[]
+  }
+
+  export type UserCompanyUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserCompanyCreateWithoutUserInput, UserCompanyUncheckedCreateWithoutUserInput> | UserCompanyCreateWithoutUserInput[] | UserCompanyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserCompanyCreateOrConnectWithoutUserInput | UserCompanyCreateOrConnectWithoutUserInput[]
+    upsert?: UserCompanyUpsertWithWhereUniqueWithoutUserInput | UserCompanyUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserCompanyCreateManyUserInputEnvelope
+    set?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    disconnect?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    delete?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    connect?: UserCompanyWhereUniqueInput | UserCompanyWhereUniqueInput[]
+    update?: UserCompanyUpdateWithWhereUniqueWithoutUserInput | UserCompanyUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserCompanyUpdateManyWithWhereWithoutUserInput | UserCompanyUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserCompanyScalarWhereInput | UserCompanyScalarWhereInput[]
+  }
+
+  export type UserBranchUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserBranchCreateWithoutUserInput, UserBranchUncheckedCreateWithoutUserInput> | UserBranchCreateWithoutUserInput[] | UserBranchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBranchCreateOrConnectWithoutUserInput | UserBranchCreateOrConnectWithoutUserInput[]
+    upsert?: UserBranchUpsertWithWhereUniqueWithoutUserInput | UserBranchUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserBranchCreateManyUserInputEnvelope
+    set?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    disconnect?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    delete?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    connect?: UserBranchWhereUniqueInput | UserBranchWhereUniqueInput[]
+    update?: UserBranchUpdateWithWhereUniqueWithoutUserInput | UserBranchUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserBranchUpdateManyWithWhereWithoutUserInput | UserBranchUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserBranchScalarWhereInput | UserBranchScalarWhereInput[]
+  }
+
+  export type DoctorBranchUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DoctorBranchCreateWithoutUserInput, DoctorBranchUncheckedCreateWithoutUserInput> | DoctorBranchCreateWithoutUserInput[] | DoctorBranchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DoctorBranchCreateOrConnectWithoutUserInput | DoctorBranchCreateOrConnectWithoutUserInput[]
+    upsert?: DoctorBranchUpsertWithWhereUniqueWithoutUserInput | DoctorBranchUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DoctorBranchCreateManyUserInputEnvelope
+    set?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    disconnect?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    delete?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    connect?: DoctorBranchWhereUniqueInput | DoctorBranchWhereUniqueInput[]
+    update?: DoctorBranchUpdateWithWhereUniqueWithoutUserInput | DoctorBranchUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DoctorBranchUpdateManyWithWhereWithoutUserInput | DoctorBranchUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DoctorBranchScalarWhereInput | DoctorBranchScalarWhereInput[]
   }
 
   export type UserRoleCreateNestedManyWithoutRoleInput = {
@@ -5187,13 +11920,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedEnumAuthProviderFilter<$PrismaModel = never> = {
-    equals?: $Enums.AuthProvider | EnumAuthProviderFieldRefInput<$PrismaModel>
-    in?: $Enums.AuthProvider[]
-    notIn?: $Enums.AuthProvider[]
-    not?: NestedEnumAuthProviderFilter<$PrismaModel> | $Enums.AuthProvider
-  }
-
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -5279,45 +12005,12 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedEnumAuthProviderWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.AuthProvider | EnumAuthProviderFieldRefInput<$PrismaModel>
-    in?: $Enums.AuthProvider[]
-    notIn?: $Enums.AuthProvider[]
-    not?: NestedEnumAuthProviderWithAggregatesFilter<$PrismaModel> | $Enums.AuthProvider
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumAuthProviderFilter<$PrismaModel>
-    _max?: NestedEnumAuthProviderFilter<$PrismaModel>
-  }
-
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
-  }
-  export type NestedJsonNullableFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-        Required<NestedJsonNullableFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
-
-  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue
-    lte?: InputJsonValue
-    gt?: InputJsonValue
-    gte?: InputJsonValue
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -5348,6 +12041,869 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumAuthProviderFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthProvider | EnumAuthProviderFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthProvider[]
+    notIn?: $Enums.AuthProvider[]
+    not?: NestedEnumAuthProviderFilter<$PrismaModel> | $Enums.AuthProvider
+  }
+
+  export type NestedEnumAuthProviderWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthProvider | EnumAuthProviderFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthProvider[]
+    notIn?: $Enums.AuthProvider[]
+    not?: NestedEnumAuthProviderWithAggregatesFilter<$PrismaModel> | $Enums.AuthProvider
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAuthProviderFilter<$PrismaModel>
+    _max?: NestedEnumAuthProviderFilter<$PrismaModel>
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue
+    lte?: InputJsonValue
+    gt?: InputJsonValue
+    gte?: InputJsonValue
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type BranchCreateWithoutCompanyInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phoneNumber?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    userBranches?: UserBranchCreateNestedManyWithoutBranchInput
+    doctorBranches?: DoctorBranchCreateNestedManyWithoutBranchInput
+  }
+
+  export type BranchUncheckedCreateWithoutCompanyInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phoneNumber?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    userBranches?: UserBranchUncheckedCreateNestedManyWithoutBranchInput
+    doctorBranches?: DoctorBranchUncheckedCreateNestedManyWithoutBranchInput
+  }
+
+  export type BranchCreateOrConnectWithoutCompanyInput = {
+    where: BranchWhereUniqueInput
+    create: XOR<BranchCreateWithoutCompanyInput, BranchUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type BranchCreateManyCompanyInputEnvelope = {
+    data: BranchCreateManyCompanyInput | BranchCreateManyCompanyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserCompanyCreateWithoutCompanyInput = {
+    user: UserCreateNestedOneWithoutUserCompaniesInput
+  }
+
+  export type UserCompanyUncheckedCreateWithoutCompanyInput = {
+    userId: string
+  }
+
+  export type UserCompanyCreateOrConnectWithoutCompanyInput = {
+    where: UserCompanyWhereUniqueInput
+    create: XOR<UserCompanyCreateWithoutCompanyInput, UserCompanyUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type UserCompanyCreateManyCompanyInputEnvelope = {
+    data: UserCompanyCreateManyCompanyInput | UserCompanyCreateManyCompanyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type BranchUpsertWithWhereUniqueWithoutCompanyInput = {
+    where: BranchWhereUniqueInput
+    update: XOR<BranchUpdateWithoutCompanyInput, BranchUncheckedUpdateWithoutCompanyInput>
+    create: XOR<BranchCreateWithoutCompanyInput, BranchUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type BranchUpdateWithWhereUniqueWithoutCompanyInput = {
+    where: BranchWhereUniqueInput
+    data: XOR<BranchUpdateWithoutCompanyInput, BranchUncheckedUpdateWithoutCompanyInput>
+  }
+
+  export type BranchUpdateManyWithWhereWithoutCompanyInput = {
+    where: BranchScalarWhereInput
+    data: XOR<BranchUpdateManyMutationInput, BranchUncheckedUpdateManyWithoutCompanyInput>
+  }
+
+  export type BranchScalarWhereInput = {
+    AND?: BranchScalarWhereInput | BranchScalarWhereInput[]
+    OR?: BranchScalarWhereInput[]
+    NOT?: BranchScalarWhereInput | BranchScalarWhereInput[]
+    id?: StringFilter<"Branch"> | string
+    companyId?: StringFilter<"Branch"> | string
+    name?: StringFilter<"Branch"> | string
+    address?: StringNullableFilter<"Branch"> | string | null
+    phoneNumber?: StringNullableFilter<"Branch"> | string | null
+    latitude?: FloatNullableFilter<"Branch"> | number | null
+    longitude?: FloatNullableFilter<"Branch"> | number | null
+    isActive?: BoolFilter<"Branch"> | boolean
+    createdAt?: DateTimeFilter<"Branch"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"Branch"> | Date | string | null
+  }
+
+  export type UserCompanyUpsertWithWhereUniqueWithoutCompanyInput = {
+    where: UserCompanyWhereUniqueInput
+    update: XOR<UserCompanyUpdateWithoutCompanyInput, UserCompanyUncheckedUpdateWithoutCompanyInput>
+    create: XOR<UserCompanyCreateWithoutCompanyInput, UserCompanyUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type UserCompanyUpdateWithWhereUniqueWithoutCompanyInput = {
+    where: UserCompanyWhereUniqueInput
+    data: XOR<UserCompanyUpdateWithoutCompanyInput, UserCompanyUncheckedUpdateWithoutCompanyInput>
+  }
+
+  export type UserCompanyUpdateManyWithWhereWithoutCompanyInput = {
+    where: UserCompanyScalarWhereInput
+    data: XOR<UserCompanyUpdateManyMutationInput, UserCompanyUncheckedUpdateManyWithoutCompanyInput>
+  }
+
+  export type UserCompanyScalarWhereInput = {
+    AND?: UserCompanyScalarWhereInput | UserCompanyScalarWhereInput[]
+    OR?: UserCompanyScalarWhereInput[]
+    NOT?: UserCompanyScalarWhereInput | UserCompanyScalarWhereInput[]
+    userId?: StringFilter<"UserCompany"> | string
+    companyId?: StringFilter<"UserCompany"> | string
+  }
+
+  export type CompanyCreateWithoutBranchesInput = {
+    id?: string
+    name: string
+    website?: string | null
+    isVerified?: boolean
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    userCompanies?: UserCompanyCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyUncheckedCreateWithoutBranchesInput = {
+    id?: string
+    name: string
+    website?: string | null
+    isVerified?: boolean
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    userCompanies?: UserCompanyUncheckedCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyCreateOrConnectWithoutBranchesInput = {
+    where: CompanyWhereUniqueInput
+    create: XOR<CompanyCreateWithoutBranchesInput, CompanyUncheckedCreateWithoutBranchesInput>
+  }
+
+  export type UserBranchCreateWithoutBranchInput = {
+    user: UserCreateNestedOneWithoutUserBranchesInput
+  }
+
+  export type UserBranchUncheckedCreateWithoutBranchInput = {
+    userId: string
+  }
+
+  export type UserBranchCreateOrConnectWithoutBranchInput = {
+    where: UserBranchWhereUniqueInput
+    create: XOR<UserBranchCreateWithoutBranchInput, UserBranchUncheckedCreateWithoutBranchInput>
+  }
+
+  export type UserBranchCreateManyBranchInputEnvelope = {
+    data: UserBranchCreateManyBranchInput | UserBranchCreateManyBranchInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DoctorBranchCreateWithoutBranchInput = {
+    user: UserCreateNestedOneWithoutDoctorBranchInput
+  }
+
+  export type DoctorBranchUncheckedCreateWithoutBranchInput = {
+    userId: string
+  }
+
+  export type DoctorBranchCreateOrConnectWithoutBranchInput = {
+    where: DoctorBranchWhereUniqueInput
+    create: XOR<DoctorBranchCreateWithoutBranchInput, DoctorBranchUncheckedCreateWithoutBranchInput>
+  }
+
+  export type DoctorBranchCreateManyBranchInputEnvelope = {
+    data: DoctorBranchCreateManyBranchInput | DoctorBranchCreateManyBranchInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CompanyUpsertWithoutBranchesInput = {
+    update: XOR<CompanyUpdateWithoutBranchesInput, CompanyUncheckedUpdateWithoutBranchesInput>
+    create: XOR<CompanyCreateWithoutBranchesInput, CompanyUncheckedCreateWithoutBranchesInput>
+    where?: CompanyWhereInput
+  }
+
+  export type CompanyUpdateToOneWithWhereWithoutBranchesInput = {
+    where?: CompanyWhereInput
+    data: XOR<CompanyUpdateWithoutBranchesInput, CompanyUncheckedUpdateWithoutBranchesInput>
+  }
+
+  export type CompanyUpdateWithoutBranchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userCompanies?: UserCompanyUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type CompanyUncheckedUpdateWithoutBranchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userCompanies?: UserCompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type UserBranchUpsertWithWhereUniqueWithoutBranchInput = {
+    where: UserBranchWhereUniqueInput
+    update: XOR<UserBranchUpdateWithoutBranchInput, UserBranchUncheckedUpdateWithoutBranchInput>
+    create: XOR<UserBranchCreateWithoutBranchInput, UserBranchUncheckedCreateWithoutBranchInput>
+  }
+
+  export type UserBranchUpdateWithWhereUniqueWithoutBranchInput = {
+    where: UserBranchWhereUniqueInput
+    data: XOR<UserBranchUpdateWithoutBranchInput, UserBranchUncheckedUpdateWithoutBranchInput>
+  }
+
+  export type UserBranchUpdateManyWithWhereWithoutBranchInput = {
+    where: UserBranchScalarWhereInput
+    data: XOR<UserBranchUpdateManyMutationInput, UserBranchUncheckedUpdateManyWithoutBranchInput>
+  }
+
+  export type UserBranchScalarWhereInput = {
+    AND?: UserBranchScalarWhereInput | UserBranchScalarWhereInput[]
+    OR?: UserBranchScalarWhereInput[]
+    NOT?: UserBranchScalarWhereInput | UserBranchScalarWhereInput[]
+    userId?: StringFilter<"UserBranch"> | string
+    branchId?: StringFilter<"UserBranch"> | string
+  }
+
+  export type DoctorBranchUpsertWithWhereUniqueWithoutBranchInput = {
+    where: DoctorBranchWhereUniqueInput
+    update: XOR<DoctorBranchUpdateWithoutBranchInput, DoctorBranchUncheckedUpdateWithoutBranchInput>
+    create: XOR<DoctorBranchCreateWithoutBranchInput, DoctorBranchUncheckedCreateWithoutBranchInput>
+  }
+
+  export type DoctorBranchUpdateWithWhereUniqueWithoutBranchInput = {
+    where: DoctorBranchWhereUniqueInput
+    data: XOR<DoctorBranchUpdateWithoutBranchInput, DoctorBranchUncheckedUpdateWithoutBranchInput>
+  }
+
+  export type DoctorBranchUpdateManyWithWhereWithoutBranchInput = {
+    where: DoctorBranchScalarWhereInput
+    data: XOR<DoctorBranchUpdateManyMutationInput, DoctorBranchUncheckedUpdateManyWithoutBranchInput>
+  }
+
+  export type DoctorBranchScalarWhereInput = {
+    AND?: DoctorBranchScalarWhereInput | DoctorBranchScalarWhereInput[]
+    OR?: DoctorBranchScalarWhereInput[]
+    NOT?: DoctorBranchScalarWhereInput | DoctorBranchScalarWhereInput[]
+    userId?: StringFilter<"DoctorBranch"> | string
+    branchId?: StringFilter<"DoctorBranch"> | string
+  }
+
+  export type UserCreateWithoutUserCompaniesInput = {
+    id?: string
+    email: string
+    passwordHash?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    displayName?: string | null
+    phoneNumber?: string | null
+    profileImageUrl?: string | null
+    provider?: $Enums.AuthProvider
+    providerId?: string | null
+    isEmailVerified?: boolean
+    isPhoneVerified?: boolean
+    isActive?: boolean
+    timezone?: string | null
+    locale?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    userBranches?: UserBranchCreateNestedManyWithoutUserInput
+    doctorBranch?: DoctorBranchCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUserCompaniesInput = {
+    id?: string
+    email: string
+    passwordHash?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    displayName?: string | null
+    phoneNumber?: string | null
+    profileImageUrl?: string | null
+    provider?: $Enums.AuthProvider
+    providerId?: string | null
+    isEmailVerified?: boolean
+    isPhoneVerified?: boolean
+    isActive?: boolean
+    timezone?: string | null
+    locale?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    userBranches?: UserBranchUncheckedCreateNestedManyWithoutUserInput
+    doctorBranch?: DoctorBranchUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUserCompaniesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUserCompaniesInput, UserUncheckedCreateWithoutUserCompaniesInput>
+  }
+
+  export type CompanyCreateWithoutUserCompaniesInput = {
+    id?: string
+    name: string
+    website?: string | null
+    isVerified?: boolean
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    branches?: BranchCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyUncheckedCreateWithoutUserCompaniesInput = {
+    id?: string
+    name: string
+    website?: string | null
+    isVerified?: boolean
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    branches?: BranchUncheckedCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyCreateOrConnectWithoutUserCompaniesInput = {
+    where: CompanyWhereUniqueInput
+    create: XOR<CompanyCreateWithoutUserCompaniesInput, CompanyUncheckedCreateWithoutUserCompaniesInput>
+  }
+
+  export type UserUpsertWithoutUserCompaniesInput = {
+    update: XOR<UserUpdateWithoutUserCompaniesInput, UserUncheckedUpdateWithoutUserCompaniesInput>
+    create: XOR<UserCreateWithoutUserCompaniesInput, UserUncheckedCreateWithoutUserCompaniesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUserCompaniesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUserCompaniesInput, UserUncheckedUpdateWithoutUserCompaniesInput>
+  }
+
+  export type UserUpdateWithoutUserCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    userBranches?: UserBranchUpdateManyWithoutUserNestedInput
+    doctorBranch?: DoctorBranchUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUserCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    userBranches?: UserBranchUncheckedUpdateManyWithoutUserNestedInput
+    doctorBranch?: DoctorBranchUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type CompanyUpsertWithoutUserCompaniesInput = {
+    update: XOR<CompanyUpdateWithoutUserCompaniesInput, CompanyUncheckedUpdateWithoutUserCompaniesInput>
+    create: XOR<CompanyCreateWithoutUserCompaniesInput, CompanyUncheckedCreateWithoutUserCompaniesInput>
+    where?: CompanyWhereInput
+  }
+
+  export type CompanyUpdateToOneWithWhereWithoutUserCompaniesInput = {
+    where?: CompanyWhereInput
+    data: XOR<CompanyUpdateWithoutUserCompaniesInput, CompanyUncheckedUpdateWithoutUserCompaniesInput>
+  }
+
+  export type CompanyUpdateWithoutUserCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    branches?: BranchUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type CompanyUncheckedUpdateWithoutUserCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    branches?: BranchUncheckedUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type UserCreateWithoutUserBranchesInput = {
+    id?: string
+    email: string
+    passwordHash?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    displayName?: string | null
+    phoneNumber?: string | null
+    profileImageUrl?: string | null
+    provider?: $Enums.AuthProvider
+    providerId?: string | null
+    isEmailVerified?: boolean
+    isPhoneVerified?: boolean
+    isActive?: boolean
+    timezone?: string | null
+    locale?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    userCompanies?: UserCompanyCreateNestedManyWithoutUserInput
+    doctorBranch?: DoctorBranchCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUserBranchesInput = {
+    id?: string
+    email: string
+    passwordHash?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    displayName?: string | null
+    phoneNumber?: string | null
+    profileImageUrl?: string | null
+    provider?: $Enums.AuthProvider
+    providerId?: string | null
+    isEmailVerified?: boolean
+    isPhoneVerified?: boolean
+    isActive?: boolean
+    timezone?: string | null
+    locale?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    userCompanies?: UserCompanyUncheckedCreateNestedManyWithoutUserInput
+    doctorBranch?: DoctorBranchUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUserBranchesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUserBranchesInput, UserUncheckedCreateWithoutUserBranchesInput>
+  }
+
+  export type BranchCreateWithoutUserBranchesInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phoneNumber?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    company: CompanyCreateNestedOneWithoutBranchesInput
+    doctorBranches?: DoctorBranchCreateNestedManyWithoutBranchInput
+  }
+
+  export type BranchUncheckedCreateWithoutUserBranchesInput = {
+    id?: string
+    companyId: string
+    name: string
+    address?: string | null
+    phoneNumber?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    doctorBranches?: DoctorBranchUncheckedCreateNestedManyWithoutBranchInput
+  }
+
+  export type BranchCreateOrConnectWithoutUserBranchesInput = {
+    where: BranchWhereUniqueInput
+    create: XOR<BranchCreateWithoutUserBranchesInput, BranchUncheckedCreateWithoutUserBranchesInput>
+  }
+
+  export type UserUpsertWithoutUserBranchesInput = {
+    update: XOR<UserUpdateWithoutUserBranchesInput, UserUncheckedUpdateWithoutUserBranchesInput>
+    create: XOR<UserCreateWithoutUserBranchesInput, UserUncheckedCreateWithoutUserBranchesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUserBranchesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUserBranchesInput, UserUncheckedUpdateWithoutUserBranchesInput>
+  }
+
+  export type UserUpdateWithoutUserBranchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    userCompanies?: UserCompanyUpdateManyWithoutUserNestedInput
+    doctorBranch?: DoctorBranchUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUserBranchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    userCompanies?: UserCompanyUncheckedUpdateManyWithoutUserNestedInput
+    doctorBranch?: DoctorBranchUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type BranchUpsertWithoutUserBranchesInput = {
+    update: XOR<BranchUpdateWithoutUserBranchesInput, BranchUncheckedUpdateWithoutUserBranchesInput>
+    create: XOR<BranchCreateWithoutUserBranchesInput, BranchUncheckedCreateWithoutUserBranchesInput>
+    where?: BranchWhereInput
+  }
+
+  export type BranchUpdateToOneWithWhereWithoutUserBranchesInput = {
+    where?: BranchWhereInput
+    data: XOR<BranchUpdateWithoutUserBranchesInput, BranchUncheckedUpdateWithoutUserBranchesInput>
+  }
+
+  export type BranchUpdateWithoutUserBranchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    company?: CompanyUpdateOneRequiredWithoutBranchesNestedInput
+    doctorBranches?: DoctorBranchUpdateManyWithoutBranchNestedInput
+  }
+
+  export type BranchUncheckedUpdateWithoutUserBranchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    doctorBranches?: DoctorBranchUncheckedUpdateManyWithoutBranchNestedInput
+  }
+
+  export type UserCreateWithoutDoctorBranchInput = {
+    id?: string
+    email: string
+    passwordHash?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    displayName?: string | null
+    phoneNumber?: string | null
+    profileImageUrl?: string | null
+    provider?: $Enums.AuthProvider
+    providerId?: string | null
+    isEmailVerified?: boolean
+    isPhoneVerified?: boolean
+    isActive?: boolean
+    timezone?: string | null
+    locale?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    userCompanies?: UserCompanyCreateNestedManyWithoutUserInput
+    userBranches?: UserBranchCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutDoctorBranchInput = {
+    id?: string
+    email: string
+    passwordHash?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    displayName?: string | null
+    phoneNumber?: string | null
+    profileImageUrl?: string | null
+    provider?: $Enums.AuthProvider
+    providerId?: string | null
+    isEmailVerified?: boolean
+    isPhoneVerified?: boolean
+    isActive?: boolean
+    timezone?: string | null
+    locale?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    userCompanies?: UserCompanyUncheckedCreateNestedManyWithoutUserInput
+    userBranches?: UserBranchUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutDoctorBranchInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDoctorBranchInput, UserUncheckedCreateWithoutDoctorBranchInput>
+  }
+
+  export type BranchCreateWithoutDoctorBranchesInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phoneNumber?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    company: CompanyCreateNestedOneWithoutBranchesInput
+    userBranches?: UserBranchCreateNestedManyWithoutBranchInput
+  }
+
+  export type BranchUncheckedCreateWithoutDoctorBranchesInput = {
+    id?: string
+    companyId: string
+    name: string
+    address?: string | null
+    phoneNumber?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    userBranches?: UserBranchUncheckedCreateNestedManyWithoutBranchInput
+  }
+
+  export type BranchCreateOrConnectWithoutDoctorBranchesInput = {
+    where: BranchWhereUniqueInput
+    create: XOR<BranchCreateWithoutDoctorBranchesInput, BranchUncheckedCreateWithoutDoctorBranchesInput>
+  }
+
+  export type UserUpsertWithoutDoctorBranchInput = {
+    update: XOR<UserUpdateWithoutDoctorBranchInput, UserUncheckedUpdateWithoutDoctorBranchInput>
+    create: XOR<UserCreateWithoutDoctorBranchInput, UserUncheckedCreateWithoutDoctorBranchInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDoctorBranchInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDoctorBranchInput, UserUncheckedUpdateWithoutDoctorBranchInput>
+  }
+
+  export type UserUpdateWithoutDoctorBranchInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    userCompanies?: UserCompanyUpdateManyWithoutUserNestedInput
+    userBranches?: UserBranchUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDoctorBranchInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+    providerId?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    locale?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    userCompanies?: UserCompanyUncheckedUpdateManyWithoutUserNestedInput
+    userBranches?: UserBranchUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type BranchUpsertWithoutDoctorBranchesInput = {
+    update: XOR<BranchUpdateWithoutDoctorBranchesInput, BranchUncheckedUpdateWithoutDoctorBranchesInput>
+    create: XOR<BranchCreateWithoutDoctorBranchesInput, BranchUncheckedCreateWithoutDoctorBranchesInput>
+    where?: BranchWhereInput
+  }
+
+  export type BranchUpdateToOneWithWhereWithoutDoctorBranchesInput = {
+    where?: BranchWhereInput
+    data: XOR<BranchUpdateWithoutDoctorBranchesInput, BranchUncheckedUpdateWithoutDoctorBranchesInput>
+  }
+
+  export type BranchUpdateWithoutDoctorBranchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    company?: CompanyUpdateOneRequiredWithoutBranchesNestedInput
+    userBranches?: UserBranchUpdateManyWithoutBranchNestedInput
+  }
+
+  export type BranchUncheckedUpdateWithoutDoctorBranchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userBranches?: UserBranchUncheckedUpdateManyWithoutBranchNestedInput
+  }
+
   export type UserRoleCreateWithoutUserInput = {
     role: RoleCreateNestedOneWithoutUsersInput
   }
@@ -5363,6 +12919,60 @@ export namespace Prisma {
 
   export type UserRoleCreateManyUserInputEnvelope = {
     data: UserRoleCreateManyUserInput | UserRoleCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserCompanyCreateWithoutUserInput = {
+    company: CompanyCreateNestedOneWithoutUserCompaniesInput
+  }
+
+  export type UserCompanyUncheckedCreateWithoutUserInput = {
+    companyId: string
+  }
+
+  export type UserCompanyCreateOrConnectWithoutUserInput = {
+    where: UserCompanyWhereUniqueInput
+    create: XOR<UserCompanyCreateWithoutUserInput, UserCompanyUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserCompanyCreateManyUserInputEnvelope = {
+    data: UserCompanyCreateManyUserInput | UserCompanyCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserBranchCreateWithoutUserInput = {
+    branch: BranchCreateNestedOneWithoutUserBranchesInput
+  }
+
+  export type UserBranchUncheckedCreateWithoutUserInput = {
+    branchId: string
+  }
+
+  export type UserBranchCreateOrConnectWithoutUserInput = {
+    where: UserBranchWhereUniqueInput
+    create: XOR<UserBranchCreateWithoutUserInput, UserBranchUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserBranchCreateManyUserInputEnvelope = {
+    data: UserBranchCreateManyUserInput | UserBranchCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DoctorBranchCreateWithoutUserInput = {
+    branch: BranchCreateNestedOneWithoutDoctorBranchesInput
+  }
+
+  export type DoctorBranchUncheckedCreateWithoutUserInput = {
+    branchId: string
+  }
+
+  export type DoctorBranchCreateOrConnectWithoutUserInput = {
+    where: DoctorBranchWhereUniqueInput
+    create: XOR<DoctorBranchCreateWithoutUserInput, DoctorBranchUncheckedCreateWithoutUserInput>
+  }
+
+  export type DoctorBranchCreateManyUserInputEnvelope = {
+    data: DoctorBranchCreateManyUserInput | DoctorBranchCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -5388,6 +12998,54 @@ export namespace Prisma {
     NOT?: UserRoleScalarWhereInput | UserRoleScalarWhereInput[]
     userId?: StringFilter<"UserRole"> | string
     roleId?: StringFilter<"UserRole"> | string
+  }
+
+  export type UserCompanyUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserCompanyWhereUniqueInput
+    update: XOR<UserCompanyUpdateWithoutUserInput, UserCompanyUncheckedUpdateWithoutUserInput>
+    create: XOR<UserCompanyCreateWithoutUserInput, UserCompanyUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserCompanyUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserCompanyWhereUniqueInput
+    data: XOR<UserCompanyUpdateWithoutUserInput, UserCompanyUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserCompanyUpdateManyWithWhereWithoutUserInput = {
+    where: UserCompanyScalarWhereInput
+    data: XOR<UserCompanyUpdateManyMutationInput, UserCompanyUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserBranchUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserBranchWhereUniqueInput
+    update: XOR<UserBranchUpdateWithoutUserInput, UserBranchUncheckedUpdateWithoutUserInput>
+    create: XOR<UserBranchCreateWithoutUserInput, UserBranchUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserBranchUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserBranchWhereUniqueInput
+    data: XOR<UserBranchUpdateWithoutUserInput, UserBranchUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserBranchUpdateManyWithWhereWithoutUserInput = {
+    where: UserBranchScalarWhereInput
+    data: XOR<UserBranchUpdateManyMutationInput, UserBranchUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type DoctorBranchUpsertWithWhereUniqueWithoutUserInput = {
+    where: DoctorBranchWhereUniqueInput
+    update: XOR<DoctorBranchUpdateWithoutUserInput, DoctorBranchUncheckedUpdateWithoutUserInput>
+    create: XOR<DoctorBranchCreateWithoutUserInput, DoctorBranchUncheckedCreateWithoutUserInput>
+  }
+
+  export type DoctorBranchUpdateWithWhereUniqueWithoutUserInput = {
+    where: DoctorBranchWhereUniqueInput
+    data: XOR<DoctorBranchUpdateWithoutUserInput, DoctorBranchUncheckedUpdateWithoutUserInput>
+  }
+
+  export type DoctorBranchUpdateManyWithWhereWithoutUserInput = {
+    where: DoctorBranchScalarWhereInput
+    data: XOR<DoctorBranchUpdateManyMutationInput, DoctorBranchUncheckedUpdateManyWithoutUserInput>
   }
 
   export type UserRoleCreateWithoutRoleInput = {
@@ -5443,6 +13101,9 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    userCompanies?: UserCompanyCreateNestedManyWithoutUserInput
+    userBranches?: UserBranchCreateNestedManyWithoutUserInput
+    doctorBranch?: DoctorBranchCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRolesInput = {
@@ -5464,6 +13125,9 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    userCompanies?: UserCompanyUncheckedCreateNestedManyWithoutUserInput
+    userBranches?: UserBranchUncheckedCreateNestedManyWithoutUserInput
+    doctorBranch?: DoctorBranchUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRolesInput = {
@@ -5520,6 +13184,9 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userCompanies?: UserCompanyUpdateManyWithoutUserNestedInput
+    userBranches?: UserBranchUpdateManyWithoutUserNestedInput
+    doctorBranch?: DoctorBranchUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRolesInput = {
@@ -5541,6 +13208,9 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userCompanies?: UserCompanyUncheckedUpdateManyWithoutUserNestedInput
+    userBranches?: UserBranchUncheckedUpdateManyWithoutUserNestedInput
+    doctorBranch?: DoctorBranchUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type RoleUpsertWithoutUsersInput = {
@@ -5568,8 +13238,120 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
+  export type BranchCreateManyCompanyInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phoneNumber?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+  }
+
+  export type UserCompanyCreateManyCompanyInput = {
+    userId: string
+  }
+
+  export type BranchUpdateWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userBranches?: UserBranchUpdateManyWithoutBranchNestedInput
+    doctorBranches?: DoctorBranchUpdateManyWithoutBranchNestedInput
+  }
+
+  export type BranchUncheckedUpdateWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userBranches?: UserBranchUncheckedUpdateManyWithoutBranchNestedInput
+    doctorBranches?: DoctorBranchUncheckedUpdateManyWithoutBranchNestedInput
+  }
+
+  export type BranchUncheckedUpdateManyWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type UserCompanyUpdateWithoutCompanyInput = {
+    user?: UserUpdateOneRequiredWithoutUserCompaniesNestedInput
+  }
+
+  export type UserCompanyUncheckedUpdateWithoutCompanyInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserCompanyUncheckedUpdateManyWithoutCompanyInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserBranchCreateManyBranchInput = {
+    userId: string
+  }
+
+  export type DoctorBranchCreateManyBranchInput = {
+    userId: string
+  }
+
+  export type UserBranchUpdateWithoutBranchInput = {
+    user?: UserUpdateOneRequiredWithoutUserBranchesNestedInput
+  }
+
+  export type UserBranchUncheckedUpdateWithoutBranchInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserBranchUncheckedUpdateManyWithoutBranchInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DoctorBranchUpdateWithoutBranchInput = {
+    user?: UserUpdateOneRequiredWithoutDoctorBranchNestedInput
+  }
+
+  export type DoctorBranchUncheckedUpdateWithoutBranchInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DoctorBranchUncheckedUpdateManyWithoutBranchInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type UserRoleCreateManyUserInput = {
     roleId: string
+  }
+
+  export type UserCompanyCreateManyUserInput = {
+    companyId: string
+  }
+
+  export type UserBranchCreateManyUserInput = {
+    branchId: string
+  }
+
+  export type DoctorBranchCreateManyUserInput = {
+    branchId: string
   }
 
   export type UserRoleUpdateWithoutUserInput = {
@@ -5582,6 +13364,42 @@ export namespace Prisma {
 
   export type UserRoleUncheckedUpdateManyWithoutUserInput = {
     roleId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserCompanyUpdateWithoutUserInput = {
+    company?: CompanyUpdateOneRequiredWithoutUserCompaniesNestedInput
+  }
+
+  export type UserCompanyUncheckedUpdateWithoutUserInput = {
+    companyId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserCompanyUncheckedUpdateManyWithoutUserInput = {
+    companyId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserBranchUpdateWithoutUserInput = {
+    branch?: BranchUpdateOneRequiredWithoutUserBranchesNestedInput
+  }
+
+  export type UserBranchUncheckedUpdateWithoutUserInput = {
+    branchId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserBranchUncheckedUpdateManyWithoutUserInput = {
+    branchId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DoctorBranchUpdateWithoutUserInput = {
+    branch?: BranchUpdateOneRequiredWithoutDoctorBranchesNestedInput
+  }
+
+  export type DoctorBranchUncheckedUpdateWithoutUserInput = {
+    branchId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DoctorBranchUncheckedUpdateManyWithoutUserInput = {
+    branchId?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserRoleCreateManyRoleInput = {
