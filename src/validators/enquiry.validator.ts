@@ -7,39 +7,39 @@ export const EnquiryValidator = z.object({
       invalid_type_error: "Full Name must be a string",
     })
     .trim()
-    .min(1, "Full Name is required"),
+    .min(1, "Full Name is required")
+    .max(100, "Full Name must be less than 100 characters long")
+    .regex(/^[a-zA-Z\s]+$/, "Full Name must contain only letters and spaces"),
   email: z
     .string({
       required_error: "Email is required",
       invalid_type_error: "Email must be a string",
     })
-    .email("Please enter a valid email address")
-    .max(250, "Email must be less than 250 characters long"),
+    .email("Please enter a valid email address").regex(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "Please enter a valid email address"
+    ).max(250, "Email must be less than 250 characters long"),
 
   phone: z
-  .string({
-    required_error: "Phone number is required",
-    invalid_type_error: "Phone number must be a string",
-  })
-  .trim()
-  .transform((value) => {
-    // remove spaces
-    const v = value.replace(/\s+/g, "");
+    .string({
+      required_error: "Phone number is required",
+      invalid_type_error: "Phone number must be a string",
+    })
+    .trim()
+    .transform((value) => {
+      // remove spaces
+      const v = value.replace(/\s+/g, "");
 
-    // if user entered 10-digit number, prefix +91
-    if (/^[6-9]\d{9}$/.test(v)) {
-      return `+91${v}`;
-    }
+      // if user entered 10-digit number, prefix +91
+      if (/^[6-9]\d{9}$/.test(v)) {
+        return `+91${v}`;
+      }
 
-    return v;
-  })
-  .refine(
-    (value) => /^\+91[6-9]\d{9}$/.test(value),
-    {
+      return v;
+    })
+    .refine((value) => /^\+91[6-9]\d{9}$/.test(value), {
       message: "Phone number must be 10 digits or in format +91XXXXXXXXXX",
-    }
-  ),
-
+    }),
 
   service: z
     .string({
@@ -48,11 +48,14 @@ export const EnquiryValidator = z.object({
     })
     .min(1, "Please select a service"),
 
+  // Make it to allow blank
   message: z
     .string()
-    .max(1000, "Message must be less than 1000 characters long")
-    .optional()
-    .or(z.literal("")),
+    .max(1000, "Message must be less than 1000 characters long").regex(
+      /^[a-zA-Z0-9\s.,:!?()"-&()@]+$/,
+      "Message must contain only letters, numbers, spaces"
+    )
+    .optional().nullable().or(z.literal("")),
 });
 
 export type EnquiryModel = z.infer<typeof EnquiryValidator>;

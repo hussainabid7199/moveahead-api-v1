@@ -175,7 +175,7 @@ export class BranchService {
         throw new Error(`${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} not mapped to branch`);
       }
 
-      message = `${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} unmapped successfully`;
+      message = `Dr.${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} mapped successfully`;
     }
 
     return message;
@@ -203,15 +203,20 @@ export class BranchService {
       throw new Error('User not found');
     }
 
-    const allowedUserRoles = [Roles.DOCTOR];
-    if (!allowedUserRoles.includes(user.roles[0].role.name as Roles)) {
-      throw new Error('Unauthorized role to create mapping to branch');
-    }
-
     // Check if user is already mapped with the branch
     const userBranchMapping = await prisma.userBranch.findFirst({
       where: { userId: user.id, branchId: branchId },
     });
+
+    // Allow user with role admin to create mapping of himself if the is not mapped with the branch only once if already mapped then throw error
+    if (user && user.roles[0].role.name === Roles.ADMIN && userBranchMapping) {
+        throw new Error(`You are already mapped to branch.`);
+    }
+
+    const allowedUserRoles = [Roles.ADMIN, Roles.USER];
+    if (!allowedUserRoles.includes(user.roles[0].role.name as Roles)) {
+      throw new Error('Unauthorized role to create mapping to branch');
+    }
 
     let message: string | null = null;
     if (userBranchMapping) {
@@ -250,11 +255,10 @@ export class BranchService {
         throw new Error(`${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} not mapped to branch`);
       }
 
-      message = `${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} unmapped successfully`;
+      message = `${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} mapped successfully`;
     }
 
     return message;
-
   }
 
   private async validateUserAndCompany(currentUserId: string, companyId: string): Promise<{ userId: string; companyId: string }> {

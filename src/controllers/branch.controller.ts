@@ -35,4 +35,34 @@ export class BranchController {
     const response = new CustomResponse('Branch updated successfully', 200, branch);
     return res.status(200).json(response);
   };
+
+  userBranchMapping = async (req: Request, res: Response) => {
+    const currentUserId: string = req.body.currentUserId;
+    const userId: string = req.body.userId;
+    const companyId: string = req.params.companyId;
+    const branchId: string = req.params.branchId;
+
+    if(!currentUserId || !userId || !companyId || !branchId) {
+      throw new Error('Missing required details');
+    }
+
+    const branch: string = await this.unitOfService.Branch.createUserBranchMapping(currentUserId, userId, companyId, branchId);
+    const response = new CustomResponse('Branch created successfully', 201, branch);
+    return res.status(201).json(response);
+  };
+
+  doctorBranchMapping = async (req: Request, res: Response) => {
+    const currentUserId = req.body.currentUserId;
+    const userId = req.body.userId;
+    const companyId = req.params.companyId;
+    const branchId = req.params.branchId;
+
+    if(!currentUserId || !userId || !companyId || !branchId) {
+      throw new Error('Missing required details');
+    }
+
+    const branch = await this.unitOfService.Branch.createDoctorBranchMapping(currentUserId, userId, companyId, branchId);
+    const response = new CustomResponse('Branch created successfully', 201, branch);
+    return res.status(201).json(response);
+  };
 }

@@ -17,5 +17,7 @@ const branchController = container.get<BranchController>(TYPES.BranchController)
 
 branchRouter.post('/:companyId', validateSchema(BranchValidator), asyncHandler(authorization([Roles.SUPERADMIN, Roles.ADMINISTRATOR])), asyncHandler(branchController.create));
 branchRouter.put('/:branchId/company/:companyId', validateSchema(BranchUpdateValidator), asyncHandler(authorization([Roles.SUPERADMIN, Roles.ADMINISTRATOR])), asyncHandler(branchController.update));
+branchRouter.post('/:branchId/company/:companyId/user', asyncHandler(authorization([Roles.SUPERADMIN, Roles.ADMINISTRATOR, Roles.ADMIN])), asyncHandler(branchController.userBranchMapping));
+branchRouter.post('/:branchId/company/:companyId/doctor', asyncHandler(authorization([Roles.SUPERADMIN, Roles.ADMINISTRATOR, Roles.ADMIN])), asyncHandler(branchController.doctorBranchMapping));
 
 export default branchRouter;
