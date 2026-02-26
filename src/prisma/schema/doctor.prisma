@@ -1,0 +1,55 @@
+model DoctorProfile {
+    id              String  @id @default(cuid()) @map("id") @db.VarChar(191)
+    userId          String  @map("user_id") @db.VarChar(191)
+    bio             String? @map("bio") @db.VarChar(191)
+    description     String? @map("description") @db.VarChar(1000)
+    profileImageUrl String? @map("profile_image_url") @db.VarChar(2048)
+    documentUrl     String? @map("document_url") @db.VarChar(1000)
+    rating          Float?  @map("rating")
+
+    // Extensibility
+    metadata Json? @map("metadata") // For storing additional user preferences/data
+
+    isActive Boolean @default(true) @map("is_active")
+
+    createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+    updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+
+    // Relations
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    doctorRating DoctorRating[]
+
+    // Indexing
+    @@index([id], name: "idx_doctor_profile_doctor_id")
+    @@index([userId], name: "idx_doctor_profile_user_id")
+    @@index([rating], name: "idx_doctor_rating_doctor_id")
+    @@index([isActive, createdAt], name: "idx_doctor_profile_active_created")
+    @@map("doctor_profile")
+}
+
+model DoctorRating {
+    id            String  @id @default(cuid()) @map("id") @db.VarChar(191)
+    doctorId      String  @map("doctor_id") @db.VarChar(191) // Doctor Profile Id
+    appointmentId String? @map("appointment_id") @db.VarChar(191)
+    
+    rating        Float?  @map("rating")
+    message       String? @map("message") @db.VarChar(255)
+    ratedBy       String? @map("ratedBy") @db.VarChar(191)
+
+    // Extensibility
+    metadata Json? @map("metadata") // For storing additional user preferences/data
+
+    isActive Boolean @default(true) @map("is_active")
+
+    createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+    updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+
+    // Relations
+    doctorProfile DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+    user          User          @relation(fields: [ratedBy], references: [id], onDelete: Cascade)
+
+    // Indexes for performance
+    @@index([doctorId], name: "idx_doctor_rating_doctor_id_doctor_profile")
+    @@index([isActive, createdAt], name: "idx_doctor_rating_active_created")
+}

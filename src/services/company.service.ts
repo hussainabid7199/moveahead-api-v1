@@ -9,13 +9,55 @@ import { Prisma } from '../prisma/generated';
 export class CompanyService {
   constructor() {}
 
-  async getAll(q: string): Promise<CompanyDto[]> {
+  async getAll(q: string, currentUserId: string): Promise<CompanyDto[]> {
     const whereCondition: Prisma.CompanyWhereInput = {
       isActive: true,
     };
 
     if (q) {
       whereCondition.AND = [{ name: { contains: q } }];
+    }
+
+    // If the current user role is SuperAdmin, return all companies
+    // If the current user role is Admin or Administrator, return only the company mapped to the user
+    const user = await prisma.user.findUnique({
+      where: { id: currentUserId },
+      select: {
+        id: true,
+        roles: {
+          select: {
+            role: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    // Only SuperAdmin can see all companies, Admin and Administrator can see only their mapped company, other roles cannot see any company
+    const allowedRoles = [Roles.SUPERADMIN, Roles.ADMINISTRATOR, Roles.ADMIN];
+    if (!allowedRoles.includes(user?.roles[0].role.name as Roles)) {
+      throw new Error('You are not authorized to view companies');
+    }
+
+    let isAdminLevelUser = false;
+    if (user) {
+      const allowedRoles = [Roles.ADMINISTRATOR, Roles.ADMIN];
+      isAdminLevelUser = user.roles.some((userRole) => allowedRoles.includes(userRole.role.name as Roles));
+    }
+
+    if (isAdminLevelUser) {
+      const userCompany = await prisma.userCompany.findFirst({
+        where: { userId: currentUserId },
+        select: { companyId: true },
+      });
+
+      if (userCompany) {
+        whereCondition.AND = [{ id: userCompany.companyId }];
+      }
     }
 
     const company = await prisma.company.findMany({
@@ -34,7 +76,12 @@ export class CompanyService {
       },
     });
 
+    if (!company) {
+      throw new Error('Company not found');
+    }
+
     const response: CompanyDto[] = company.map((item) => ({
+      id: item.id,
       name: item.name,
       website: item.website || null,
       isVerified: item.isVerified,
@@ -77,6 +124,81 @@ export class CompanyService {
 
     return response;
   }
+
+  getCompanyByUserId = async (userId: string): Promise<CompanyDto> => {
+    const user = await prisma.user.findUnique({
+      where: { id: userId, isActive: true },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        displayName: true,
+        roles: {
+          select: {
+            role: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const allowedRoles = [Roles.ADMINISTRATOR, Roles.ADMIN, Roles.USER];
+    const userRoles = user.roles.map((userRole) => userRole.role.name);
+    const hasAllowedRole = userRoles.some((role) => allowedRoles.includes(role as Roles));
+
+    if (!hasAllowedRole) {
+      throw new Error('You are not authorized to get company details');
+    }
+
+    const company = await prisma.userCompany.findFirst({
+      where: {
+        userId: user.id,
+      },
+      select: {
+        companyId: true,
+        userId: true,
+      },
+    });
+
+    if (!company) {
+      throw new Error('Company not found');
+    }
+
+    const companyDetails = await prisma.company.findFirst({
+      where: { id: company.companyId, isActive: true },
+      select: {
+        id: true,
+        name: true,
+        website: true,
+        isVerified: true,
+        isActive: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    if (!companyDetails) {
+      throw new Error('Company not found');
+    }
+
+    const response: CompanyDto = {
+      name: companyDetails.name,
+      website: companyDetails.website || null,
+      isVerified: companyDetails.isVerified,
+      isActive: companyDetails.isActive,
+      createdAt: companyDetails.createdAt,
+    };
+
+    return response;
+  };
 
   async create(model: CompanyModel): Promise<CompanyDto> {
     const company = await prisma.company.create({

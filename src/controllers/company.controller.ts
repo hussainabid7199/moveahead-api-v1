@@ -13,7 +13,8 @@ export class CompanyController {
 
   findAll = async (req: Request, res: Response) => {
     const q = req.query.q as string;
-    const companies = await this.unitOfService.Company.getAll(q);
+    const currentUserId = req.body.currentUserId;
+    const companies = await this.unitOfService.Company.getAll(q, currentUserId);
     const response = new CustomResponse('Companies fetched successfully', 200, companies);
     return res.status(200).json(response);
   };
@@ -24,6 +25,13 @@ export class CompanyController {
     const response = new CustomResponse('Company fetched successfully', 200, company);
     return res.status(200).json(response);
   };
+
+  findCompanyByUserId = async (req: Request, res: Response) => {
+    const userId = req.params.userId;
+    const company = await this.unitOfService.Company.getCompanyByUserId(userId);
+    const response = new CustomResponse('Company fetched successfully', 200, company);
+    return res.status(200).json(response);
+  }
 
   create = async (req: Request, res: Response) => {
     const { success, data } = await validateSchemaBody(req, CompanyValidator);

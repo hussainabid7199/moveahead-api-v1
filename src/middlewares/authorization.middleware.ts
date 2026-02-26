@@ -26,7 +26,7 @@ const authorization = (roles: Array<Roles>) => {
     }
 
     const userRole = await prisma.role.findFirst({
-      where: { id: user.roles?.[0] as string },
+      where: { id: user.role?.[0] as string },
       select: { id: true, name: true },
     });
 

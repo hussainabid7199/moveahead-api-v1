@@ -351,7 +351,7 @@ export class UserService {
       metadata: user.metadata,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
-      roles: user.roles ? user.roles.map((r: any) => r.roleId) : [],
+      role: user.roles ? user.roles.map((r: any) => r.roleId) : [],
     };
   }
 }

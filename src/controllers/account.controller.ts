@@ -54,7 +54,7 @@ export class AccountController {
     }
 
     const roles = await prisma.role.findFirst({
-      where: { id: user.roles?.[0] as string },
+      where: { id: user.role?.[0] as string },
       select: { id: true, name: true },
     });
 

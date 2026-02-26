@@ -11,6 +11,39 @@ export class BranchController {
     this.unitOfService = unitOfService;
   }
 
+  getAllBranchUsers = async (req: Request, res: Response) => {
+    const companyId = req.params.companyId;
+    const branchId = req.params.branchId;
+    const currentUserId = req.body.currentUserId;
+    const search = req.query.search as string;
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : null;
+    const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : null;
+    if(!companyId || !branchId || !currentUserId) {
+      throw new Error('Missing required details');
+    }
+    const users = await this.unitOfService.Branch.getAllBranchUsers(companyId, branchId, currentUserId, search,  limit || 10, offset || 0);
+    const response = new CustomResponse('Users fetched successfully', 200, users);
+    return res.status(200).json(response);
+  }
+
+
+  getByCompanyId = async (req: Request, res: Response) => {
+    const companyId = req.params.companyId;
+    const currentUserId = req.body.currentUserId;
+    const search = req.query.search as string;
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : null;
+    const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : null;
+
+    if(!companyId || !currentUserId) {
+      throw new Error('Missing required details');
+    }
+    const branches = await this.unitOfService.Branch.getAllByCompanyId(companyId, currentUserId, search, limit || 10, offset || 0);
+    const response = new CustomResponse('Branches fetched successfully', 200, branches);
+    return res.status(200).json(response);
+  }
+
+  
+
   create = async (req: Request, res: Response) => {
     const currentUserId = req.body.currentUserId;
     const companyId = req.params.companyId;

@@ -4,11 +4,11 @@ import config from '../config';
 
 class ClientIdMiddleware {
   verify(req: Request, res: Response, next: NextFunction) {
-    // const url: string = req.originalUrl;
+    const url: string = req.originalUrl;
 
-    // if (url.startsWith('/')) {
-    //   return next();
-    // }
+    if (url.startsWith('/') || url.startsWith('/health') || url.startsWith('/swagger')) {
+      return next();
+    }
 
     const clientId: string = Array.isArray(req.headers['x-client-id']) ? req.headers['x-client-id'][0] : req.headers['x-client-id'] || '';
     const _clientId = config.app.clientId;
@@ -22,6 +22,7 @@ class ClientIdMiddleware {
     }
 
     req.clientId = clientId;
+    console.log(`ClientId: ${clientId} - URL: ${url}`);
 
     // Call next to pass control to the next middleware or route handler
     next();

@@ -11,6 +11,7 @@ import compression from "compression";
 import helmet from "helmet";
 import RateLimiter from './security/ratelimiting/rateLimiting';
 import { corsMiddleware } from './security/cors';
+import { setupSwagger } from './utils/common/swagger';
 
 // Load environment variables
 dotenv.config();
@@ -37,7 +38,7 @@ app.get('/', (req, res) => {
 
 
 app.use("/api",routes);
-
+setupSwagger(app);
 // Error-handling middleware
 app.use(errorHandler);
 
