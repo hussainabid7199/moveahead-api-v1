@@ -146,8 +146,6 @@ export class BranchService {
       updatedAt: branch.updatedAt!,
     }));
 
-    console.log('Branches fetched successfully', response);
-
     return response;
   }
 

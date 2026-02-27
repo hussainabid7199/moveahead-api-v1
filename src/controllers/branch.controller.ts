@@ -42,8 +42,6 @@ export class BranchController {
     return res.status(200).json(response);
   }
 
-  
-
   create = async (req: Request, res: Response) => {
     const currentUserId = req.body.currentUserId;
     const companyId = req.params.companyId;
@@ -51,7 +49,10 @@ export class BranchController {
     if (!success || !data) {
       throw new Error('Validation failed');
     }
-    const branch = await this.unitOfService.Branch.create(currentUserId, companyId, data);
+
+    const latitude = Number(data.latitude);
+    const longitude = Number(data.longitude);
+    const branch = await this.unitOfService.Branch.create(currentUserId, companyId, { ...data, latitude, longitude });
     const response = new CustomResponse('Branch created successfully', 201, branch);
     return res.status(201).json(response);
   };
@@ -64,7 +65,9 @@ export class BranchController {
     if (!success || !data) {
       throw new Error('Validation failed');
     }
-    const branch = await this.unitOfService.Branch.update(currentUserId, companyId, branchId, data);
+    const latitude = Number(data.latitude);
+    const longitude = Number(data.longitude);
+    const branch = await this.unitOfService.Branch.update(currentUserId, companyId, branchId, { ...data, latitude, longitude });
     const response = new CustomResponse('Branch updated successfully', 200, branch);
     return res.status(200).json(response);
   };
