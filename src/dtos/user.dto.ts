@@ -1,4 +1,5 @@
-import { AuthProvider, UserRole } from '../prisma/generated';
+import { Roles } from '../enums/roles.enum';
+import { AuthProvider } from '../prisma/generated';
 
 export interface UserDto {
   id: string;
@@ -19,7 +20,7 @@ export interface UserDto {
   metadata?: any;
   createdAt: Date;
   updatedAt?: Date | null;
-  roles?: string[];
+  role?: Roles;
 }
 
 export interface CreateUserDto {
@@ -37,7 +38,22 @@ export interface CreateUserDto {
   isPhoneVerified?: boolean;
   twoFactorEnabled?: boolean;
   twoFactorSecret?: string;
-  role?: UserRole;
+  role?: Roles;
+  isActive?: boolean;
+}
+
+export interface UserBasicDto {
+  id: string;
+  email: string;
+  firstName?: string | null;
+  lastName?: string;
+  phoneNumber?: string;
+  phoneCountryCode?: string;
+  dateOfBirth?: Date;
+  profileImageUrl?: string;
+  isEmailVerified?: boolean;
+  isPhoneVerified?: boolean;
+  role?: Roles;
   isActive?: boolean;
 }
 

@@ -1,5 +1,6 @@
 model Company {
   id         String  @id @default(cuid()) @map("id") @db.VarChar(191) // UUID or cuid for unique company ID
+  parentId   String? @map("parent_id") @db.VarChar(191) // For hierarchical company structure
   name       String  @map("name") @db.VarChar(200)
   website    String? @map("website") @db.VarChar(2048)
   isVerified Boolean @default(false) @map("is_verified")
@@ -10,8 +11,9 @@ model Company {
   updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
 
   // Relations
-  branches      Branch[]
-  userCompanies UserCompany[]
+  branches          Branch[]
+  userCompanyBranch UserCompanyBranch[]
+  userCompany       UserCompany[]
 
   // Indexes for performance
   @@index([name(200)], name: "idx_company_name")
@@ -22,6 +24,7 @@ model Company {
 model Branch {
   id          String  @id @default(cuid()) @map("id") @db.VarChar(191) // UUID or cuid for unique branch ID
   companyId   String  @map("company_id") @db.VarChar(191) //
+  parentId    String? @map("parent_id") @db.VarChar(191) // For hierarchical branch structure
   name        String  @map("name") @db.VarChar(200)
   address     String? @map("address") @db.VarChar(500)
   phoneNumber String? @map("phone_number") @db.VarChar(20) // E.164 format
@@ -33,16 +36,32 @@ model Branch {
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
 
+  userCompanyBranch UserCompanyBranch[]
+
   // Relations
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-
-  userBranches   UserBranch[]
-  doctorBranches DoctorBranch[]
 
   // Indexes for performance
   @@index([name(200)], name: "idx_branch_name")
   @@index([isActive, createdAt], name: "idx_branch_active_created")
   @@map("branch")
+}
+
+model UserCompanyBranch {
+  userId    String @map("user_id") @db.VarChar(191) // UUID or cuid for unique user ID
+  companyId String @map("company_id") @db.VarChar(191) // UUID or cuid for unique company ID
+  branchId  String @map("branch_id") @db.VarChar(191) // UUID or cuid for unique branch ID
+
+  // Relations with cascade delete
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  branch  Branch  @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  @@id([userId, companyId, branchId])
+  @@index([userId], name: "idx_user_branch_user_id")
+  @@index([companyId], name: "idx_user_branch_company_id")
+  @@index([branchId], name: "idx_user_branch_branch_id")
+  @@map("user_company_branch")
 }
 
 model UserCompany {
@@ -59,33 +78,61 @@ model UserCompany {
   @@map("user_company")
 }
 
-model UserBranch {
-  userId   String @map("user_id") @db.VarChar(191) // UUID or cuid for unique user ID
-  branchId String @map("branch_id") @db.VarChar(191) // UUID or cuid for unique branch ID
+// model DoctorProfile {
+//     id              String  @id @default(cuid()) @map("id") @db.VarChar(191)
+//     userId          String  @map("user_id") @db.VarChar(191)
+//     bio             String? @map("bio") @db.VarChar(191)
+//     description     String? @map("description") @db.VarChar(1000)
+//     profileImageUrl String? @map("profile_image_url") @db.VarChar(2048)
+//     documentUrl     String? @map("document_url") @db.VarChar(1000)
+//     rating          Float?  @map("rating")
 
-  // Relations with cascade delete
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  branch Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+//     // Extensibility
+//     metadata Json? @map("metadata") // For storing additional user preferences/data
 
-  @@id([userId, branchId])
-  @@index([userId], name: "idx_user_branch_user_id")
-  @@index([branchId], name: "idx_user_branch_branch_id")
-  @@map("user_branch")
-}
+//     isActive Boolean @default(true) @map("is_active")
 
-model DoctorBranch {
-  userId   String @map("user_id") @db.VarChar(191) // UUID or cuid for unique user ID
-  branchId String @map("branch_id") @db.VarChar(191) // UUID or cuid for unique branch ID
+//     createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+//     updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
 
-  // Relations with cascade delete
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  branch Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+//     // Relations
+//     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@id([userId, branchId])
-  @@index([userId], name: "idx_doctor_branch_user_id")
-  @@index([branchId], name: "idx_doctor_branch_branch_id")
-  @@map("doctor_branch")
-}
+//     doctorRating DoctorRating[]
+
+//     // Indexing
+//     @@index([id], name: "idx_doctor_profile_doctor_id")
+//     @@index([userId], name: "idx_doctor_profile_user_id")
+//     @@index([rating], name: "idx_doctor_rating_doctor_id")
+//     @@index([isActive, createdAt], name: "idx_doctor_profile_active_created")
+//     @@map("doctor_profile")
+// }
+
+// model DoctorRating {
+//     id            String  @id @default(cuid()) @map("id") @db.VarChar(191)
+//     doctorId      String  @map("doctor_id") @db.VarChar(191) // Doctor Profile Id
+//     appointmentId String? @map("appointment_id") @db.VarChar(191)
+
+//     rating        Float?  @map("rating")
+//     message       String? @map("message") @db.VarChar(255)
+//     ratedBy       String? @map("ratedBy") @db.VarChar(191)
+
+//     // Extensibility
+//     metadata Json? @map("metadata") // For storing additional user preferences/data
+
+//     isActive Boolean @default(true) @map("is_active")
+
+//     createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+//     updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+
+//     // Relations
+//     doctorProfile DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+//     user          User          @relation(fields: [ratedBy], references: [id], onDelete: Cascade)
+
+//     // Indexes for performance
+//     @@index([doctorId], name: "idx_doctor_rating_doctor_id_doctor_profile")
+//     @@index([isActive, createdAt], name: "idx_doctor_rating_active_created")
+// }
 
 // @ts-eslint-ignore-file
 generator client {
@@ -134,10 +181,9 @@ model User {
   updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
 
   // Relations
-  roles         UserRole[]
-  userCompanies UserCompany[]
-  userBranches  UserBranch[]
-  doctorBranch  DoctorBranch[]
+  roles             UserRole[]
+  userCompanyBranch UserCompanyBranch[]
+  userCompany       UserCompany[]
 
   // Indexes for performance
   @@index([email(191)], name: "idx_users_email")

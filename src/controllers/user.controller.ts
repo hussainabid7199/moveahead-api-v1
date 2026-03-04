@@ -99,6 +99,26 @@ export class UserController {
     return res.status(200).json(response);
   };
 
+  getAllUsersForBranchMapping = async (req: Request, res: Response): Promise<Response<CustomResponse<UserDto[]>>> => {
+    const currentUserId: string = req.body.currentUserId;
+    const companyId: string = req.params.companyId;
+    const branchId: string = req.params.branchId;
+    const q: string = req.query.q as string;
+    const name: string = req.query.name as string;
+    const phone: string = req.query.phone as string;
+
+    if(!currentUserId || !companyId || !branchId) {
+      throw new CustomError('Missing required fields', 400);
+    }
+
+    const users = await this.unitOfService.User.findUsersWithRolesWithoutBranchMapping(currentUserId, companyId, branchId, q, name, phone);
+    const response: CustomResponse<UserDto[]> = {
+      success: true,
+      data: users,
+    };
+    return res.status(200).json(response);
+  };
+
   /**
    * Updates a user's information by their unique identifier.
    *
@@ -116,6 +136,27 @@ export class UserController {
       throw new CustomError('User not found', 404);
     }
 
+    const response: CustomResponse<UserDto> = {
+      success: true,
+      data: user,
+    };
+
+    return res.status(200).json(response);
+  };
+
+  updateUserRole = async (req: Request, res: Response): Promise<Response<CustomResponse<UserDto>>> => {
+    const userId = req.params.id;
+    const newRole = req.body.role as string;
+
+    if (!newRole) {
+      throw new CustomError('New role is required', 400);
+    }
+
+    const user = await this.unitOfService.User.updateUserRole(userId, newRole);
+    if (!user) {
+      throw new CustomError('User not found', 404);
+    }
+    
     const response: CustomResponse<UserDto> = {
       success: true,
       data: user,

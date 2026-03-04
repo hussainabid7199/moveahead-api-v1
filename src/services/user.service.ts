@@ -5,6 +5,8 @@ import { AuthProvider } from '../prisma/generated';
 import PasswordUtils from '../utils/password.utils';
 import prisma from '../prisma';
 import { CreateUserModel } from '../validators/user.validator';
+import { Prisma } from '../prisma/generated';
+import { Roles } from '../enums/roles.enum';
 
 @injectable()
 export class UserService {
@@ -92,6 +94,141 @@ export class UserService {
     return this.convertToDto(user);
   }
 
+  async findUsersWithRolesWithoutBranchMapping(
+    currentUserId: string,
+    companyId: string,
+    branchId: string,
+    q?: string,
+    name?: string,
+    phoneNumber?: string
+  ): Promise<UserDto[]> {
+    const user = await prisma.user.findUnique({
+      where: { id: currentUserId },
+      select: {
+        id: true,
+        roles: {
+          select: {
+            role: {
+              select: {
+                id: true,
+                name: true,
+                isActive: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const allowedRoles = [Roles.ADMINISTRATOR, Roles.ADMIN];
+    if (!allowedRoles.includes(user.roles[0].role.name as Roles)) {
+      throw new Error('You are not authorized to create a user doctor mapping');
+    }
+
+    // Check company exists
+    const company = await prisma.company.findUnique({
+      where: { id: companyId },
+      select: {
+        id: true,
+        name: true,
+        website: true,
+        isActive: true,
+      },
+    });
+
+    if (!company) {
+      throw new Error('Company not found');
+    }
+
+    // Check user mapping with the company
+    const userMapping = await prisma.userCompanyBranch.findUnique({
+      where: { userId_companyId_branchId: { userId: user.id, companyId: company.id, branchId: branchId } },
+    });
+
+    if (!userMapping) {
+      throw new Error('User not mapped to company');
+    }
+
+    const branch = await prisma.branch.findFirst({
+      where: { id: branchId },
+      select: {
+        id: true,
+        name: true,
+        address: true,
+        phoneNumber: true,
+        isActive: true,
+      },
+    });
+
+    if (!branch) {
+      throw new Error('Branch not found');
+    }
+
+    const whereCondition: Prisma.UserWhereInput = {};
+    if (q) {
+      whereCondition.OR = [{ displayName: { contains: q } }, { email: { contains: q } }, { phoneNumber: { contains: q } }];
+    }
+    if (name) {
+      whereCondition.OR = [{ displayName: { contains: name } }];
+    }
+    if (phoneNumber) {
+      whereCondition.OR = [{ phoneNumber: { contains: phoneNumber } }];
+    }
+
+    whereCondition.AND = [
+      { isActive: true },
+      { NOT: { id: user.id } },
+      { NOT: { roles: { some: { role: { name: { in: [Roles.SUPERADMIN, Roles.ADMINISTRATOR, Roles.ADMIN] } } } }}},
+      { NOT: { userCompanyBranch: { some: { branchId: branch.id } } } },
+    ];
+
+    // Get all user and doctor who are not mapped to the user_branch and doctor_branch with role doctor and user
+    const users = await prisma.user.findMany({
+      where: whereCondition,
+      select: {
+        id: true,
+        displayName: true,
+        firstName: true,
+        lastName: true,
+        profileImageUrl: true,
+        email: true,
+        phoneNumber: true,
+        createdAt: true,
+        roles: {
+          select: {
+            role: {
+              select: {
+                id: true,
+                name: true,
+                isActive: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const response: UserDto[] = users.map((user) => {
+      return {
+        id: user.id,
+        displayName: user.displayName,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        profileImageUrl: user.profileImageUrl,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        createdAt: user.createdAt,
+        roles: user.roles.map((role) => role.role.name),
+      };
+    });
+
+    return response;
+  }
+
   /**
    * Creates a new user with the specified data and role.
    *
@@ -168,6 +305,78 @@ export class UserService {
     return this.convertToDto(user);
   }
 
+  async updatePassword(id: string, newPassword: string): Promise<UserDto | null> {
+    const hashedPassword = await PasswordUtils.hashPassword(newPassword);
+    const user = await prisma.user.update({
+      where: { id },
+      data: { passwordHash: hashedPassword },
+      include: {
+        roles: true,
+      },
+    });
+    if (!user) {
+      return null;
+    }
+    return this.convertToDto(user);
+  }
+
+  async updateUserRole(id: string, newRole: string): Promise<UserDto | null> {
+
+    // First, find the user to ensure they exist and to get their current roles
+    const user = await prisma.user.findFirst({
+      where: { id, isActive: true },
+    });
+
+    if (!user) {
+      throw new Error('User not found'); // User not found
+    }
+
+    // Find existing role from the role user mapping table
+    const existingRole = await prisma.userRole.findFirst({
+      where: { userId: id },
+      select: {
+        userId: true,
+        roleId: true,
+      }
+    });
+
+    if (existingRole) {
+      // Delete existing role mapping
+      await prisma.$transaction(async (tx) => {
+        await tx.userRole.delete({
+          where: { userId_roleId: { userId: id, roleId: existingRole.roleId } },
+        });
+
+        const roleRecord = await tx.role.findUnique({
+          where: { name: newRole },
+          select: { id: true },
+        });
+        
+        if (!roleRecord) {
+          throw new Error(`Role "${newRole}" not found`);
+        }
+
+        // Create new role mapping
+        await tx.userRole.create({
+          data: {
+            userId: id,
+            roleId: roleRecord.id,
+          },
+        });
+
+        // Return the updated user with roles
+        return await tx.user.findUnique({
+          where: { id },
+          include: {
+            roles: true,
+          },
+        });
+      });
+    }
+
+    return this.convertToDto(user);
+  } 
+
   /**
    * Deletes a user by their unique identifier.
    *
@@ -213,7 +422,7 @@ export class UserService {
       metadata: user.metadata,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
-      roles: user.roles ? user.roles.map((r: any) => r.roleId) : [],
+      role: user.roles ? user.roles.map((r: any) => r.roleId) : [],
     };
   }
 }

@@ -123,6 +123,7 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.CompanyScalarFieldEnum = {
   id: 'id',
+  parentId: 'parentId',
   name: 'name',
   website: 'website',
   isVerified: 'isVerified',
@@ -134,6 +135,7 @@ exports.Prisma.CompanyScalarFieldEnum = {
 exports.Prisma.BranchScalarFieldEnum = {
   id: 'id',
   companyId: 'companyId',
+  parentId: 'parentId',
   name: 'name',
   address: 'address',
   phoneNumber: 'phoneNumber',
@@ -144,19 +146,15 @@ exports.Prisma.BranchScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.UserCompanyBranchScalarFieldEnum = {
+  userId: 'userId',
+  companyId: 'companyId',
+  branchId: 'branchId'
+};
+
 exports.Prisma.UserCompanyScalarFieldEnum = {
   userId: 'userId',
   companyId: 'companyId'
-};
-
-exports.Prisma.UserBranchScalarFieldEnum = {
-  userId: 'userId',
-  branchId: 'branchId'
-};
-
-exports.Prisma.DoctorBranchScalarFieldEnum = {
-  userId: 'userId',
-  branchId: 'branchId'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -209,6 +207,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.CompanyOrderByRelevanceFieldEnum = {
   id: 'id',
+  parentId: 'parentId',
   name: 'name',
   website: 'website'
 };
@@ -216,24 +215,21 @@ exports.Prisma.CompanyOrderByRelevanceFieldEnum = {
 exports.Prisma.BranchOrderByRelevanceFieldEnum = {
   id: 'id',
   companyId: 'companyId',
+  parentId: 'parentId',
   name: 'name',
   address: 'address',
   phoneNumber: 'phoneNumber'
 };
 
+exports.Prisma.UserCompanyBranchOrderByRelevanceFieldEnum = {
+  userId: 'userId',
+  companyId: 'companyId',
+  branchId: 'branchId'
+};
+
 exports.Prisma.UserCompanyOrderByRelevanceFieldEnum = {
   userId: 'userId',
   companyId: 'companyId'
-};
-
-exports.Prisma.UserBranchOrderByRelevanceFieldEnum = {
-  userId: 'userId',
-  branchId: 'branchId'
-};
-
-exports.Prisma.DoctorBranchOrderByRelevanceFieldEnum = {
-  userId: 'userId',
-  branchId: 'branchId'
 };
 
 exports.Prisma.JsonNullValueFilter = {
@@ -282,9 +278,8 @@ exports.AuthProvider = exports.$Enums.AuthProvider = {
 exports.Prisma.ModelName = {
   Company: 'Company',
   Branch: 'Branch',
+  UserCompanyBranch: 'UserCompanyBranch',
   UserCompany: 'UserCompany',
-  UserBranch: 'UserBranch',
-  DoctorBranch: 'DoctorBranch',
   User: 'User',
   Role: 'Role',
   UserRole: 'UserRole'

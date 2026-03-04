@@ -15,10 +15,11 @@ companyRouter.use(authentication);
 
 const companyController = container.get<CompanyController>(TYPES.CompanyController);
 
-companyRouter.get('/', asyncHandler(authorization([Roles.SUPERADMIN])), asyncHandler(companyController.findAll));
+companyRouter.get('/', asyncHandler(authorization([Roles.SUPERADMIN, Roles.ADMINISTRATOR, Roles.ADMIN])), asyncHandler(companyController.findAll));
+companyRouter.get('/user/:userId', asyncHandler(authorization([Roles.ADMINISTRATOR, Roles.ADMIN])), asyncHandler(companyController.findCompanyByUserId));
 companyRouter.get('/:id', asyncHandler(authorization([Roles.SUPERADMIN])), asyncHandler(companyController.findById));
 companyRouter.post('/', validateSchema(CompanyValidator), asyncHandler(authorization([Roles.SUPERADMIN])), asyncHandler(companyController.create));
 companyRouter.put('/:id', validateSchema(CompanyUpdateValidator), asyncHandler(authorization([Roles.SUPERADMIN])), asyncHandler(companyController.update));
-companyRouter.post('/mapping', validateSchema(CompanyMappingValidator), asyncHandler(authorization([Roles.SUPERADMIN, Roles.ADMINISTRATOR])), asyncHandler(companyController.mapping));
+companyRouter.post('/mapping', validateSchema(CompanyMappingValidator), asyncHandler(authorization([Roles.SUPERADMIN, Roles.ADMINISTRATOR, Roles.ADMIN])), asyncHandler(companyController.mapping));
 
 export default companyRouter;
