@@ -20,6 +20,6 @@ companyRouter.get('/user/:userId', asyncHandler(authorization([Roles.ADMINISTRAT
 companyRouter.get('/:id', asyncHandler(authorization([Roles.SUPERADMIN])), asyncHandler(companyController.findById));
 companyRouter.post('/', validateSchema(CompanyValidator), asyncHandler(authorization([Roles.SUPERADMIN])), asyncHandler(companyController.create));
 companyRouter.put('/:id', validateSchema(CompanyUpdateValidator), asyncHandler(authorization([Roles.SUPERADMIN])), asyncHandler(companyController.update));
-companyRouter.post('/mapping', validateSchema(CompanyMappingValidator), asyncHandler(authorization([Roles.SUPERADMIN, Roles.ADMINISTRATOR])), asyncHandler(companyController.mapping));
+companyRouter.post('/mapping', validateSchema(CompanyMappingValidator), asyncHandler(authorization([Roles.SUPERADMIN, Roles.ADMINISTRATOR, Roles.ADMIN])), asyncHandler(companyController.mapping));
 
 export default companyRouter;

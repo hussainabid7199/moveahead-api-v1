@@ -13,7 +13,7 @@
   ],
 
   "paths": {
-    "/api/account/login": {
+    "/api/auth/login": {
       "post": {
         "tags": ["Account"],
         "summary": "Login user",
@@ -46,10 +46,11 @@
       }
     },
 
-    "/api/account/register": {
+    "/api/auth/register": {
       "post": {
         "tags": ["Account"],
         "summary": "Register new user",
+        "security": [],
         "requestBody": {
           "required": true,
           "content": {
@@ -75,57 +76,46 @@
       }
     },
 
-    "/api/account/profile": {
-      "get": {
+    "/api/auth/refresh-token": {
+      "post": {
         "tags": ["Account"],
-        "summary": "Get user profile",
+        "summary": "Refresh JWT token",
         "responses": {
           "200": {
-            "description": "Profile fetched",
+            "description": "Token refreshed successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
+                  "$ref": "#/components/schemas/LoginResponse"
                 }
               }
             }
+          },
+          "401": {
+            "description": "Invalid or expired token"
           }
         }
-      },
+      }
+    },
 
-      "put": {
+    "/api/auth/logout": {
+      "post": {
         "tags": ["Account"],
-        "summary": "Update user profile",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateUserRequest"
-              }
-            }
-          }
-        },
+        "summary": "Logout user",
         "responses": {
           "200": {
-            "description": "Profile updated",
+            "description": "Logout successful",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "message": { "type": "string" }
+                  }
                 }
               }
             }
-          }
-        }
-      },
-
-      "delete": {
-        "tags": ["Account"],
-        "summary": "Delete user account",
-        "responses": {
-          "200": {
-            "description": "Account deleted"
           }
         }
       }
@@ -159,6 +149,10 @@
           "password": {
             "type": "string",
             "example": "Password@123"
+          },
+          "rememberMe": {
+            "type": "boolean",
+            "example": false
           }
         }
       },

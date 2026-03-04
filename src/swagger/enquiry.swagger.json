@@ -1,0 +1,154 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Enquiry API",
+    "version": "1.0.0"
+  },
+
+  "security": [
+    {
+      "bearerAuth": [],
+      "clientId": []
+    }
+  ],
+
+  "paths": {
+    "/api/enquiry/email": {
+      "post": {
+        "tags": ["Enquiry"],
+        "summary": "Submit an enquiry",
+        "description": "Public endpoint - no authentication required. Sends enquiry email to company and confirmation email to user.",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnquiryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Enquiry submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Enquiry submitted successfully. We will contact you soon."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": ["Invalid email format", "Phone number is required"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "clientId": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-client-id"
+      }
+    },
+
+    "schemas": {
+      "EnquiryRequest": {
+        "type": "object",
+        "required": ["fullName", "email", "phone", "service"],
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "pattern": "^[a-zA-Z\\s]+$",
+            "example": "John Doe",
+            "description": "Full name (letters and spaces only, 1-100 characters)"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 250,
+            "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            "example": "john.doe@example.com",
+            "description": "Valid email address (max 250 characters)"
+          },
+          "phone": {
+            "type": "string",
+            "pattern": "^\\+91[6-9]\\d{9}$",
+            "example": "+919876543210",
+            "description": "Phone number in format +91XXXXXXXXXX (10 digits starting with 6-9)"
+          },
+          "service": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Speech Therapy",
+            "description": "Service interested in"
+          },
+          "message": {
+            "type": "string",
+            "maxLength": 1000,
+            "pattern": "^[a-zA-Z0-9\\s.,:!?()\"\\-&()@]+$",
+            "nullable": true,
+            "example": "I would like to know more about your speech therapy services for children.",
+            "description": "Optional message (max 1000 characters, alphanumeric and basic punctuation)"
+          }
+        },
+        "example": {
+          "fullName": "John Doe",
+          "email": "john.doe@example.com",
+          "phone": "+919876543210",
+          "service": "Speech Therapy",
+          "message": "I would like to know more about your speech therapy services for children."
+        }
+      }
+    }
+  }
+}

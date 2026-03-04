@@ -145,8 +145,8 @@ export class UserService {
     }
 
     // Check user mapping with the company
-    const userMapping = await prisma.userCompany.findUnique({
-      where: { userId_companyId: { userId: user.id, companyId: company.id } },
+    const userMapping = await prisma.userCompanyBranch.findUnique({
+      where: { userId_companyId_branchId: { userId: user.id, companyId: company.id, branchId: branchId } },
     });
 
     if (!userMapping) {
@@ -183,8 +183,7 @@ export class UserService {
       { isActive: true },
       { NOT: { id: user.id } },
       { NOT: { roles: { some: { role: { name: { in: [Roles.SUPERADMIN, Roles.ADMINISTRATOR, Roles.ADMIN] } } } }}},
-      { NOT: { userBranches: { some: { branchId: branch.id } } } },
-      { NOT: { doctorBranch: { some: { branchId: branch.id } } } },
+      { NOT: { userCompanyBranch: { some: { branchId: branch.id } } } },
     ];
 
     // Get all user and doctor who are not mapped to the user_branch and doctor_branch with role doctor and user
@@ -305,6 +304,78 @@ export class UserService {
     }
     return this.convertToDto(user);
   }
+
+  async updatePassword(id: string, newPassword: string): Promise<UserDto | null> {
+    const hashedPassword = await PasswordUtils.hashPassword(newPassword);
+    const user = await prisma.user.update({
+      where: { id },
+      data: { passwordHash: hashedPassword },
+      include: {
+        roles: true,
+      },
+    });
+    if (!user) {
+      return null;
+    }
+    return this.convertToDto(user);
+  }
+
+  async updateUserRole(id: string, newRole: string): Promise<UserDto | null> {
+
+    // First, find the user to ensure they exist and to get their current roles
+    const user = await prisma.user.findFirst({
+      where: { id, isActive: true },
+    });
+
+    if (!user) {
+      throw new Error('User not found'); // User not found
+    }
+
+    // Find existing role from the role user mapping table
+    const existingRole = await prisma.userRole.findFirst({
+      where: { userId: id },
+      select: {
+        userId: true,
+        roleId: true,
+      }
+    });
+
+    if (existingRole) {
+      // Delete existing role mapping
+      await prisma.$transaction(async (tx) => {
+        await tx.userRole.delete({
+          where: { userId_roleId: { userId: id, roleId: existingRole.roleId } },
+        });
+
+        const roleRecord = await tx.role.findUnique({
+          where: { name: newRole },
+          select: { id: true },
+        });
+        
+        if (!roleRecord) {
+          throw new Error(`Role "${newRole}" not found`);
+        }
+
+        // Create new role mapping
+        await tx.userRole.create({
+          data: {
+            userId: id,
+            roleId: roleRecord.id,
+          },
+        });
+
+        // Return the updated user with roles
+        return await tx.user.findUnique({
+          where: { id },
+          include: {
+            roles: true,
+          },
+        });
+      });
+    }
+
+    return this.convertToDto(user);
+  } 
 
   /**
    * Deletes a user by their unique identifier.

@@ -22,6 +22,10 @@ export function setupSwagger(app: Express) {
     return { ...acc, ...(file.paths || {}) };
   }, {} as Record<string, any>);
 
+  const schemas = swaggerFiles.reduce((acc, file) => {
+    return { ...acc, ...(file.components?.schemas || {}) };
+  }, {} as Record<string, any>);
+
   const spec = {
     openapi: '3.0.0',
     info: {
@@ -35,17 +39,18 @@ export function setupSwagger(app: Express) {
 
     components: {
       securitySchemes: {
-        Auth: {
+        bearerAuth: {
           type: 'http',
           scheme: 'bearer',
           bearerFormat: 'JWT',
         },
-        ClientId: {
+        clientId: {
           type: 'apiKey',
           in: 'header',
           name: 'x-client-id',
         },
       },
+      schemas,
     },
 
     // 👇 Applies to ALL endpoints

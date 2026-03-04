@@ -12,6 +12,7 @@ import helmet from "helmet";
 import RateLimiter from './security/ratelimiting/rateLimiting';
 import { corsMiddleware } from './security/cors';
 import { setupSwagger } from './utils/common/swagger';
+import hpp from "hpp";
 
 // Load environment variables
 dotenv.config();
@@ -23,6 +24,7 @@ app.set("trust proxy", 1);
 app.use(helmet());
 app.use(corsMiddleware);
 app.use(RateLimiter());
+app.use(hpp());
 //setup public directory
 app.use(asyncHandler(ClientIdMiddleware.verify));
 app.use(express.static(path.join(__dirname, 'public')));

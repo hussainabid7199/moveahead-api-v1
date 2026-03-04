@@ -4,6 +4,7 @@ import { Roles } from '../enums/roles.enum';
 import prisma from '../prisma';
 import { BranchModel, BranchUpdateModel } from '../validators/branch.validator';
 import { UserBasicDto } from '../dtos/user.dto';
+import CustomError from '../exceptions/custom-error';
 
 @injectable()
 export class BranchService {
@@ -32,7 +33,7 @@ export class BranchService {
     });
 
     if (!branch) {
-      throw new Error('Branch not found');
+      throw new CustomError('Branch not found', 404);
     }
 
     const currentUserRole = await prisma.userRole.findFirst({
@@ -41,7 +42,7 @@ export class BranchService {
     });
 
     if (!currentUserRole) {
-      throw new Error('User role not found');
+      throw new CustomError('User role not found', 404);
     }
 
     let allowedRoles: Roles[] = [];
@@ -54,8 +55,8 @@ export class BranchService {
     }
 
     // Get all mapped user with this branch
-    const userBranchMapping = await prisma.userBranch.findMany({
-      where: { branchId: branchId },
+    const userBranchMapping = await prisma.userCompanyBranch.findMany({
+      where: { branchId: branchId, companyId: companyId, userId: { not: currentUserId } },
       select: {
         userId: true,
       },
@@ -88,7 +89,107 @@ export class BranchService {
     });
 
     if (!users) {
-      throw new Error('No user found for this branch');
+      throw new CustomError('No user found for this branch', 404);
+    }
+
+    const filteredUsers = users.filter((user) => allowedRoles.includes(user.roles[0].role.name as Roles));
+    const response: UserBasicDto[] = filteredUsers.map((user) => ({
+      id: user.id,
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
+      displayName: user?.displayName || '',
+      email: user?.email || '',
+      phoneNumber: user?.phoneNumber || '',
+      profileImageUrl: user?.profileImageUrl || '',
+      isEmailVerified: user.isEmailVerified,
+      isPhoneVerified: user.isPhoneVerified,
+      role: user.roles[0].role.name as Roles,
+      isActive: true,
+    }));
+
+    return response;
+  }
+
+  async getAllBranchDoctor(
+    companyId: string,
+    branchId: string,
+    currentUserId: string,
+    search?: string,
+    limit: number = 10,
+    offset: number = 0
+  ): Promise<UserBasicDto[]> {
+    const result = await this.validateUserAndCompany(currentUserId, companyId);
+
+    const branch = await prisma.branch.findMany({
+      where: {
+        companyId: result.companyId,
+        id: branchId,
+        isActive: true,
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+
+    if (!branch) {
+      throw new CustomError('Branch not found', 404);
+    }
+
+    const currentUserRole = await prisma.userRole.findFirst({
+      where: { userId: currentUserId },
+      select: { role: { select: { name: true } } },
+    });
+
+    if (!currentUserRole) {
+      throw new CustomError('User role not found', 404);
+    }
+
+    let allowedRoles: Roles[] = [];
+    if (currentUserRole.role.name === Roles.ADMIN) {
+      allowedRoles = [Roles.ADMIN, Roles.USER, Roles.DOCTOR];
+    } else if (currentUserRole.role.name === Roles.ADMINISTRATOR) {
+      allowedRoles = [Roles.ADMIN, Roles.USER, Roles.DOCTOR];
+    } else if (currentUserRole.role.name === Roles.SUPERADMIN) {
+      allowedRoles = [Roles.ADMINISTRATOR, Roles.ADMIN, Roles.USER, Roles.DOCTOR];
+    }
+
+    // Get all mapped user with this branch
+    const doctorBranchMapping = await prisma.userCompanyBranch.findMany({
+      where: { branchId: branchId, companyId: companyId, userId: { not: currentUserId } },
+      select: {
+        userId: true,
+      },
+    });
+
+    const userIds = doctorBranchMapping.map((mapping) => mapping.userId);
+
+    // Only get the user whose role is user
+    const users = await prisma.user.findMany({
+      where: {
+        id: { in: userIds, not: currentUserId },
+        isActive: true,
+        email: search ? { contains: search } : undefined,
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        displayName: true,
+        email: true,
+        phoneNumber: true,
+        profileImageUrl: true,
+        isEmailVerified: true,
+        isPhoneVerified: true,
+        roles: { select: { role: { select: { id: true, name: true, isActive: true } } } },
+      },
+      skip: offset,
+      take: limit,
+      orderBy: { createdAt: 'desc' },
+    });
+
+    if (!users) {
+      throw new CustomError('No user found for this branch', 404);
     }
 
     const filteredUsers = users.filter((user) => allowedRoles.includes(user.roles[0].role.name as Roles));
@@ -171,7 +272,7 @@ export class BranchService {
     });
 
     if (!newBranch) {
-      throw new Error('Branch not created');
+      throw new CustomError('Branch not created', 400);
     }
 
     const response: BranchDto = {
@@ -208,7 +309,7 @@ export class BranchService {
     });
 
     if (!branchExist) {
-      throw new Error('Branch not found');
+      throw new CustomError('Branch not found', 404);
     }
 
     const updateBranch = await prisma.$transaction(async (tx) => {
@@ -229,7 +330,7 @@ export class BranchService {
     });
 
     if (!updateBranch) {
-      throw new Error('Branch not updated');
+      throw new CustomError('Branch not updated', 400);
     }
 
     const response: BranchDto = {
@@ -266,16 +367,16 @@ export class BranchService {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new CustomError('User not found', 404);
     }
 
     const allowedUserRoles = [Roles.DOCTOR];
     if (!allowedUserRoles.includes(user.roles[0].role.name as Roles)) {
-      throw new Error('Unauthorized role to create mapping to branch');
+      throw new CustomError('Unauthorized role to create mapping to branch', 403);
     }
 
     // Check if user is already mapped with the branch
-    const doctorBranchMapping = await prisma.doctorBranch.findFirst({
+    const doctorBranchMapping = await prisma.userCompanyBranch.findFirst({
       where: { userId: user.id, branchId: branchId },
     });
 
@@ -283,10 +384,11 @@ export class BranchService {
     if (doctorBranchMapping) {
       // Unmapped the user from the branch
       const deleteMapping = await prisma.$transaction(async (tx) => {
-        const mapping = await tx.doctorBranch.delete({
+        const mapping = await tx.userCompanyBranch.delete({
           where: {
-            userId_branchId: {
+            userId_companyId_branchId: {
               userId: user.id,
+              companyId: companyId,
               branchId: branchId,
             },
           },
@@ -296,15 +398,16 @@ export class BranchService {
       });
 
       if (!deleteMapping) {
-        throw new Error(`${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} not unmapped from branch`);
+        throw new CustomError(`${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} not unmapped from branch`, 400);
       }
 
       message = `${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} unmapped successfully`;
     } else {
       const createMapping = await prisma.$transaction(async (tx) => {
-        const mapping = await tx.doctorBranch.create({
+        const mapping = await tx.userCompanyBranch.create({
           data: {
             userId: user.id,
+            companyId: companyId,
             branchId: branchId,
           },
         });
@@ -313,7 +416,7 @@ export class BranchService {
       });
 
       if (!createMapping) {
-        throw new Error(`${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} not mapped to branch`);
+        throw new CustomError(`${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} not mapped to branch`, 400);
       }
 
       message = `Dr.${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} mapped successfully`;
@@ -326,7 +429,7 @@ export class BranchService {
     const result = await this.validateCurrentUserCompanyAndBranch(currentUserId, branchId, companyId);
 
     if (!result) {
-      throw new Error('Unauthorized to create mapping to branch');
+      throw new CustomError('Unauthorized to create mapping to branch', 403);
     }
 
     const user = await prisma.user.findFirst({
@@ -341,32 +444,59 @@ export class BranchService {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new CustomError('User not found', 404);
+    }
+
+    let message: string | null = null;
+    if (user.roles[0].role.name === Roles.ADMINISTRATOR) {
+      // Check if the user is mapped with the company
+      const companyMapping = await prisma.userCompanyBranch.findFirst({
+        where: { userId: user.id, companyId: companyId, branchId: branchId },
+      });
+
+      if (!companyMapping) {
+        // Create user company mapping
+        const mapping = await prisma.userCompanyBranch.create({
+          data: {
+            userId: user.id,
+            companyId: companyId,
+            branchId: branchId,
+          },
+        });
+
+        if (!mapping) {
+          throw new CustomError(`${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} not mapped to company`, 400);
+        }
+
+        message = `${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} mapped to company successfully`;
+
+        return message;
+      }
     }
 
     // Check if user is already mapped with the branch
-    const userBranchMapping = await prisma.userBranch.findFirst({
-      where: { userId: user.id, branchId: branchId },
+    const userBranchMapping = await prisma.userCompanyBranch.findFirst({
+      where: { userId: user.id, companyId: companyId, branchId: branchId },
     });
 
     // Allow user with role admin to create mapping of himself if the is not mapped with the branch only once if already mapped then throw error
     if (user && user.roles[0].role.name === Roles.ADMIN && userBranchMapping) {
-      throw new Error(`You are already mapped to branch.`);
+      throw new CustomError(`You are already mapped to branch.`, 400);
     }
 
     const allowedUserRoles = [Roles.ADMIN, Roles.USER];
     if (!allowedUserRoles.includes(user.roles[0].role.name as Roles)) {
-      throw new Error('Unauthorized role to create mapping to branch');
+      throw new CustomError('Unauthorized role to create mapping to branch', 403);
     }
 
-    let message: string | null = null;
     if (userBranchMapping) {
       // Unmapped the user from the branch
       const deleteMapping = await prisma.$transaction(async (tx) => {
-        const mapping = await tx.userBranch.delete({
+        const mapping = await tx.userCompanyBranch.delete({
           where: {
-            userId_branchId: {
+            userId_companyId_branchId: {
               userId: user.id,
+              companyId: companyId,
               branchId: branchId,
             },
           },
@@ -376,15 +506,16 @@ export class BranchService {
       });
 
       if (!deleteMapping) {
-        throw new Error(`${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} not unmapped from branch`);
+        throw new CustomError(`${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} not unmapped from branch`, 400);
       }
 
       message = `${user.displayName ? user.displayName : `${user.firstName} ${user.lastName}`} unmapped successfully`;
     } else {
       const createMapping = await prisma.$transaction(async (tx) => {
-        const mapping = await tx.userBranch.create({
+        const mapping = await tx.userCompanyBranch.create({
           data: {
             userId: user.id,
+            companyId: companyId,
             branchId: branchId,
           },
         });
@@ -400,6 +531,97 @@ export class BranchService {
     }
 
     return message;
+  }
+
+  async getUnmappedUsers(companyId: string, currentUserId: string, search?: string, limit: number = 10, offset: number = 0): Promise<UserBasicDto[]> {
+    await this.validateUserAndCompany(currentUserId, companyId);
+
+    const masterUsers = await prisma.userCompany.findMany({
+      where: { companyId: companyId },
+      select: {
+        user: {
+          select: {
+            id: true,
+            roles: { select: { role: { select: { name: true } } } },
+          },
+        },
+      },
+    });
+
+    // Get all users of the company
+    const subUsers = await prisma.userCompanyBranch.findMany({
+      where: { companyId: companyId },
+      select: {
+        user: {
+          select: {
+            id: true,
+            roles: { select: { role: { select: { name: true } } } },
+          },
+        },
+      },
+    });
+
+    const user = [...masterUsers, ...subUsers];
+
+    const doctor = user.map((user) => (user.user.id && user.user.roles[0].role.name === Roles.DOCTOR ? user.user.id : null));
+    const patient = user.map((user) => (user.user.id && user.user.roles[0].role.name === Roles.USER ? user.user.id : null));
+    const admin = user.map((user) => (user.user.id && user.user.roles[0].role.name === Roles.ADMIN ? user.user.id : null));
+    const masterAdmin = user.map((user) => (user.user.id && user.user.roles[0].role.name === Roles.ADMINISTRATOR ? user.user.id : null));
+    const userIds = [...doctor, ...patient, ...admin, ...masterAdmin].filter((id): id is string => id !== null);
+
+    // Only get the user whose role is user and not mapped with any branch
+    const users = await prisma.user.findMany({
+      where: {
+        id: { notIn: userIds, not: currentUserId },
+        isActive: true,
+        email: search ? { contains: search } : undefined,
+        displayName: search ? { contains: search } : undefined,
+        phoneNumber: search ? { contains: search } : undefined,
+        AND: [
+          {
+            roles: {
+              some: {
+                role: {
+                  name: Roles.USER,
+                },
+              },
+            },
+          },
+        ],
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        displayName: true,
+        email: true,
+        phoneNumber: true,
+        profileImageUrl: true,
+        isEmailVerified: true,
+        isPhoneVerified: true,
+      },
+      skip: offset,
+      take: limit,
+      orderBy: { createdAt: 'desc' },
+    });
+
+    if (!users) {
+      throw new CustomError('No user found for this company', 404);
+    }
+
+    const response: UserBasicDto[] = users.map((user) => ({
+      id: user.id,
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
+      displayName: user?.displayName || '',
+      email: user?.email || '',
+      phoneNumber: user?.phoneNumber || '',
+      profileImageUrl: user?.profileImageUrl || '',
+      isEmailVerified: user.isEmailVerified,
+      isPhoneVerified: user.isPhoneVerified,
+    }));
+
+    return response;
   }
 
   private async validateUserAndCompany(currentUserId: string, companyId: string): Promise<{ userId: string; companyId: string }> {
@@ -422,12 +644,12 @@ export class BranchService {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new CustomError('User not found', 404);
     }
 
     const allowedRoles = [Roles.SUPERADMIN, Roles.ADMINISTRATOR, Roles.ADMIN];
     if (!allowedRoles.includes(user.roles[0].role.name as Roles)) {
-      throw new Error('You are not authorized to create a branch');
+      throw new CustomError('You are not authorized to create a branch', 403);
     }
 
     // Check if company exists
@@ -437,20 +659,20 @@ export class BranchService {
     });
 
     if (!company) {
-      throw new Error('Company not found');
+      throw new CustomError('Company not found', 404);
     }
 
     if (!company.isActive) {
-      throw new Error('Company is not active');
+      throw new CustomError('Company is not active', 400);
     }
 
     if (!company.isVerified) {
-      throw new Error('Company is not verified, please contact support and verify your company');
+      throw new CustomError('Company is not verified, please contact support and verify your company', 400);
     }
 
     if (user.roles[0].role.name === Roles.ADMINISTRATOR || user.roles[0].role.name === Roles.ADMIN) {
       // Check if the user is mapped with the company
-      const userCompany = await prisma.userCompany.findFirst({
+      const userCompany = await prisma.userCompanyBranch.findFirst({
         where: {
           userId: user.id,
           companyId: company.id,
@@ -458,7 +680,7 @@ export class BranchService {
       });
 
       if (!userCompany) {
-        throw new Error('You are not authorized to create a branch');
+        throw new CustomError('You are not authorized to create a branch', 403);
       }
     }
 
@@ -473,7 +695,7 @@ export class BranchService {
     });
 
     if (!company) {
-      throw new Error('Company not found');
+      throw new CustomError('Company not found', 404);
     }
 
     // Validate branch with this company
@@ -493,7 +715,7 @@ export class BranchService {
     });
 
     if (!branch) {
-      throw new Error('Branch not found');
+      throw new CustomError('Branch not found', 404);
     }
 
     const validateCurrentUser = await prisma.user.findFirst({
@@ -502,22 +724,22 @@ export class BranchService {
     });
 
     if (!validateCurrentUser) {
-      throw new Error('User not found');
+      throw new CustomError('User not found', 404);
     }
 
     const allowedRoles = [Roles.SUPERADMIN, Roles.ADMINISTRATOR, Roles.ADMIN];
     if (!allowedRoles.includes(validateCurrentUser.roles[0].role.name as Roles)) {
-      throw new Error('You are not authorized to create doctor mapping to branch');
+      throw new CustomError('You are not authorized to create doctor mapping to branch', 403);
     }
 
     // Check if the administrator and admin is mapped with the company
     if (validateCurrentUser.roles[0].role.name === Roles.ADMINISTRATOR || validateCurrentUser.roles[0].role.name === Roles.ADMIN) {
-      const userCompanyMapping = await prisma.userCompany.findFirst({
+      const userCompanyMapping = await prisma.userCompanyBranch.findFirst({
         where: { userId: validateCurrentUser.id, companyId: companyId },
       });
 
       if (!userCompanyMapping) {
-        throw new Error('You are not authorized to create doctor mapping to branch');
+        throw new CustomError('You are not authorized to create doctor mapping to branch', 403);
       }
     }
 

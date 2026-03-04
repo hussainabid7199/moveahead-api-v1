@@ -18,6 +18,7 @@ userRouter.get('/getbyemail', asyncHandler(userController.getUserByEmail));
 userRouter.get('/company/:companyId/branch/:branchId/mapping', asyncHandler(authorization([Roles.ADMINISTRATOR, Roles.ADMIN])), asyncHandler(userController.getAllUsersForBranchMapping));
 userRouter.get('/:id', asyncHandler(userController.getUserById));
 userRouter.put('/:id', asyncHandler(userController.updateUserById));
+userRouter.post('/:id/role', asyncHandler(userController.updateUserRole));
 userRouter.delete('/:id', asyncHandler(authorization([Roles.SUPERADMIN])), asyncHandler(userController.deleteUserById));
 
 export default userRouter;

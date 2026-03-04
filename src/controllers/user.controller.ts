@@ -144,6 +144,27 @@ export class UserController {
     return res.status(200).json(response);
   };
 
+  updateUserRole = async (req: Request, res: Response): Promise<Response<CustomResponse<UserDto>>> => {
+    const userId = req.params.id;
+    const newRole = req.body.role as string;
+
+    if (!newRole) {
+      throw new CustomError('New role is required', 400);
+    }
+
+    const user = await this.unitOfService.User.updateUserRole(userId, newRole);
+    if (!user) {
+      throw new CustomError('User not found', 404);
+    }
+    
+    const response: CustomResponse<UserDto> = {
+      success: true,
+      data: user,
+    };
+
+    return res.status(200).json(response);
+  };
+
   /**
    * Deletes a user by their unique identifier.
    *

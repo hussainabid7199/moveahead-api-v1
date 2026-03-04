@@ -60,7 +60,7 @@ export class CompanyController {
     if (!success || !data) {
       throw new Error('Validation failed');
     }
-    const company = await this.unitOfService.Company.companyMapping(currentUserId, data.userId, data.companyId);
+    const company = await this.unitOfService.Company.userMapping(currentUserId, data.userId, data.companyId, data.branchId);
     const response = new CustomResponse('Mapping completed successfully', 200, company);
     return res.status(200).json(response);
   };
