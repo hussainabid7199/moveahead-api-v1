@@ -5,6 +5,7 @@ import container from '../config/ioc.config';
 import { TYPES } from '../config/ioc.types';
 import CustomError from '../exceptions/custom-error';
 import UnitOfService from '../services/unitof.service';
+import { CreateUserModel } from '../validators/user.validator';
 
 export class UserController {
   constructor(private unitOfService = container.get<UnitOfService>(TYPES.UnitOfService)) {
@@ -144,15 +145,18 @@ export class UserController {
     return res.status(200).json(response);
   };
 
-  updateUserRole = async (req: Request, res: Response): Promise<Response<CustomResponse<UserDto>>> => {
-    const userId = req.params.id;
-    const newRole = req.body.role as string;
+  createUser = async (req: Request, res: Response): Promise<Response<CustomResponse<UserDto>>> => {
+    const data = req.body as CreateUserModel;
+    const companyId: string = req.params.companyId;
+    const branchId: string = req.params.branchId;
+    const roleName: string = req.params.roleName as string;
+    const currentUserId = req.body.currentUserId as string;
 
-    if (!newRole) {
-      throw new CustomError('New role is required', 400);
+    if (!roleName) {
+      throw new CustomError('Role name is required', 400);
     }
 
-    const user = await this.unitOfService.User.updateUserRole(userId, newRole);
+    const user = await this.unitOfService.User.createUser(currentUserId, data, roleName, companyId, branchId);
     if (!user) {
       throw new CustomError('User not found', 404);
     }

@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { UpdateUserDto, UserDto } from '../dtos/user.dto';
+import { CreateUserDto, UpdateUserDto, UserDto } from '../dtos/user.dto';
 
 import { AuthProvider } from '../prisma/generated';
 import PasswordUtils from '../utils/password.utils';
@@ -7,6 +7,7 @@ import prisma from '../prisma';
 import { CreateUserModel } from '../validators/user.validator';
 import { Prisma } from '../prisma/generated';
 import { Roles } from '../enums/roles.enum';
+import CustomError from '../exceptions/custom-error';
 
 @injectable()
 export class UserService {
@@ -182,7 +183,7 @@ export class UserService {
     whereCondition.AND = [
       { isActive: true },
       { NOT: { id: user.id } },
-      { NOT: { roles: { some: { role: { name: { in: [Roles.SUPERADMIN, Roles.ADMINISTRATOR, Roles.ADMIN] } } } }}},
+      { NOT: { roles: { some: { role: { name: { in: [Roles.SUPERADMIN, Roles.ADMINISTRATOR, Roles.ADMIN] } } } } } },
       { NOT: { userCompanyBranch: { some: { branchId: branch.id } } } },
     ];
 
@@ -321,7 +322,6 @@ export class UserService {
   }
 
   async updateUserRole(id: string, newRole: string): Promise<UserDto | null> {
-
     // First, find the user to ensure they exist and to get their current roles
     const user = await prisma.user.findFirst({
       where: { id, isActive: true },
@@ -337,7 +337,7 @@ export class UserService {
       select: {
         userId: true,
         roleId: true,
-      }
+      },
     });
 
     if (existingRole) {
@@ -351,7 +351,7 @@ export class UserService {
           where: { name: newRole },
           select: { id: true },
         });
-        
+
         if (!roleRecord) {
           throw new Error(`Role "${newRole}" not found`);
         }
@@ -375,7 +375,7 @@ export class UserService {
     }
 
     return this.convertToDto(user);
-  } 
+  }
 
   /**
    * Deletes a user by their unique identifier.
@@ -394,6 +394,143 @@ export class UserService {
     });
     return this.convertToDto(user);
   }
+
+  createUser = async (
+    currentUserId: string,
+    user: CreateUserModel,
+    role: string,
+    companyId: string,
+    branchId?: string
+  ): Promise<UserDto | null> => {
+    // Check current user role
+    const currentUser = await prisma.user.findUnique({
+      where: { id: currentUserId },
+      select: {
+        id: true,
+        roles: {
+          select: {
+            role: {
+              select: {
+                id: true,
+                name: true,
+                isActive: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!currentUser) {
+      throw new CustomError('Current user not found', 404);
+    }
+
+    const userRole = currentUser.roles[0].role.name as Roles;
+
+    if (![Roles.SUPERADMIN, Roles.ADMINISTRATOR, Roles.ADMIN].includes(userRole)) {
+      throw new CustomError('You are not authorized to create a user', 403);
+    }
+
+    // Check if the role is valid
+    const roleRecord = await prisma.role.findUnique({
+      where: { name: role },
+      select: { id: true, name: true },
+    });
+
+    if (!roleRecord) {
+      throw new CustomError(`Role not found`, 404);
+    }
+
+    const roleName = roleRecord.name as Roles;
+
+    // Check if the company is a valid company
+    const company = await prisma.company.findFirst({
+      where: { id: companyId, isActive: true, isVerified: true },
+    });
+
+    if (!company) {
+      throw new CustomError('Company not found', 404);
+    }
+
+    const createdUser = prisma.$transaction(async (tx): Promise<UserDto | null> => {
+      if (roleName === Roles.ADMINISTRATOR && userRole === Roles.SUPERADMIN) {
+        // Create user and assign role
+        const newUser = await this.create(user, roleName);
+        if (!newUser) {
+          throw new CustomError('Failed to create user', 500);
+        }
+
+        // Map user with company and branch
+        await tx.userCompany.create({
+          data: {
+            userId: newUser.id,
+            companyId: company.id,
+          },
+        });
+
+        return this.convertToDto(newUser);
+      }
+
+      if (!branchId) {
+        throw new CustomError('Branch ID is required', 400);
+      }
+
+      // Check if the branch is a valid branch of the company
+      const branch = await prisma.branch.findFirst({
+        where: { id: branchId, companyId: company.id, isActive: true },
+      });
+
+      if (!branch) {
+        throw new CustomError('Branch not found', 404);
+      }
+
+      if (roleName === Roles.ADMIN && (userRole === Roles.SUPERADMIN || userRole === Roles.ADMINISTRATOR)) {
+        // Create user and assign role
+        const newUser = await this.create(user, roleName);
+        if (!newUser) {
+          throw new Error('Failed to create user');
+        }
+
+        // Map user with company and branch
+        await prisma.userCompanyBranch.create({
+          data: {
+            userId: newUser.id,
+            companyId: company.id,
+            branchId: branch.id,
+          },
+        });
+
+        return this.convertToDto(newUser);
+      }
+
+      if (roleName === Roles.DOCTOR || roleName === Roles.USER && (userRole === Roles.SUPERADMIN || userRole === Roles.ADMINISTRATOR || userRole === Roles.ADMIN)) {
+        // Create user and assign role
+        const newUser = await this.create(user, roleName);
+        if (!newUser) {
+          throw new Error('Failed to create user');
+        }
+
+        // Map user with company and branch
+        await prisma.userCompanyBranch.create({
+          data: {
+            userId: newUser.id,
+            companyId: company.id,
+            branchId: branch.id,
+          },
+        });
+
+        return this.convertToDto(newUser);
+      }
+
+      return null;
+    });
+
+    if (!createdUser) {
+      throw new Error('Failed to create user with company and branch mapping');
+    }
+
+    return createdUser;
+  };
 
   /**
    * Converts a User entity to a UserDto object.
