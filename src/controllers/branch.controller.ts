@@ -26,6 +26,36 @@ export class BranchController {
     return res.status(200).json(response);
   };
 
+  getAllBranchPatients = async (req: Request, res: Response) => {
+    const companyId = req.params.companyId;
+    const branchId = req.params.branchId;
+    const currentUserId = req.body.currentUserId;
+    const search = req.query.search as string;
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : null;
+    const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : null;
+    if (!companyId || !branchId || !currentUserId) {
+      throw new Error('Missing required details');
+    }
+    const users = await this.unitOfService.Branch.getAllBranchPatients(companyId, branchId, currentUserId, search, limit || 10, offset || 0);
+    const response = new CustomResponse('Patients fetched successfully', 200, users);
+    return res.status(200).json(response);
+  };
+
+    getAllBranchAdmins = async (req: Request, res: Response) => {
+    const companyId = req.params.companyId;
+    const branchId = req.params.branchId;
+    const currentUserId = req.body.currentUserId;
+    const search = req.query.search as string;
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : null;
+    const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : null;
+    if (!companyId || !branchId || !currentUserId) {
+      throw new Error('Missing required details');
+    }
+    const users = await this.unitOfService.Branch.getAllBranchAdmins(companyId, branchId, currentUserId, search, limit || 10, offset || 0);
+    const response = new CustomResponse('Admins fetched successfully', 200, users);
+    return res.status(200).json(response);
+  };
+
   getAllBranchDoctors = async (req: Request, res: Response) => {
     const companyId = req.params.companyId;
     const branchId = req.params.branchId;

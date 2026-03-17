@@ -5,6 +5,7 @@ import accountRouter from './account.routes';
 import enquiryRouter from './enquiry.routes';
 import companyRouter from './company.routes';
 import branchRouter from './branch.routes';
+import dashboardRouter from './dashboard.routes';
 
 const routes = express.Router();
 
@@ -14,5 +15,6 @@ routes.use('/auth', accountRouter);
 routes.use('/enquiry', enquiryRouter);
 routes.use('/company', companyRouter);
 routes.use('/branch', branchRouter);
+routes.use('/dashboard', dashboardRouter);
 
 export default routes;

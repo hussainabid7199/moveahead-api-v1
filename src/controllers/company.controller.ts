@@ -14,7 +14,16 @@ export class CompanyController {
   findAll = async (req: Request, res: Response) => {
     const q = req.query.q as string;
     const currentUserId = req.body.currentUserId;
-    const companies = await this.unitOfService.Company.getAll(q, currentUserId);
+    const isVerifiedQuery = req.query.isVerified;
+    const selectedCompanyId = req.query.selectedCompanyId as string | undefined;
+    const isVerified: boolean =
+      typeof isVerifiedQuery === 'string' ? isVerifiedQuery === 'true' : true;
+    const companies = await this.unitOfService.Company.getAll(
+      q,
+      currentUserId,
+      isVerified,
+      selectedCompanyId,
+    );
     const response = new CustomResponse('Companies fetched successfully', 200, companies);
     return res.status(200).json(response);
   };
@@ -60,7 +69,7 @@ export class CompanyController {
     if (!success || !data) {
       throw new Error('Validation failed');
     }
-    const company = await this.unitOfService.Company.userMapping(currentUserId, data.userId, data.companyId, data.branchId);
+    const company = await this.unitOfService.Company.userMapping(currentUserId, data.userId, data.companyId, data.branchId || "");
     const response = new CustomResponse('Mapping completed successfully', 200, company);
     return res.status(200).json(response);
   };
