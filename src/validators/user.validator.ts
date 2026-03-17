@@ -25,3 +25,4 @@ export const CreateUserValidator = z.object({
 });
 
 export type CreateUserModel = z.infer<typeof CreateUserValidator>;
+

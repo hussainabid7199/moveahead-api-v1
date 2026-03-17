@@ -5,10 +5,12 @@ export const TYPES = {
   EnquiryController: Symbol.for('EnquiryController'),
   CompanyController: Symbol.for('CompanyController'),
   BranchController: Symbol.for('BranchController'),
+  DashboardController: Symbol.for('DashboardController'),
 
   UnitOfService: Symbol.for('UnitOfService'),
   UserService: Symbol.for('UserService'),
   EmailService: Symbol.for('EmailService'),
   CompanyService: Symbol.for('CompanyService'),
   BranchService: Symbol.for('BranchService'),
+  DashboardService: Symbol.for('DashboardService'),
 };

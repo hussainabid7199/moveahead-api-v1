@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
+import * as path from 'path';
 import CustomResponse from '../dtos/custom-response';
 import { UpdateUserDto, UserDto } from '../dtos/user.dto';
 import container from '../config/ioc.config';
 import { TYPES } from '../config/ioc.types';
 import CustomError from '../exceptions/custom-error';
 import UnitOfService from '../services/unitof.service';
+import { CreateUserModel } from '../validators/user.validator';
 
 export class UserController {
   constructor(private unitOfService = container.get<UnitOfService>(TYPES.UnitOfService)) {
@@ -99,6 +101,50 @@ export class UserController {
     return res.status(200).json(response);
   };
 
+  getAllUsersForBranchMapping = async (req: Request, res: Response): Promise<Response<CustomResponse<UserDto[]>>> => {
+    const currentUserId: string = req.body.currentUserId;
+    const companyId: string = req.params.companyId;
+    const branchId: string = req.params.branchId;
+    const q: string = req.query.q as string;
+    const name: string = req.query.name as string;
+    const phone: string = req.query.phone as string;
+
+    if(!currentUserId || !companyId || !branchId) {
+      throw new CustomError('Missing required fields', 400);
+    }
+
+    const users = await this.unitOfService.User.findUsersWithRolesWithoutBranchMapping(currentUserId, companyId, branchId, q, name, phone);
+    const response: CustomResponse<UserDto[]> = {
+      success: true,
+      data: users,
+    };
+    return res.status(200).json(response);
+  };
+
+  create = async (req: Request, res: Response): Promise<Response<CustomResponse<UserDto>>> => {
+    const data = req.body as CreateUserModel;
+    const companyId: string = req.params.companyId;
+    const branchId: string = req.params.branchId;
+    const roleName: string = req.params.roleName as string;
+    const currentUserId = req.body.currentUserId as string;
+
+    if (!roleName) {
+      throw new CustomError('Role name is required', 400);
+    }
+
+    const user = await this.unitOfService.User.createUser(currentUserId, data, roleName, companyId, branchId);
+    if (!user) {
+      throw new CustomError('User not found', 404);
+    }
+    
+    const response: CustomResponse<UserDto> = {
+      success: true,
+      data: user,
+    };
+
+    return res.status(200).json(response);
+  };
+
   /**
    * Updates a user's information by their unique identifier.
    *
@@ -107,11 +153,48 @@ export class UserController {
    * @returns A promise that resolves to an Express response containing a `CustomResponse` with the updated `UserDto` data,
    *          or a 404 status with an error message if the user is not found.
    */
-  updateUserById = async (req: Request, res: Response): Promise<Response<CustomResponse<UserDto>>> => {
+  update = async (req: Request, res: Response): Promise<Response<CustomResponse<UserDto>>> => {
     const userId = req.params.id;
     const data = req.body as UpdateUserDto;
     const user = await this.unitOfService.User.update(userId, data);
 
+    if (!user) {
+      throw new CustomError('User not found', 404);
+    }
+
+    const response: CustomResponse<UserDto> = {
+      success: true,
+      data: user,
+    };
+
+    return res.status(200).json(response);
+  };
+
+  /**
+   * Handles profile picture upload for a user.
+   *
+   * Expects a `multipart/form-data` request with a single `avatar` file field
+   * processed by the `uploadAvatar` multer middleware before this handler runs.
+   *
+   * @param req - Express request object; `req.file` is populated by multer.
+   * @param res - Express response object.
+   * @returns Updated `UserDto` with the new `profileImageUrl`.
+   */
+  uploadAvatar = async (req: Request, res: Response): Promise<Response<CustomResponse<UserDto>>> => {
+    const userId = req.params.id;
+    if (!userId) {
+      throw new CustomError('User ID is required', 400);
+    }
+
+    if (!req.file) {
+      throw new CustomError('No image file provided', 400);
+    }
+
+    // Build the publicly accessible URL for the uploaded file.
+    // Files are served from the root `public/` directory by express.static.
+    const profileImageUrl = `/uploads/avatars/${path.basename(req.file.filename)}`;
+
+    const user = await this.unitOfService.User.update(userId, { profileImageUrl });
     if (!user) {
       throw new CustomError('User not found', 404);
     }
@@ -135,7 +218,7 @@ export class UserController {
    * - Returns a 404 status code if the user is not found.
    * - Returns a 200 status code with the deleted user data on success.
    */
-  deleteUserById = async (req: Request, res: Response): Promise<Response<CustomResponse<UserDto>>> => {
+  delete = async (req: Request, res: Response): Promise<Response<CustomResponse<UserDto>>> => {
     const userId = req.params.id;
     const user = await this.unitOfService.User.delete(userId);
     if (!user) {

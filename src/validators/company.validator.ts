@@ -14,6 +14,7 @@ export const CompanyUpdateValidator = CompanyValidator.extend({
 export const CompanyMappingValidator = z.object({
   userId: z.string().min(1, 'User is required'),
   companyId: z.string().min(1, 'Company is required'),
+  branchId: z.string().optional().nullable(),
 })
 
 export type CompanyModel = z.infer<typeof CompanyValidator>;

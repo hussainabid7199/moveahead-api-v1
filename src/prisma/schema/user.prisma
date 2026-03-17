@@ -34,10 +34,8 @@ model User {
 
   // Relations
   roles UserRole[]
-  userCompanies UserCompany[]
-  userBranches  UserBranch[]
-  doctorBranch DoctorBranch[]
-  
+  userCompanyBranch UserCompanyBranch[]
+  userCompany UserCompany[]
 
   // Indexes for performance
   @@index([email(191)], name: "idx_users_email")

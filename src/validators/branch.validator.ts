@@ -1,5 +1,17 @@
 import { z } from 'zod';
 
+const numericString = /^-?(?:\d+\.?\d*|\.\d+)$/;
+
+const NumberFromStringNullable = z
+  .union([
+    z.number(),
+    z.string().regex(numericString).transform((v) => Number(v)),
+    z.null(),
+    z.literal(''),
+  ])
+  .transform((v) => (v === '' ? null : v))
+  .optional();
+
 export const BranchValidator = z.object({
   name: z.string().min(1, 'Branch name is required'),
   address: z.string().min(1, 'Branch address is required').max(255, 'Branch address must be less than 255 characters'),
@@ -23,8 +35,8 @@ export const BranchValidator = z.object({
     .refine((value) => /^\+91[6-9]\d{9}$/.test(value), {
       message: 'Phone number must be 10 digits or in format +91XXXXXXXXXX',
     }),
-  latitude: z.number().min(1, 'Branch latitude is required').nullable().optional(),
-  longitude: z.number().min(1, 'Branch longitude is required').nullable().optional(),
+  latitude: NumberFromStringNullable,
+  longitude: NumberFromStringNullable,
 });
 
 export const BranchUpdateValidator = BranchValidator.extend({

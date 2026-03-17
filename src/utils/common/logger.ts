@@ -1,6 +1,119 @@
 import winston from "winston";
+import fs from "fs";
+import path from "path";
+import readline from "readline";
 
 const isProduction = process.env.APP_MODE === "production";
+
+const LOGS_DIR = path.resolve(process.cwd(), "logs");
+
+const ensureLogsDir = () => {
+  try {
+    fs.mkdirSync(LOGS_DIR, { recursive: true });
+  } catch {
+    // Ignore; if it fails, transports will surface errors.
+  }
+};
+
+const ensureLogFiles = (fileNames: string[]) => {
+  for (const fileName of fileNames) {
+    const fullPath = path.join(LOGS_DIR, fileName);
+    try {
+      // Open in append mode creates the file if it doesn't exist.
+      const fd = fs.openSync(fullPath, "a");
+      fs.closeSync(fd);
+    } catch {
+      // Ignore; transport will error if it cannot write.
+    }
+  }
+};
+
+const logFile = (fileName: string) => path.join(LOGS_DIR, fileName);
+
+const parseLogTimestampMs = (timestamp: unknown) => {
+  if (typeof timestamp !== "string" || !timestamp) return null;
+  // Winston timestamp format: "YYYY-MM-DD HH:mm:ss" (local time)
+  const isoLike = timestamp.includes("T") ? timestamp : timestamp.replace(" ", "T");
+  const ms = Date.parse(isoLike);
+  return Number.isFinite(ms) ? ms : null;
+};
+
+const pruneLogFileEntries = async (filePath: string, daysToKeep: number) => {
+  const cutoffMs = Date.now() - daysToKeep * 24 * 60 * 60 * 1000;
+  const tmpPath = `${filePath}.tmp`;
+
+  try {
+    const stat = await fs.promises.stat(filePath);
+    if (!stat.isFile() || stat.size === 0) return;
+  } catch {
+    return;
+  }
+
+  const input = fs.createReadStream(filePath, { encoding: "utf8" });
+  const output = fs.createWriteStream(tmpPath, { encoding: "utf8" });
+  const rl = readline.createInterface({ input, crlfDelay: Infinity });
+
+  let keptAny = false;
+
+  try {
+    for await (const line of rl) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+
+      let keep = true;
+      try {
+        const obj = JSON.parse(trimmed);
+        const tsMs = parseLogTimestampMs(obj?.timestamp);
+        if (tsMs !== null) {
+          keep = tsMs >= cutoffMs;
+        }
+      } catch {
+        // If not JSON, keep to avoid accidental data loss
+        keep = true;
+      }
+
+      if (keep) {
+        output.write(trimmed + "\n");
+        keptAny = true;
+      }
+    }
+  } finally {
+    rl.close();
+    input.close();
+    output.end();
+  }
+
+  await new Promise<void>((resolve) => output.on("finish", () => resolve()));
+
+  if (!keptAny) {
+    await fs.promises.writeFile(filePath, "", "utf8");
+    await fs.promises.unlink(tmpPath).catch(() => undefined);
+    return;
+  }
+
+  await fs.promises.copyFile(tmpPath, filePath);
+  await fs.promises.unlink(tmpPath).catch(() => undefined);
+};
+
+const pruneAllLogFiles = async (daysToKeep: number) => {
+  try {
+    const files = [
+      logFile("app.log"),
+      logFile("error.log"),
+      logFile("security.log"),
+      logFile("performance.log"),
+      logFile("audit.log"),
+      logFile("exceptions.log"),
+      logFile("rejections.log"),
+    ];
+
+    for (const file of files) {
+      await pruneLogFileEntries(file, daysToKeep);
+    }
+  } catch {
+    // Ignore retention errors (should not break app startup)
+  }
+};
 
 // --------------------
 // Log levels
@@ -24,36 +137,38 @@ const logFormat = winston.format.combine(
 // --------------------
 // Console transport (always safe)
 // --------------------
-const consoleTransport = new winston.transports.Console({
-  format: winston.format.combine(
-    winston.format.colorize(),
-    winston.format.printf(({ timestamp, level, message, ...meta }) => {
-      const metaStr = Object.keys(meta).length ? JSON.stringify(meta) : "";
-      return `${timestamp} [${level}]: ${message} ${metaStr}`;
-    })
-  ),
-});
+// (Console transport intentionally disabled; file-only logging.)
 
 // --------------------
 // Build transports dynamically
 // --------------------
-const transports: winston.transport[] = [consoleTransport];
+ensureLogsDir();
+ensureLogFiles([
+  "app.log",
+  "error.log",
+  "security.log",
+  "performance.log",
+  "audit.log",
+  "exceptions.log",
+  "rejections.log",
+]);
+// Best-effort retention: delete log ENTRIES older than N days (keeps files)
+const retentionDays = Number(process.env.LOG_RETENTION_DAYS || 30);
+void pruneAllLogFiles(Number.isFinite(retentionDays) && retentionDays > 0 ? retentionDays : 30);
 
-if (!isProduction) {
-  transports.push(
-    new winston.transports.File({
-      filename: "logs/app.log",
-      maxsize: 5 * 1024 * 1024,
-      maxFiles: 5,
-    }),
-    new winston.transports.File({
-      filename: "logs/error.log",
-      level: "error",
-      maxsize: 5 * 1024 * 1024,
-      maxFiles: 5,
-    })
-  );
-}
+const transports: winston.transport[] = [
+  new winston.transports.File({
+    filename: logFile("app.log"),
+    maxsize: 5 * 1024 * 1024,
+    maxFiles: 5,
+  }),
+  new winston.transports.File({
+    filename: logFile("error.log"),
+    level: "error",
+    maxsize: 5 * 1024 * 1024,
+    maxFiles: 5,
+  }),
+];
 
 // --------------------
 // Logger
@@ -65,11 +180,11 @@ export const logger = winston.createLogger({
   defaultMeta: { service: "MOVE AHEAD" },
   transports,
   exceptionHandlers: !isProduction
-    ? [new winston.transports.File({ filename: "logs/exceptions.log" })]
-    : [consoleTransport],
+    ? [new winston.transports.File({ filename: logFile("exceptions.log") })]
+    : [new winston.transports.File({ filename: logFile("exceptions.log") })],
   rejectionHandlers: !isProduction
-    ? [new winston.transports.File({ filename: "logs/rejections.log" })]
-    : [consoleTransport],
+    ? [new winston.transports.File({ filename: logFile("rejections.log") })]
+    : [new winston.transports.File({ filename: logFile("rejections.log") })],
 });
 
 // --------------------
@@ -80,7 +195,13 @@ export const securityLogger = winston.createLogger({
   level: "info",
   format: logFormat,
   defaultMeta: { service: "MOVE AHEAD", category: "security" },
-  transports,
+  transports: [
+    new winston.transports.File({
+      filename: logFile("security.log"),
+      maxsize: 5 * 1024 * 1024,
+      maxFiles: 5,
+    }),
+  ],
 });
 
 export const performanceLogger = winston.createLogger({
@@ -88,7 +209,13 @@ export const performanceLogger = winston.createLogger({
   level: "info",
   format: logFormat,
   defaultMeta: { service: "MOVE AHEAD", category: "performance" },
-  transports,
+  transports: [
+    new winston.transports.File({
+      filename: logFile("performance.log"),
+      maxsize: 5 * 1024 * 1024,
+      maxFiles: 5,
+    }),
+  ],
 });
 
 export const auditLogger = winston.createLogger({
@@ -96,7 +223,13 @@ export const auditLogger = winston.createLogger({
   level: "info",
   format: logFormat,
   defaultMeta: { service: "MOVE AHEAD", category: "audit" },
-  transports,
+  transports: [
+    new winston.transports.File({
+      filename: logFile("audit.log"),
+      maxsize: 5 * 1024 * 1024,
+      maxFiles: 5,
+    }),
+  ],
 });
 
 // --------------------

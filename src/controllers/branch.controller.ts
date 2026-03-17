@@ -11,6 +11,81 @@ export class BranchController {
     this.unitOfService = unitOfService;
   }
 
+  getAllBranchUsers = async (req: Request, res: Response) => {
+    const companyId = req.params.companyId;
+    const branchId = req.params.branchId;
+    const currentUserId = req.body.currentUserId;
+    const search = req.query.search as string;
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : null;
+    const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : null;
+    if (!companyId || !branchId || !currentUserId) {
+      throw new Error('Missing required details');
+    }
+    const users = await this.unitOfService.Branch.getAllBranchUsers(companyId, branchId, currentUserId, search, limit || 10, offset || 0);
+    const response = new CustomResponse('Users fetched successfully', 200, users);
+    return res.status(200).json(response);
+  };
+
+  getAllBranchPatients = async (req: Request, res: Response) => {
+    const companyId = req.params.companyId;
+    const branchId = req.params.branchId;
+    const currentUserId = req.body.currentUserId;
+    const search = req.query.search as string;
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : null;
+    const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : null;
+    if (!companyId || !branchId || !currentUserId) {
+      throw new Error('Missing required details');
+    }
+    const users = await this.unitOfService.Branch.getAllBranchPatients(companyId, branchId, currentUserId, search, limit || 10, offset || 0);
+    const response = new CustomResponse('Patients fetched successfully', 200, users);
+    return res.status(200).json(response);
+  };
+
+    getAllBranchAdmins = async (req: Request, res: Response) => {
+    const companyId = req.params.companyId;
+    const branchId = req.params.branchId;
+    const currentUserId = req.body.currentUserId;
+    const search = req.query.search as string;
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : null;
+    const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : null;
+    if (!companyId || !branchId || !currentUserId) {
+      throw new Error('Missing required details');
+    }
+    const users = await this.unitOfService.Branch.getAllBranchAdmins(companyId, branchId, currentUserId, search, limit || 10, offset || 0);
+    const response = new CustomResponse('Admins fetched successfully', 200, users);
+    return res.status(200).json(response);
+  };
+
+  getAllBranchDoctors = async (req: Request, res: Response) => {
+    const companyId = req.params.companyId;
+    const branchId = req.params.branchId;
+    const currentUserId = req.body.currentUserId;
+    const search = req.query.search as string;
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : null;
+    const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : null;
+    if (!companyId || !branchId || !currentUserId) {
+      throw new Error('Missing required details');
+    }
+    const users = await this.unitOfService.Branch.getAllBranchDoctor(companyId, branchId, currentUserId, search, limit || 10, offset || 0);
+    const response = new CustomResponse('Doctors fetched successfully', 200, users);
+    return res.status(200).json(response);
+  };
+
+  getByCompanyId = async (req: Request, res: Response) => {
+    const companyId = req.params.companyId;
+    const currentUserId = req.body.currentUserId;
+    const search = req.query.search as string;
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : null;
+    const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : null;
+
+    if (!companyId || !currentUserId) {
+      throw new Error('Missing required details');
+    }
+    const branches = await this.unitOfService.Branch.getAllByCompanyId(companyId, currentUserId, search, limit || 10, offset || 0);
+    const response = new CustomResponse('Branches fetched successfully', 200, branches);
+    return res.status(200).json(response);
+  };
+
   create = async (req: Request, res: Response) => {
     const currentUserId = req.body.currentUserId;
     const companyId = req.params.companyId;
@@ -18,7 +93,10 @@ export class BranchController {
     if (!success || !data) {
       throw new Error('Validation failed');
     }
-    const branch = await this.unitOfService.Branch.create(currentUserId, companyId, data);
+
+    const latitude = Number(data.latitude);
+    const longitude = Number(data.longitude);
+    const branch = await this.unitOfService.Branch.create(currentUserId, companyId, { ...data, latitude, longitude });
     const response = new CustomResponse('Branch created successfully', 201, branch);
     return res.status(201).json(response);
   };
@@ -31,8 +109,56 @@ export class BranchController {
     if (!success || !data) {
       throw new Error('Validation failed');
     }
-    const branch = await this.unitOfService.Branch.update(currentUserId, companyId, branchId, data);
+    const latitude = Number(data.latitude);
+    const longitude = Number(data.longitude);
+    const branch = await this.unitOfService.Branch.update(currentUserId, companyId, branchId, { ...data, latitude, longitude });
     const response = new CustomResponse('Branch updated successfully', 200, branch);
     return res.status(200).json(response);
   };
+
+  // Display all users who are not mapped to any branch in the company
+  getUnmappedUsers = async (req: Request, res: Response) => {
+    const companyId = req.params.companyId;
+    const currentUserId = req.body.currentUserId;
+    const search = req.query.search as string;
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : null;
+    const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : null;
+
+    if (!companyId || !currentUserId) {
+      throw new Error('Missing required details');
+    }
+    const users = await this.unitOfService.Branch.getUnmappedUsers(companyId, currentUserId, search, limit || 10, offset || 0);
+    const response = new CustomResponse('Users fetched successfully', 200, users);
+    return res.status(200).json(response);
+  };
+
+  //   userBranchMapping = async (req: Request, res: Response) => {
+  //   const currentUserId: string = req.body.currentUserId;
+  //   const userId: string = req.body.userId;
+  //   const companyId: string = req.params.companyId;
+  //   const branchId: string = req.params.branchId;
+
+  //   if(!currentUserId || !userId || !companyId || !branchId) {
+  //     throw new Error('Missing required details');
+  //   }
+
+  //   const branch: string = await this.unitOfService.Branch.createUserBranchMapping(currentUserId, userId, companyId, branchId);
+  //   const response = new CustomResponse('Branch created successfully', 201, branch);
+  //   return res.status(201).json(response);
+  // };
+
+  // doctorBranchMapping = async (req: Request, res: Response) => {
+  //   const currentUserId = req.body.currentUserId;
+  //   const userId = req.body.userId;
+  //   const companyId = req.params.companyId;
+  //   const branchId = req.params.branchId;
+
+  //   if(!currentUserId || !userId || !companyId || !branchId) {
+  //     throw new Error('Missing required details');
+  //   }
+
+  //   const branch = await this.unitOfService.Branch.createDoctorBranchMapping(currentUserId, userId, companyId, branchId);
+  //   const response = new CustomResponse('Branch created successfully', 201, branch);
+  //   return res.status(201).json(response);
+  // };
 }
