@@ -10,6 +10,10 @@ class ClientIdMiddleware {
       return next();
     }
 
+    if (req.method === 'OPTIONS') {
+      return next();
+    }
+
     const clientId: string = Array.isArray(req.headers['x-client-id']) ? req.headers['x-client-id'][0] : req.headers['x-client-id'] || '';
     const _clientId = config.app.clientId;
 
@@ -28,7 +32,5 @@ class ClientIdMiddleware {
     next();
   }
 }
-
-
 
 export default new ClientIdMiddleware();
