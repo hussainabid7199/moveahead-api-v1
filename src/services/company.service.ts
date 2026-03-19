@@ -49,7 +49,7 @@ export class CompanyService {
       throw new CustomError('You are not authorized to view companies', 403);
     }
 
-    if (typeof isVerified === 'boolean' && userRole === Roles.SUPERADMIN) {
+    if (typeof isVerified === 'boolean' && userRole !== Roles.SUPERADMIN) {
       whereCondition.isVerified = isVerified;
     }
 
