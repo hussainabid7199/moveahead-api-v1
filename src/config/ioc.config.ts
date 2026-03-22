@@ -9,6 +9,7 @@ import { EnquiryController } from '../controllers/enquiry.controller';
 import { CompanyController } from '../controllers/company.controller';
 import { BranchController } from '../controllers/branch.controller';
 import { DashboardController } from '../controllers/dashboard.controller';
+import { DepartmentController } from '../controllers/department.controller';
 
 
 // Services imports
@@ -18,6 +19,7 @@ import { EmailService } from '../services/email.service';
 import { CompanyService } from '../services/company.service';
 import { BranchService } from '../services/branch.service';
 import { DashboardService } from '../services/dashboard.service';
+import { DepartmentService } from '../services/department.service';
 
 
 const container = new Container();
@@ -29,6 +31,7 @@ container.bind<EnquiryController>(TYPES.EnquiryController).to(EnquiryController)
 container.bind<CompanyController>(TYPES.CompanyController).to(CompanyController);
 container.bind<BranchController>(TYPES.BranchController).to(BranchController);
 container.bind<DashboardController>(TYPES.DashboardController).to(DashboardController);
+container.bind<DepartmentController>(TYPES.DepartmentController).to(DepartmentController);
 
 // Services (Note: Services should be binded last)
 container.bind<UnitOfService>(TYPES.UnitOfService).to(UnitOfService);
@@ -37,6 +40,7 @@ container.bind<EmailService>(TYPES.EmailService).to(EmailService);
 container.bind<CompanyService>(TYPES.CompanyService).to(CompanyService);
 container.bind<BranchService>(TYPES.BranchService).to(BranchService);
 container.bind<DashboardService>(TYPES.DashboardService).to(DashboardService);
+container.bind<DepartmentService>(TYPES.DepartmentService).to(DepartmentService);
 
 
 export default container;
