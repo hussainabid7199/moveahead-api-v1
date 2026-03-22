@@ -157,6 +157,18 @@ exports.Prisma.UserCompanyScalarFieldEnum = {
   companyId: 'companyId'
 };
 
+exports.Prisma.DepartmentScalarFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  companyId: 'companyId',
+  branchId: 'branchId',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -232,6 +244,15 @@ exports.Prisma.UserCompanyOrderByRelevanceFieldEnum = {
   companyId: 'companyId'
 };
 
+exports.Prisma.DepartmentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  companyId: 'companyId',
+  branchId: 'branchId',
+  name: 'name',
+  description: 'description'
+};
+
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
@@ -280,6 +301,7 @@ exports.Prisma.ModelName = {
   Branch: 'Branch',
   UserCompanyBranch: 'UserCompanyBranch',
   UserCompany: 'UserCompany',
+  Department: 'Department',
   User: 'User',
   Role: 'Role',
   UserRole: 'UserRole'
