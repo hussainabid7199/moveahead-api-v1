@@ -4,10 +4,15 @@ import { Express } from 'express';
 import swaggerUi from 'swagger-ui-express';
 
 export function setupSwagger(app: Express) {
-  const swaggerDir = path.resolve(process.cwd(), 'src/swagger');
+  const possibleDirs = [
+    path.resolve(process.cwd(), 'src/swagger'),   // dev
+    path.resolve(process.cwd(), 'dist/swagger'),  // docker/prod
+  ];
 
-  if (!fs.existsSync(swaggerDir)) {
-    console.warn('Swagger directory not found:', swaggerDir);
+  const swaggerDir = possibleDirs.find(dir => fs.existsSync(dir));
+
+  if (!swaggerDir) {
+    console.warn('Swagger directory not found:', possibleDirs);
     return;
   }
 
@@ -36,7 +41,6 @@ export function setupSwagger(app: Express) {
       development: 'http://localhost:3001/api',
       version: '1.0.0',
     },
-
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -52,15 +56,12 @@ export function setupSwagger(app: Express) {
       },
       schemas,
     },
-
-    // 👇 Applies to ALL endpoints
     security: [
       {
         bearerAuth: [],
         clientId: [],
       },
     ],
-
     paths,
   };
 
