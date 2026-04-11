@@ -14,6 +14,7 @@ model Company {
     branches      Branch[]
     userCompanyBranch UserCompanyBranch[]
     userCompany UserCompany[]
+    departments Department[]
 
     // Indexes for performance
     @@index([name(200)], name: "idx_company_name")
@@ -37,6 +38,7 @@ model Branch {
     updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
 
     userCompanyBranch UserCompanyBranch[]
+    departments Department[]
 
     // Relations
     company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
