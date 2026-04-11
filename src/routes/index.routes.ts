@@ -6,6 +6,7 @@ import enquiryRouter from './enquiry.routes';
 import companyRouter from './company.routes';
 import branchRouter from './branch.routes';
 import dashboardRouter from './dashboard.routes';
+import departmentRouter from './department.routes';
 
 const routes = express.Router();
 
@@ -16,5 +17,6 @@ routes.use('/enquiry', enquiryRouter);
 routes.use('/company', companyRouter);
 routes.use('/branch', branchRouter);
 routes.use('/dashboard', dashboardRouter);
+routes.use('/department', departmentRouter);
 
 export default routes;

@@ -10,8 +10,7 @@
     "db:migrate": "prisma migrate dev --name ",
     "db:update": "prisma migrate dev",
     "db:validate": "prisma validate",
-    "prisma:generate": "prisma generate",
-    "postinstall": "prisma generate"
+    "prisma:generate": "prisma generate"
   },
   "prisma": {
     "schema": "./src/prisma/schema"
