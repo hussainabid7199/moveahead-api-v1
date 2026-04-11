@@ -32,6 +32,58 @@
 #         - name: run new docker container
 #           run: docker run -d -p 5000:5000 --name $IMAGE_NAME $IMAGE_NAME:$VERSION
           
+# name: CI/CD Pipeline
+
+# on:
+#   push:
+#     branches: ['dev', 'staging', 'main']
+
+# env:
+#   IMAGE_NAME: move-ahead-server
+#   VERSION: latest
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
+
+#       # ✅ Secure login
+#       - name: Login to Docker Hub
+#         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+#       # ✅ Build with proper tag
+#       - name: Build Docker Image
+#         run: |
+#           docker build -t ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION .
+
+#       # ✅ Push correct image
+#       - name: Push Docker Image
+#         run: |
+#           docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
+
+#   deploy:
+#     needs: build
+#     runs-on: [self-hosted, aws-ec2]
+
+#     steps:
+#       - name: Pull image from Docker Hub
+#         run: |
+#           docker pull ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
+
+#       - name: Delete old container
+#         run: |
+#           docker rm -f $IMAGE_NAME || true
+
+#       - name: Run new container
+#         run: |
+#           docker run -d -p 5000:5000 --name $IMAGE_NAME \
+#           ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
+
+
+
 name: CI/CD Pipeline
 
 on:
@@ -50,34 +102,35 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # ✅ Secure login
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      # ✅ Build with proper tag
       - name: Build Docker Image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION .
 
-      # ✅ Push correct image
       - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
 
   deploy:
     needs: build
-    runs-on: [self-hosted, aws-ec2]
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Pull image from Docker Hub
-        run: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.AWS_EC2_HOST }}
+          username: ${{ secrets.AWS_EC2_USER }}
+          key: ${{ secrets.AWS_EC2_SSH_KEY }}
+          script: |
+            # Pull latest image
+            docker pull ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
 
-      - name: Delete old container
-        run: |
-          docker rm -f $IMAGE_NAME || true
+            # Stop & remove old container
+            docker rm -f $IMAGE_NAME || true
 
-      - name: Run new container
-        run: |
-          docker run -d -p 5000:5000 --name $IMAGE_NAME \
-          ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
+            # Run new container
+            docker run -d -p 5000:5000 --name $IMAGE_NAME \
+            ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
