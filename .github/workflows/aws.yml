@@ -125,12 +125,15 @@ jobs:
           username: ${{ secrets.AWS_EC2_USER }}
           key: ${{ secrets.AWS_EC2_SSH_KEY }}
           script: |
+            IMAGE_NAME=move-ahead-server
+            VERSION=latest
+
             # Pull latest image
-            docker pull ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
 
             # Stop & remove old container
-            docker rm -f $IMAGE_NAME || true
+            sudo docker rm -f $IMAGE_NAME || true
 
             # Run new container
-            docker run -d -p 5000:5000 --name $IMAGE_NAME \
+            sudo docker run -d -p 5000:5000 --name $IMAGE_NAME \
             ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
