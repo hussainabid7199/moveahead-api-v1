@@ -49,6 +49,6 @@ jobs:
             sudo docker rm -f $IMAGE_NAME || true
 
             # Run new container
-            sudo docker run -d -p 5000:3001 --name move-ahead-server \
+            sudo docker run -d -p 3001:3001 --name move-ahead-server \
             --env-file /home/ec2-user/app.env \
             ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
