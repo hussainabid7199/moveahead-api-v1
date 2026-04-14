@@ -10,7 +10,7 @@ import CustomError from '../exceptions/custom-error';
 export class CompanyService {
   constructor() {}
 
-  async getAll(q: string, currentUserId: string, isVerified: boolean = true, selectedCompanyId?: string): Promise<CompanyDto[]> {
+  async getAll(q: string, currentUserId: string, selectedCompanyId?: string): Promise<CompanyDto[]> {
     const whereCondition: Prisma.CompanyWhereInput = {
       isActive: true,
     };
@@ -49,8 +49,8 @@ export class CompanyService {
       throw new CustomError('You are not authorized to view companies', 403);
     }
 
-    if (typeof isVerified === 'boolean' && userRole !== Roles.SUPERADMIN) {
-      whereCondition.isVerified = isVerified;
+    if (userRole !== Roles.SUPERADMIN) {
+      whereCondition.isVerified = true;
     }
 
     if (userRole === Roles.ADMINISTRATOR) {

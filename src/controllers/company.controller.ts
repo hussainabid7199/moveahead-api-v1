@@ -14,14 +14,10 @@ export class CompanyController {
   findAll = async (req: Request, res: Response) => {
     const q = req.query.q as string;
     const currentUserId = req.body.currentUserId;
-    const isVerifiedQuery = req.query.isVerified;
     const selectedCompanyId = req.query.selectedCompanyId as string | undefined;
-    const isVerified: boolean =
-      typeof isVerifiedQuery === 'string' ? isVerifiedQuery === 'true' : true;
     const companies = await this.unitOfService.Company.getAll(
       q,
       currentUserId,
-      isVerified,
       selectedCompanyId,
     );
     const response = new CustomResponse('Companies fetched successfully', 200, companies);
