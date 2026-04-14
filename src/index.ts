@@ -30,8 +30,8 @@ app.use(corsMiddleware);
 app.use(RateLimiter());
 app.use(hpp());
 
-app.get('/', (req, res) => {  
-  res.send('Welcome to Move Ahead API!');
+app.get('/', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'public/home/index.html'));
 });
 //setup public directory
 app.use(asyncHandler(ClientIdMiddleware.verify));
