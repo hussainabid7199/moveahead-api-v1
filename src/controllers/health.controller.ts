@@ -18,6 +18,6 @@ export class HealthController {
    * @returns A response with HTTP status 200 and a JSON body `{ status: 'UP' }`.
    */
   async check(req: Request, res: Response) {
-    return res.status(200).json({ status: 'UP' });
+    return res.status(200).json({ status: 'UP', message: 'Health check successful' });
   }
 }
