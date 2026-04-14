@@ -11,24 +11,44 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-        - name: checkout
-          uses: actions/checkout@v3
-        - name: login to docker hub
-          run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        - name: build docker image
-          run: docker build -t $IMAGE_NAME .
-        - name: push docker image to docker hub
-          run: docker push $IMAGE_NAME:$VERSION
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION .
+
+      - name: Push Docker Image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
 
   deploy:
     needs: build
-    runs-on: [aws-ec2]
+    runs-on: ubuntu-latest
+
     steps:
-        - name: pull image from docker hub
-          run: docker pull $IMAGE_NAME:$VERSION
-        - name: delete old container
-          run: docker rm -f $IMAGE_NAME || true
-        - name: run new docker container
-          run: docker run -d -p 5000:5000 --name $IMAGE_NAME $IMAGE_NAME:$VERSION
-          
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.AWS_EC2_HOST }}
+          username: ${{ secrets.AWS_EC2_USER }}
+          key: ${{ secrets.AWS_EC2_SSH_KEY }}
+          script: |
+            IMAGE_NAME=move-ahead-server
+            VERSION=latest
+
+            # Pull latest image
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
+
+            # Stop & remove old container
+            sudo docker rm -f $IMAGE_NAME || true
+
+            # Run new container
+            sudo docker run -d -p 5000:3001 --name move-ahead-server \
+            --env-file /home/ec2-user/app.env \
+            ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$VERSION
