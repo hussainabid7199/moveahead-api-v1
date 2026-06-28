@@ -1,4 +1,5 @@
-import { Prisma, PrismaClient } from './generated';
+import { Prisma, PrismaClient } from "./generated";
+
 
 const isProduction = process.env.APP_MODE === 'production';
 // Create a singleton instance of PrismaClient

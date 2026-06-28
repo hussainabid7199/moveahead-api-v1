@@ -3,6 +3,7 @@ import { EmailParams } from '../params/email.params';
 import * as nodemailer from 'nodemailer';
 import config from '../config';
 import Mail from 'nodemailer/lib/mailer';
+import CustomError from '../exceptions/custom-error';
 
 @injectable()
 export class EmailService {
@@ -76,7 +77,7 @@ export class EmailService {
       return true;
     } catch (err) {
       console.error('Error sending email:', err);
-      return false;
+      throw new CustomError('Failed to send email', 500, { message: 'Failed to send email', error: err });
     }
   }
 }

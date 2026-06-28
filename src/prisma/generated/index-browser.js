@@ -121,6 +121,54 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.CompanyScalarFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  name: 'name',
+  website: 'website',
+  isVerified: 'isVerified',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BranchScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  parentId: 'parentId',
+  name: 'name',
+  address: 'address',
+  phoneNumber: 'phoneNumber',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserCompanyBranchScalarFieldEnum = {
+  userId: 'userId',
+  companyId: 'companyId',
+  branchId: 'branchId'
+};
+
+exports.Prisma.UserCompanyScalarFieldEnum = {
+  userId: 'userId',
+  companyId: 'companyId'
+};
+
+exports.Prisma.DepartmentScalarFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  companyId: 'companyId',
+  branchId: 'branchId',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -164,6 +212,47 @@ exports.Prisma.NullableJsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
+exports.Prisma.CompanyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  name: 'name',
+  website: 'website'
+};
+
+exports.Prisma.BranchOrderByRelevanceFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  parentId: 'parentId',
+  name: 'name',
+  address: 'address',
+  phoneNumber: 'phoneNumber'
+};
+
+exports.Prisma.UserCompanyBranchOrderByRelevanceFieldEnum = {
+  userId: 'userId',
+  companyId: 'companyId',
+  branchId: 'branchId'
+};
+
+exports.Prisma.UserCompanyOrderByRelevanceFieldEnum = {
+  userId: 'userId',
+  companyId: 'companyId'
+};
+
+exports.Prisma.DepartmentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  companyId: 'companyId',
+  branchId: 'branchId',
+  name: 'name',
+  description: 'description'
+};
+
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
@@ -173,11 +262,6 @@ exports.Prisma.JsonNullValueFilter = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
-};
-
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
 };
 
 exports.Prisma.UserOrderByRelevanceFieldEnum = {
@@ -213,6 +297,11 @@ exports.AuthProvider = exports.$Enums.AuthProvider = {
 };
 
 exports.Prisma.ModelName = {
+  Company: 'Company',
+  Branch: 'Branch',
+  UserCompanyBranch: 'UserCompanyBranch',
+  UserCompany: 'UserCompany',
+  Department: 'Department',
   User: 'User',
   Role: 'Role',
   UserRole: 'UserRole'

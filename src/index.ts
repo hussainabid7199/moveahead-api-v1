@@ -11,6 +11,9 @@ import compression from "compression";
 import helmet from "helmet";
 import RateLimiter from './security/ratelimiting/rateLimiting';
 import { corsMiddleware } from './security/cors';
+import { setupSwagger } from './utils/common/swagger';
+import hpp from "hpp";
+import RequestMiddleware from './security/request';
 
 // Load environment variables
 dotenv.config();
@@ -18,27 +21,31 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.set("trust proxy", 1);
-app.use(helmet());
+
+
+app.set("trust proxy", 2);
+app.use(RequestMiddleware())
+app.use(helmet({crossOriginResourcePolicy: { policy: "cross-origin" }}));
 app.use(corsMiddleware);
 app.use(RateLimiter());
+app.use(hpp());
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'public/home/index.html'));
+});
 //setup public directory
 app.use(asyncHandler(ClientIdMiddleware.verify));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(bodyParser.json({ limit: "1mb", strict: true }));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 // Payload Compression
 app.use(compression({ level: 6, threshold: 1024, memLevel: 8 }));
-//route setup
-app.get('/', (req, res) => {  
-  res.send('Welcome to Move Ahead API!');
-});
 
 app.use(asyncHandler(ClientIdMiddleware.verify));
 
 app.use("/api",routes);
-
+setupSwagger(app);
 // Error-handling middleware
 app.use(errorHandler);
 

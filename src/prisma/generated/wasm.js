@@ -93,6 +93,54 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.CompanyScalarFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  name: 'name',
+  website: 'website',
+  isVerified: 'isVerified',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BranchScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  parentId: 'parentId',
+  name: 'name',
+  address: 'address',
+  phoneNumber: 'phoneNumber',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserCompanyBranchScalarFieldEnum = {
+  userId: 'userId',
+  companyId: 'companyId',
+  branchId: 'branchId'
+};
+
+exports.Prisma.UserCompanyScalarFieldEnum = {
+  userId: 'userId',
+  companyId: 'companyId'
+};
+
+exports.Prisma.DepartmentScalarFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  companyId: 'companyId',
+  branchId: 'branchId',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -136,6 +184,47 @@ exports.Prisma.NullableJsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
+exports.Prisma.CompanyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  name: 'name',
+  website: 'website'
+};
+
+exports.Prisma.BranchOrderByRelevanceFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  parentId: 'parentId',
+  name: 'name',
+  address: 'address',
+  phoneNumber: 'phoneNumber'
+};
+
+exports.Prisma.UserCompanyBranchOrderByRelevanceFieldEnum = {
+  userId: 'userId',
+  companyId: 'companyId',
+  branchId: 'branchId'
+};
+
+exports.Prisma.UserCompanyOrderByRelevanceFieldEnum = {
+  userId: 'userId',
+  companyId: 'companyId'
+};
+
+exports.Prisma.DepartmentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  companyId: 'companyId',
+  branchId: 'branchId',
+  name: 'name',
+  description: 'description'
+};
+
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
@@ -145,11 +234,6 @@ exports.Prisma.JsonNullValueFilter = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
-};
-
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
 };
 
 exports.Prisma.UserOrderByRelevanceFieldEnum = {
@@ -185,6 +269,11 @@ exports.AuthProvider = exports.$Enums.AuthProvider = {
 };
 
 exports.Prisma.ModelName = {
+  Company: 'Company',
+  Branch: 'Branch',
+  UserCompanyBranch: 'UserCompanyBranch',
+  UserCompany: 'UserCompany',
+  Department: 'Department',
   User: 'User',
   Role: 'Role',
   UserRole: 'UserRole'
@@ -232,7 +321,6 @@ const config = {
     "db"
   ],
   "activeProvider": "mysql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -241,13 +329,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../generated\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum AuthProvider {\n  CREDENTIALS\n  GOOGLE\n  FACEBOOK\n  GITHUB\n  APPLE\n}\n\nmodel User {\n  id              String       @id @default(cuid()) @map(\"id\") @db.VarChar(191) // UUID or cuid for unique user ID\n  email           String       @unique @map(\"email\") @db.VarChar(191) // RFC 5321 compliant\n  passwordHash    String?      @map(\"password_hash\") @db.VarChar(1000) // Sufficient for bcrypt hashes\n  firstName       String?      @map(\"first_name\") @db.VarChar(200)\n  lastName        String?      @map(\"last_name\") @db.VarChar(200)\n  displayName     String?      @map(\"display_name\") @db.VarChar(300)\n  phoneNumber     String?      @map(\"phone_number\") @db.VarChar(20) // E.164 format\n  profileImageUrl String?      @map(\"profile_image_url\") @db.VarChar(2048)\n  provider        AuthProvider @default(CREDENTIALS) @map(\"provider\")\n  providerId      String?      @map(\"provider_id\") @db.VarChar(100)\n  isEmailVerified Boolean      @default(false) @map(\"is_email_verified\")\n  isPhoneVerified Boolean      @default(false) @map(\"is_phone_verified\")\n  isActive        Boolean      @default(true) @map(\"is_active\")\n\n  // Localization\n  timezone String? @map(\"timezone\") @db.VarChar(50) // IANA timezone format, e.g., \"America/New_York\"\n  locale   String? @map(\"locale\") @db.VarChar(10) // e.g., \"en-US\"\n\n  // Extensibility\n  metadata Json? @map(\"metadata\") // For storing additional user preferences/data\n\n  // Timestamps\n  createdAt DateTime  @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt DateTime? @updatedAt @map(\"updated_at\") @db.Timestamp(6)\n\n  // Relations\n  roles UserRole[]\n\n  // Indexes for performance\n  @@index([email(191)], name: \"idx_users_email\")\n  @@index([phoneNumber(20)], name: \"idx_users_phone_number\")\n  @@index([provider, providerId(100)], name: \"idx_users_provider_provider_id\")\n  @@index([isActive, createdAt], name: \"idx_users_active_created\")\n  @@index([provider, isEmailVerified], name: \"idx_users_provider_verified\")\n  @@map(\"users\")\n}\n\nmodel Role {\n  id          String  @id @default(cuid()) @map(\"id\") @db.VarChar(191) // UUID or cuid for unique role ID\n  name        String  @unique @map(\"name\") @db.VarChar(100)\n  description String? @map(\"description\") @db.VarChar(500)\n  isActive    Boolean @default(true) @map(\"is_active\")\n\n  // Relations\n  users UserRole[]\n\n  // Indexes\n  @@index([isActive], name: \"idx_roles_active\")\n  @@map(\"roles\")\n}\n\nmodel UserRole {\n  userId String @map(\"user_id\") @db.VarChar(191) // UUID or cuid for unique user ID\n  roleId String @map(\"role_id\") @db.VarChar(191) // UUID or cuid for unique role ID\n\n  // Relations with cascade delete\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)\n\n  @@id([userId, roleId])\n  @@index([userId], name: \"idx_user_roles_user_id\")\n  @@index([roleId], name: \"idx_user_roles_role_id\")\n  @@map(\"user_roles\")\n}\n",
-  "inlineSchemaHash": "3dc67869ae1225d11e2190c4b80e88bf58c39c1db4600c867b3fe3769487af6a",
+  "inlineSchema": "model Company {\n  id         String  @id @default(cuid()) @map(\"id\") @db.VarChar(191) // UUID or cuid for unique company ID\n  parentId   String? @map(\"parent_id\") @db.VarChar(191) // For hierarchical company structure\n  name       String  @map(\"name\") @db.VarChar(200)\n  website    String? @map(\"website\") @db.VarChar(2048)\n  isVerified Boolean @default(false) @map(\"is_verified\")\n\n  isActive  Boolean   @default(true) @map(\"is_active\")\n  // Timestamps\n  createdAt DateTime  @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt DateTime? @updatedAt @map(\"updated_at\") @db.Timestamp(6)\n\n  // Relations\n  branches          Branch[]\n  userCompanyBranch UserCompanyBranch[]\n  userCompany       UserCompany[]\n  departments       Department[]\n\n  // Indexes for performance\n  @@index([name(200)], name: \"idx_company_name\")\n  @@index([isActive, createdAt], name: \"idx_company_active_created\")\n  @@map(\"company\")\n}\n\nmodel Branch {\n  id          String  @id @default(cuid()) @map(\"id\") @db.VarChar(191) // UUID or cuid for unique branch ID\n  companyId   String  @map(\"company_id\") @db.VarChar(191) //\n  parentId    String? @map(\"parent_id\") @db.VarChar(191) // For hierarchical branch structure\n  name        String  @map(\"name\") @db.VarChar(200)\n  address     String? @map(\"address\") @db.VarChar(500)\n  phoneNumber String? @map(\"phone_number\") @db.VarChar(20) // E.164 format\n  latitude    Float?  @map(\"latitude\")\n  longitude   Float?  @map(\"longitude\")\n  isActive    Boolean @default(true) @map(\"is_active\")\n\n  // Timestamps\n  createdAt DateTime  @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt DateTime? @updatedAt @map(\"updated_at\") @db.Timestamp(6)\n\n  userCompanyBranch UserCompanyBranch[]\n  departments       Department[]\n\n  // Relations\n  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)\n\n  // Indexes for performance\n  @@index([name(200)], name: \"idx_branch_name\")\n  @@index([isActive, createdAt], name: \"idx_branch_active_created\")\n  @@map(\"branch\")\n}\n\nmodel UserCompanyBranch {\n  userId    String @map(\"user_id\") @db.VarChar(191) // UUID or cuid for unique user ID\n  companyId String @map(\"company_id\") @db.VarChar(191) // UUID or cuid for unique company ID\n  branchId  String @map(\"branch_id\") @db.VarChar(191) // UUID or cuid for unique branch ID\n\n  // Relations with cascade delete\n  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)\n  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)\n  branch  Branch  @relation(fields: [branchId], references: [id], onDelete: Cascade)\n\n  @@id([userId, companyId, branchId])\n  @@index([userId], name: \"idx_user_branch_user_id\")\n  @@index([companyId], name: \"idx_user_branch_company_id\")\n  @@index([branchId], name: \"idx_user_branch_branch_id\")\n  @@map(\"user_company_branch\")\n}\n\nmodel UserCompany {\n  userId    String @map(\"user_id\") @db.VarChar(191) // UUID or cuid for unique user ID\n  companyId String @map(\"company_id\") @db.VarChar(191) // UUID or cuid for unique company ID\n\n  // Relations with cascade delete\n  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)\n  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)\n\n  @@id([userId, companyId])\n  @@index([userId], name: \"idx_user_company_user_id\")\n  @@index([companyId], name: \"idx_user_company_company_id\")\n  @@map(\"user_company\")\n}\n\nmodel Department {\n  id          String  @id @default(cuid()) @map(\"id\") @db.VarChar(191) // UUID or cuid for unique department ID\n  parentId    String? @map(\"parent_id\") @db.VarChar(191) // Self-referencing foreign key for hierarchical structure\n  companyId   String  @map(\"company_id\") @db.VarChar(191) // Foreign key to the company this department belongs to\n  branchId    String? @map(\"branch_id\") @db.VarChar(191) // Optional foreign key to a specific branch\n  name        String  @unique @map(\"name\") @db.VarChar(100)\n  description String? @map(\"description\") @db.VarChar(500)\n  isActive    Boolean @default(true) @map(\"is_active\")\n\n  createdAt DateTime  @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt DateTime? @updatedAt @map(\"updated_at\") @db.Timestamp(6)\n\n  // Relations\n  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)\n  branch  Branch? @relation(fields: [branchId], references: [id], onDelete: Cascade)\n\n  // Indexes\n  @@index([isActive], name: \"idx_departments_active\")\n  @@index([companyId], name: \"idx_departments_company_id\")\n  @@index([branchId], name: \"idx_departments_branch_id\")\n  @@index([name(100)], name: \"idx_departments_name\")\n  @@map(\"departments\")\n}\n\n// model DoctorProfile {\n//     id              String  @id @default(cuid()) @map(\"id\") @db.VarChar(191)\n//     userId          String  @map(\"user_id\") @db.VarChar(191)\n//     bio             String? @map(\"bio\") @db.VarChar(191)\n//     description     String? @map(\"description\") @db.VarChar(1000)\n//     profileImageUrl String? @map(\"profile_image_url\") @db.VarChar(2048)\n//     documentUrl     String? @map(\"document_url\") @db.VarChar(1000)\n//     rating          Float?  @map(\"rating\")\n\n//     // Extensibility\n//     metadata Json? @map(\"metadata\") // For storing additional user preferences/data\n\n//     isActive Boolean @default(true) @map(\"is_active\")\n\n//     createdAt DateTime  @default(now()) @map(\"created_at\") @db.Timestamp(6)\n//     updatedAt DateTime? @updatedAt @map(\"updated_at\") @db.Timestamp(6)\n\n//     // Relations\n//     user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n//     doctorRating DoctorRating[]\n\n//     // Indexing\n//     @@index([id], name: \"idx_doctor_profile_doctor_id\")\n//     @@index([userId], name: \"idx_doctor_profile_user_id\")\n//     @@index([rating], name: \"idx_doctor_rating_doctor_id\")\n//     @@index([isActive, createdAt], name: \"idx_doctor_profile_active_created\")\n//     @@map(\"doctor_profile\")\n// }\n\n// model DoctorRating {\n//     id            String  @id @default(cuid()) @map(\"id\") @db.VarChar(191)\n//     doctorId      String  @map(\"doctor_id\") @db.VarChar(191) // Doctor Profile Id\n//     appointmentId String? @map(\"appointment_id\") @db.VarChar(191)\n\n//     rating        Float?  @map(\"rating\")\n//     message       String? @map(\"message\") @db.VarChar(255)\n//     ratedBy       String? @map(\"ratedBy\") @db.VarChar(191)\n\n//     // Extensibility\n//     metadata Json? @map(\"metadata\") // For storing additional user preferences/data\n\n//     isActive Boolean @default(true) @map(\"is_active\")\n\n//     createdAt DateTime  @default(now()) @map(\"created_at\") @db.Timestamp(6)\n//     updatedAt DateTime? @updatedAt @map(\"updated_at\") @db.Timestamp(6)\n\n//     // Relations\n//     doctorProfile DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)\n//     user          User          @relation(fields: [ratedBy], references: [id], onDelete: Cascade)\n\n//     // Indexes for performance\n//     @@index([doctorId], name: \"idx_doctor_rating_doctor_id_doctor_profile\")\n//     @@index([isActive, createdAt], name: \"idx_doctor_rating_active_created\")\n// }\n\n// @ts-eslint-ignore-file\ngenerator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n  output        = \"../generated\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum AuthProvider {\n  CREDENTIALS\n  GOOGLE\n  FACEBOOK\n  GITHUB\n  APPLE\n}\n\nmodel User {\n  id              String       @id @default(cuid()) @map(\"id\") @db.VarChar(191) // UUID or cuid for unique user ID\n  email           String       @unique @map(\"email\") @db.VarChar(191) // RFC 5321 compliant\n  passwordHash    String?      @map(\"password_hash\") @db.VarChar(1000) // Sufficient for bcrypt hashes\n  firstName       String?      @map(\"first_name\") @db.VarChar(200)\n  lastName        String?      @map(\"last_name\") @db.VarChar(200)\n  displayName     String?      @map(\"display_name\") @db.VarChar(300)\n  phoneNumber     String?      @map(\"phone_number\") @db.VarChar(20) // E.164 format\n  profileImageUrl String?      @map(\"profile_image_url\") @db.VarChar(2048)\n  provider        AuthProvider @default(CREDENTIALS) @map(\"provider\")\n  providerId      String?      @map(\"provider_id\") @db.VarChar(100)\n  isEmailVerified Boolean      @default(false) @map(\"is_email_verified\")\n  isPhoneVerified Boolean      @default(false) @map(\"is_phone_verified\")\n  isActive        Boolean      @default(true) @map(\"is_active\")\n\n  // Localization\n  timezone String? @map(\"timezone\") @db.VarChar(50) // IANA timezone format, e.g., \"America/New_York\"\n  locale   String? @map(\"locale\") @db.VarChar(10) // e.g., \"en-US\"\n\n  // Extensibility\n  metadata Json? @map(\"metadata\") // For storing additional user preferences/data\n\n  // Timestamps\n  createdAt DateTime  @default(now()) @map(\"created_at\") @db.Timestamp(6)\n  updatedAt DateTime? @updatedAt @map(\"updated_at\") @db.Timestamp(6)\n\n  // Relations\n  roles             UserRole[]\n  userCompanyBranch UserCompanyBranch[]\n  userCompany       UserCompany[]\n\n  // Indexes for performance\n  @@index([email(191)], name: \"idx_users_email\")\n  @@index([phoneNumber(20)], name: \"idx_users_phone_number\")\n  @@index([provider, providerId(100)], name: \"idx_users_provider_provider_id\")\n  @@index([isActive, createdAt], name: \"idx_users_active_created\")\n  @@index([provider, isEmailVerified], name: \"idx_users_provider_verified\")\n  @@map(\"users\")\n}\n\nmodel Role {\n  id          String  @id @default(cuid()) @map(\"id\") @db.VarChar(191) // UUID or cuid for unique role ID\n  name        String  @unique @map(\"name\") @db.VarChar(100)\n  description String? @map(\"description\") @db.VarChar(500)\n  isActive    Boolean @default(true) @map(\"is_active\")\n\n  // Relations\n  users UserRole[]\n\n  // Indexes\n  @@index([isActive], name: \"idx_roles_active\")\n  @@map(\"roles\")\n}\n\nmodel UserRole {\n  userId String @map(\"user_id\") @db.VarChar(191) // UUID or cuid for unique user ID\n  roleId String @map(\"role_id\") @db.VarChar(191) // UUID or cuid for unique role ID\n\n  // Relations with cascade delete\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)\n\n  @@id([userId, roleId])\n  @@index([userId], name: \"idx_user_roles_user_id\")\n  @@index([roleId], name: \"idx_user_roles_role_id\")\n  @@map(\"user_roles\")\n}\n",
+  "inlineSchemaHash": "887cada8f5dd7d4b5b7e9cdfa0b77520fe924e42c21651a4613c41c08002d57c",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"id\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"email\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"password_hash\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"first_name\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"last_name\"},{\"name\":\"displayName\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"display_name\"},{\"name\":\"phoneNumber\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"phone_number\"},{\"name\":\"profileImageUrl\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"profile_image_url\"},{\"name\":\"provider\",\"kind\":\"enum\",\"type\":\"AuthProvider\",\"dbName\":\"provider\"},{\"name\":\"providerId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"provider_id\"},{\"name\":\"isEmailVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_email_verified\"},{\"name\":\"isPhoneVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_phone_verified\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_active\"},{\"name\":\"timezone\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"timezone\"},{\"name\":\"locale\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"locale\"},{\"name\":\"metadata\",\"kind\":\"scalar\",\"type\":\"Json\",\"dbName\":\"metadata\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"roles\",\"kind\":\"object\",\"type\":\"UserRole\",\"relationName\":\"UserToUserRole\"}],\"dbName\":\"users\"},\"Role\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"id\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"name\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"description\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_active\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"UserRole\",\"relationName\":\"RoleToUserRole\"}],\"dbName\":\"roles\"},\"UserRole\":{\"fields\":[{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"roleId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"role_id\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserRole\"},{\"name\":\"role\",\"kind\":\"object\",\"type\":\"Role\",\"relationName\":\"RoleToUserRole\"}],\"dbName\":\"user_roles\"}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Company\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"id\"},{\"name\":\"parentId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"parent_id\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"name\"},{\"name\":\"website\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"website\"},{\"name\":\"isVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_verified\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_active\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"branches\",\"kind\":\"object\",\"type\":\"Branch\",\"relationName\":\"BranchToCompany\"},{\"name\":\"userCompanyBranch\",\"kind\":\"object\",\"type\":\"UserCompanyBranch\",\"relationName\":\"CompanyToUserCompanyBranch\"},{\"name\":\"userCompany\",\"kind\":\"object\",\"type\":\"UserCompany\",\"relationName\":\"CompanyToUserCompany\"},{\"name\":\"departments\",\"kind\":\"object\",\"type\":\"Department\",\"relationName\":\"CompanyToDepartment\"}],\"dbName\":\"company\"},\"Branch\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"id\"},{\"name\":\"companyId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"company_id\"},{\"name\":\"parentId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"parent_id\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"name\"},{\"name\":\"address\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"address\"},{\"name\":\"phoneNumber\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"phone_number\"},{\"name\":\"latitude\",\"kind\":\"scalar\",\"type\":\"Float\",\"dbName\":\"latitude\"},{\"name\":\"longitude\",\"kind\":\"scalar\",\"type\":\"Float\",\"dbName\":\"longitude\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_active\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"userCompanyBranch\",\"kind\":\"object\",\"type\":\"UserCompanyBranch\",\"relationName\":\"BranchToUserCompanyBranch\"},{\"name\":\"departments\",\"kind\":\"object\",\"type\":\"Department\",\"relationName\":\"BranchToDepartment\"},{\"name\":\"company\",\"kind\":\"object\",\"type\":\"Company\",\"relationName\":\"BranchToCompany\"}],\"dbName\":\"branch\"},\"UserCompanyBranch\":{\"fields\":[{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"companyId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"company_id\"},{\"name\":\"branchId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"branch_id\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserCompanyBranch\"},{\"name\":\"company\",\"kind\":\"object\",\"type\":\"Company\",\"relationName\":\"CompanyToUserCompanyBranch\"},{\"name\":\"branch\",\"kind\":\"object\",\"type\":\"Branch\",\"relationName\":\"BranchToUserCompanyBranch\"}],\"dbName\":\"user_company_branch\"},\"UserCompany\":{\"fields\":[{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"companyId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"company_id\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserCompany\"},{\"name\":\"company\",\"kind\":\"object\",\"type\":\"Company\",\"relationName\":\"CompanyToUserCompany\"}],\"dbName\":\"user_company\"},\"Department\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"id\"},{\"name\":\"parentId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"parent_id\"},{\"name\":\"companyId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"company_id\"},{\"name\":\"branchId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"branch_id\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"name\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"description\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_active\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"company\",\"kind\":\"object\",\"type\":\"Company\",\"relationName\":\"CompanyToDepartment\"},{\"name\":\"branch\",\"kind\":\"object\",\"type\":\"Branch\",\"relationName\":\"BranchToDepartment\"}],\"dbName\":\"departments\"},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"id\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"email\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"password_hash\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"first_name\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"last_name\"},{\"name\":\"displayName\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"display_name\"},{\"name\":\"phoneNumber\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"phone_number\"},{\"name\":\"profileImageUrl\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"profile_image_url\"},{\"name\":\"provider\",\"kind\":\"enum\",\"type\":\"AuthProvider\",\"dbName\":\"provider\"},{\"name\":\"providerId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"provider_id\"},{\"name\":\"isEmailVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_email_verified\"},{\"name\":\"isPhoneVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_phone_verified\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_active\"},{\"name\":\"timezone\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"timezone\"},{\"name\":\"locale\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"locale\"},{\"name\":\"metadata\",\"kind\":\"scalar\",\"type\":\"Json\",\"dbName\":\"metadata\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"roles\",\"kind\":\"object\",\"type\":\"UserRole\",\"relationName\":\"UserToUserRole\"},{\"name\":\"userCompanyBranch\",\"kind\":\"object\",\"type\":\"UserCompanyBranch\",\"relationName\":\"UserToUserCompanyBranch\"},{\"name\":\"userCompany\",\"kind\":\"object\",\"type\":\"UserCompany\",\"relationName\":\"UserToUserCompany\"}],\"dbName\":\"users\"},\"Role\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"id\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"name\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"description\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_active\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"UserRole\",\"relationName\":\"RoleToUserRole\"}],\"dbName\":\"roles\"},\"UserRole\":{\"fields\":[{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"roleId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"role_id\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserRole\"},{\"name\":\"role\",\"kind\":\"object\",\"type\":\"Role\",\"relationName\":\"RoleToUserRole\"}],\"dbName\":\"user_roles\"}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

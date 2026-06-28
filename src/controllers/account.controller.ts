@@ -7,7 +7,6 @@ import container from '../config/ioc.config';
 import { TYPES } from '../config/ioc.types';
 import CustomError from '../exceptions/custom-error';
 import { UserDto } from '../dtos/user.dto';
-import { UserRole } from '../prisma/generated';
 import UnitOfService from '../services/unitof.service';
 import prisma from '../prisma';
 import { Roles } from '../enums/roles.enum';
@@ -55,7 +54,7 @@ export class AccountController {
     }
 
     const roles = await prisma.role.findFirst({
-      where: { id: user.roles?.[0] as string },
+      where: { id: user.role?.[0] as string },
       select: { id: true, name: true },
     });
 
@@ -74,7 +73,7 @@ export class AccountController {
       config.jwt.secret,
       {
         expiresIn: '30d',
-        algorithm: 'HS256',
+        algorithm: 'HS512',
         audience: config.jwt.audience,
         issuer: config.jwt.issuer,
         notBefore: '0',
@@ -108,7 +107,7 @@ export class AccountController {
     }
 
     // Find the default USER role id
-    const userRole = await prisma.role.findUnique({ where: { name: 'USER' } });
+    const userRole = await prisma.role.findUnique({ where: { name: Roles.USER } });
     if (!userRole) {
       throw new CustomError('Default USER role not found', 500);
     }

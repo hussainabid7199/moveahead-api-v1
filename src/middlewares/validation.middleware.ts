@@ -60,3 +60,30 @@ export const validateSchemaByBody = async (req: Request, schema: z.ZodSchema) =>
     return response;
   }
 };
+
+
+export const validateSchemaBody = async <T>(
+  req: Request, 
+  schema: z.ZodSchema<T>
+): Promise<CustomResponse<T>> => {
+  try {
+    const parsedData = await schema.parseAsync(req.body);
+
+    return {
+      success: true,
+      data: parsedData, // Now returning the actual body content
+    };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return {
+        success: false,
+        errors: error.issues.map((err) => err.message),
+      };
+    }
+
+    return {
+      success: false,
+      errors: ['Internal server error occurred while validating the schema'],
+    };
+  }
+};
